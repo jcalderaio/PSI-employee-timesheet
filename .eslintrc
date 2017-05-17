@@ -1,0 +1,16 @@
+{
+  "extends":     "rallycoding",
+  "env":         {
+    "browser":   true
+  },
+  "globals":   {
+    "fetch": true
+  },
+  "rules": {
+    "no-mixed-spaces-and-tabs": off,
+    "max-len": off,
+    "global-require": off,
+    "react/jsx-closing-bracket-location": off,
+    "no-else-return": off
+  }
+}
