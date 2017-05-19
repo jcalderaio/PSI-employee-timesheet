@@ -92,7 +92,7 @@ export default class Main extends Component {
 
 const styles = {
     bannerStyle: {
-        height: 45,
+        height: 40,
         flex: 1, 		//this will stretch it across the screen
         width: null,
     },
