@@ -18,7 +18,7 @@ export default class Login extends Component {
 
     componentWillMount() {
 		if (this.state.loggedIn) {
-			this.props.navigation.navigate('Main');
+			this.props.navigation.navigate('ModalStack');
 		}
 		this.loadFromStorage('user');
 		console.log('first?');
@@ -66,7 +66,7 @@ export default class Login extends Component {
 			loadingSignIn: true
 		});
 
-		navigate('Main');
+		navigate('ModalStack');
 
 		// Delete this. It is duplicated at the end.
 		this.setState({

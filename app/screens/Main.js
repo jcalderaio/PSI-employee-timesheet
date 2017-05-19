@@ -16,7 +16,7 @@ export default class Main extends Component {
             <Left>
               <Button
                 transparent
-                onPress={() => navigate('Login')}
+                onPress={() => goBack(null)}
               >
                 <Text>Logout</Text>
               </Button>

@@ -1,6 +1,6 @@
 import React from 'react';
 import Expo from 'expo';
-import { Root } from './app/config/router';
+import { LoginStack } from './app/config/router';
 
 export default class App extends React.Component {
 	constructor(props) {
@@ -23,6 +23,6 @@ export default class App extends React.Component {
 			return <Expo.AppLoading />;
 		}
 
-		return (<Root />);
+		return (<LoginStack />);
 	}
 }
