@@ -1,6 +1,6 @@
 import React from 'react';
 import { TabNavigator, StackNavigator } from 'react-navigation';
-import { Icon } from 'native-base';
+import { MaterialIcons, Ionicons } from '@expo/vector-icons';
 
 // Import the screens
 import Login from '../screens/Login';
@@ -13,15 +13,15 @@ export const Tabs = TabNavigator({
   Main: {
     screen: Main,
     navigationOptions: {
-      tabBarLabel: 'Main', 
-      tabBarIcon: ({ tintColor }) => <Icon name='person' size={35} style={{ color: tintColor }} />
+      tabBarLabel: 'Main',
+      tabBarIcon: ({ tintColor }) => <MaterialIcons name='account-circle' size={35} style={{ color: tintColor }} />
     },
   },
   TodaysCharges: {
     screen: TodaysCharges,
     navigationOptions: {
       tabBarLabel: 'Today\'s Charges',  // Label below tab
-      tabBarIcon: ({ tintColor }) => <Icon name='timer' size={35} style={{ color: tintColor }} />
+      tabBarIcon: ({ tintColor }) => <Ionicons name='ios-time' size={35} style={{ color: tintColor }} />
     },
   },
 }, {
