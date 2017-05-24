@@ -7,9 +7,11 @@ export default class TodaysCharges extends Component {
     return (
       <Container style={{ flex: 1 }}>
 
-          <Header>
-            <Body style={{ justifyContent: 'center' }}>
-              <Title>Today's Charges</Title>
+          <Header
+            style={styles.headerStyle}
+          >
+            <Body>
+              <Title style={styles.headerTextStyle}>Today's Charges</Title>
             </Body>
           </Header>
 
@@ -24,12 +26,12 @@ export default class TodaysCharges extends Component {
             <Button
                block
                onPress={() => {
-                 alert('Charges Added!');
+                 alert('Charges Updated!');
                  this.props.navigation.navigate('Today\'s Charges');
                }}
                style={styles.addChargeButton}
             >
-               <Text>Add Entry</Text>
+               <Text>Update Charges</Text>
              </Button>
 
             <View style={styles.footer}>
@@ -54,6 +56,12 @@ const styles = {
         flex: 1, 		//this will stretch it across the screen
         width: null,
     },
+    headerStyle: {
+  		backgroundColor: 'red'
+  	},
+  	headerTextStyle: {
+  		color: '#FFF'
+  	},
     footer: {
     	position: 'absolute',
     	left: 0,

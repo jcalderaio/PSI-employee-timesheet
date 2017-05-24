@@ -104,9 +104,11 @@ export default class Login extends Component {
         return (
             <Container>
 
-                <Header>
+                <Header
+                    style={styles.headerStyle}
+                >
                     <Body>
-                        <Title>Login</Title>
+                        <Title style={styles.headerTextStyle}>Login</Title>
                     </Body>
                 </Header>
 
@@ -172,7 +174,14 @@ export default class Login extends Component {
 }
 
 const styles = {
+	headerStyle: {
+		backgroundColor: 'red'
+	},
+	headerTextStyle: {
+		color: '#FFF'
+	},
 	loginButton: {
+		backgroundColor: '#EF5350',
 		marginHorizontal: 20,
 		marginTop: 20,
 		shadowColor: '#000',

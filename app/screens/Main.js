@@ -12,17 +12,19 @@ export default class Main extends Component {
     return (
       <Container>
 
-          <Header>
+          <Header
+            style={styles.headerStyle}
+          >
             <Left>
               <Button
                 transparent
                 onPress={() => goBack(null)}
               >
-                <Text>Logout</Text>
+                <Text style={styles.headerTextStyle}>Logout</Text>
               </Button>
             </Left>
-            <Body style={{ justifyContent: 'center' }}>
-              <Title>Main</Title>
+            <Body>
+              <Title style={styles.headerTextStyle}>Main</Title>
             </Body>
             <Right />
           </Header>
@@ -96,6 +98,12 @@ const styles = {
         flex: 1, 		//this will stretch it across the screen
         width: null,
     },
+    headerStyle: {
+  		backgroundColor: 'red'
+  	},
+  	headerTextStyle: {
+  		color: '#FFF'
+  	},
     addEntryButton: {
       marginHorizontal: 20,
   		marginTop: 60,

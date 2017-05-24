@@ -1,21 +1,24 @@
 import React, { Component } from 'react';
-import { Container, Content, Button, Text, Grid, Header, Left, Right, Body, Title, H1 } from 'native-base';
+import { Container, Content, Button, Grid, Header, Left, Right, Body, Title, H1 } from 'native-base';
+import { Octicons } from '@expo/vector-icons';
 
 export default class SelectRecent extends Component {
   render() {
     return (
         <Container>
-			<Header>
+			<Header
+				style={styles.headerStyle}
+			>
 				<Left />
 				<Body>
-					<Title>Select Recent</Title>
+					<Title style={styles.headerTextStyle}>Select Recent</Title>
 				</Body>
 				<Right>
 					<Button
 						transparent
 						onPress={() => this.props.navigation.goBack(null)}
 					>
-						<Text>Cancel</Text>
+						<Octicons name='x' size={26} style={{ color: '#FFF' }} />
 					</Button>
 				</Right>
 			</Header>
@@ -28,3 +31,12 @@ export default class SelectRecent extends Component {
     );
   }
 }
+
+const styles = {
+	headerStyle: {
+		backgroundColor: 'red'
+	},
+	headerTextStyle: {
+		color: '#FFF'
+	},
+};

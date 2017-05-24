@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Container, Content, Button, Text, Grid, Header, Left, Right, Body, Title, H1 } from 'native-base';
+import { Container, Content, Button, Grid, Header, Left, Right, Body, Title, H1 } from 'native-base';
+import { Octicons } from '@expo/vector-icons';
 
 export default class AddEntry extends Component {
   render() {
@@ -7,17 +8,19 @@ export default class AddEntry extends Component {
 
     return (
         <Container>
-			<Header>
+			<Header
+				style={styles.headerStyle}
+			>
 				<Left />
 				<Body>
-					<Title>Add Entry</Title>
+					<Title style={styles.headerTextStyle}>Add Entry</Title>
 				</Body>
 				<Right>
 					<Button
 						transparent
 						onPress={() => goBack(null)}
 					>
-						<Text>Cancel</Text>
+						<Octicons name='x' size={26} style={{ color: '#FFF' }} />
 					</Button>
 				</Right>
 			</Header>
@@ -30,3 +33,12 @@ export default class AddEntry extends Component {
     );
   }
 }
+
+const styles = {
+	headerStyle: {
+	backgroundColor: 'red'
+	},
+	headerTextStyle: {
+		color: '#FFF'
+	},
+};

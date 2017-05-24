@@ -14,18 +14,21 @@ export const Tabs = TabNavigator({
     screen: Main,
     navigationOptions: {
       tabBarLabel: 'Main',
-      tabBarIcon: ({ tintColor }) => <MaterialIcons name='account-circle' size={35} style={{ color: tintColor }} />
+      tabBarIcon: ({ tintColor }) => <MaterialIcons name='account-circle' size={26} style={{ color: tintColor }} />
     },
   },
   TodaysCharges: {
     screen: TodaysCharges,
     navigationOptions: {
       tabBarLabel: 'Today\'s Charges',  // Label below tab
-      tabBarIcon: ({ tintColor }) => <Ionicons name='ios-time' size={35} style={{ color: tintColor }} />
+      tabBarIcon: ({ tintColor }) => <Ionicons name='ios-time' size={26} style={{ color: tintColor }} />
     },
   },
 }, {
-    headerMode: 'none'
+    headerMode: 'none',
+    tabBarOptions: {
+      activeTintColor: 'red'
+    },
 });
 
 export const ModalStack = StackNavigator({
