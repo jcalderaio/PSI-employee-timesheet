@@ -29,6 +29,7 @@ export const Tabs = TabNavigator({
     tabBarOptions: {
       activeTintColor: 'red'
     },
+    tabBarPosition: 'bottom',
 });
 
 export const ModalStack = StackNavigator({
@@ -43,7 +44,7 @@ export const ModalStack = StackNavigator({
   }
 }, {
     mode: 'modal',
-	headerMode: 'none' // So no navigation bar pops up
+	  headerMode: 'none' // So no navigation bar pops up
 });
 
 export const LoginStack = StackNavigator({ // This contains both the Tabs

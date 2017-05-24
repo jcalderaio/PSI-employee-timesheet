@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { Image } from 'react-native';
-import { Container, Content, Button, Text, Grid, Header, Left, Right, Body, Title, H1, View } from 'native-base';
+import { Container, Content, Button, Text, Grid, Header, Body, Title, View } from 'native-base';
+
+import { CardSection } from '../components/CardSection';
+import { Card } from '../components/Card';
 
 export default class TodaysCharges extends Component {
   render() {
     return (
-      <Container style={{ flex: 1 }}>
+      <Container>
 
           <Header
             style={styles.headerStyle}
@@ -16,6 +19,7 @@ export default class TodaysCharges extends Component {
           </Header>
 
           <Content>
+
 
             <Image
               style={styles.tableStyle}

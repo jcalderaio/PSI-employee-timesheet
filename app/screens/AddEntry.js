@@ -20,7 +20,7 @@ export default class AddEntry extends Component {
 						transparent
 						onPress={() => goBack(null)}
 					>
-						<Octicons name='x' size={26} style={{ color: '#FFF' }} />
+						<Octicons name='x' size={23} style={{ color: '#FFF' }} />
 					</Button>
 				</Right>
 			</Header>
