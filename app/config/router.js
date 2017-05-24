@@ -1,6 +1,7 @@
 import React from 'react';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import { MaterialIcons, Ionicons } from '@expo/vector-icons';
+import { Platform } from 'react-native';
 
 // Import the screens
 import Login from '../screens/Login';
@@ -20,16 +21,25 @@ export const Tabs = TabNavigator({
   TodaysCharges: {
     screen: TodaysCharges,
     navigationOptions: {
-      tabBarLabel: 'Today\'s Charges',  // Label below tab
+      tabBarLabel: 'Today\'s Charges',
       tabBarIcon: ({ tintColor }) => <Ionicons name='ios-time' size={26} style={{ color: tintColor }} />
     },
   },
 }, {
     headerMode: 'none',
-    tabBarOptions: {
-      activeTintColor: 'red'
-    },
     tabBarPosition: 'bottom',
+    tabBarOptions: {
+      activeTintColor: 'red',
+      inactiveTintColor: '#b5b5b5',
+      showIcon: 'true',
+      showLabel: (Platform.OS !== 'android'),
+      labelStyle: {
+        fontSize: 11,
+      },
+      style: {
+        backgroundColor: '#fff'
+      }
+    },
 });
 
 export const ModalStack = StackNavigator({

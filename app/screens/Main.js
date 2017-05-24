@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Image } from 'react-native';
 import { Container, Content, Button, Text, Grid, Header, Left, Right, Body, Title } from 'native-base';
+import myTheme from '../Themes/myTheme';
 
 import { CardSection } from '../components/CardSection';
 import { Card } from '../components/Card';
@@ -12,6 +13,7 @@ export default class Main extends Component {
     return (
       <Container>
 
+          {/* Header */}
           <Header
             style={styles.headerStyle}
           >
@@ -23,13 +25,17 @@ export default class Main extends Component {
                 <Text style={styles.headerTextStyle}>Logout</Text>
               </Button>
             </Left>
+
             <Body>
               <Title style={styles.headerTextStyle}>Main</Title>
             </Body>
-            <Right />
-          </Header>
 
-          <Content>
+            <Right />
+
+          </Header>
+          {/* End of Header */}
+
+          <Content theme={myTheme}>
 
               <Image
                 style={styles.bannerStyle}
@@ -71,20 +77,20 @@ export default class Main extends Component {
               </Card>
 
               <Button
-					       block
-					       onPress={() => navigate('AddEntry')}
-					       style={styles.addEntryButton}
-			       >
-					       <Text>Add Entry</Text>
-			         </Button>
+      					block
+      					onPress={() => navigate('AddEntry')}
+      					style={styles.addEntryButton}
+			    >
+					    <Text>Add Entry</Text>
+			        </Button>
 
               <Button
-					       block
-					       onPress={() => navigate('SelectRecent')}
-					       style={styles.selectRecentButton}
-				       >
-					       <Text>Select Recent</Text>
-				       </Button>
+        				block
+        				onPress={() => navigate('SelectRecent')}
+        				style={styles.selectRecentButton}
+				      >
+					        <Text>Select Recent</Text>
+				      </Button>
 
           </Content>
       </Container>
@@ -105,7 +111,7 @@ const styles = {
   		color: '#FFF'
   	},
     addEntryButton: {
-      marginHorizontal: 20,
+        marginHorizontal: 20,
   		marginTop: 60,
   		shadowColor: '#000',
   		shadowOffset: { width: 0, height: 2 },
@@ -113,7 +119,7 @@ const styles = {
   		shadowRadius: 2
     },
     selectRecentButton: {
-      marginHorizontal: 20,
+        marginHorizontal: 20,
   		marginTop: 25,
   		shadowColor: '#000',
   		shadowOffset: { width: 0, height: 2 },

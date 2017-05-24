@@ -10,9 +10,7 @@ export default class Login extends Component {
 			email: '',
 			password: '',
 			message: '',
-			color: '',
-			loadingSignIn: false,
-			loadingSignUp: false
+			loadingSignIn: false
 		};
 	}
 
@@ -22,17 +20,6 @@ export default class Login extends Component {
 		}
 		this.loadFromStorage('user');
 		console.log('first?');
-	}
-
-    //Dynamically changes the style of the "this.state.message" text below
-	getMessageStyle() {
-		return {
-			marginTop: 20,
-			paddingHorizontal: 20,
-			fontSize: 14,
-			color: this.state.color,
-			alignSelf: 'center'
-		};
 	}
 
     saveToStorage = async (key, value) => {
@@ -152,7 +139,7 @@ export default class Login extends Component {
 									returnKeyType={'done'}
 								/>
 							</Item>
-							<Text style={this.getMessageStyle()}>{this.state.message}</Text>
+							<Text style={styles.errorMessageStyle}>{this.state.message}</Text>
 						</Form>
 						{/* If Sign in pressed, then show a loading screen*/}
 						{this.state.loadingSignIn && <Spinner size='small' />}
@@ -193,5 +180,12 @@ const styles = {
 		height: 265,
 		flex: 1, 		//this will stretch it across the screen
 		width: null
-	}
+	},
+    errorMessageStyle: {
+        marginTop: 20,
+        paddingHorizontal: 20,
+        fontSize: 14,
+        color: 'red',
+        alignSelf: 'center'
+    }
 };
