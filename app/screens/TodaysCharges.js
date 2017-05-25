@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image } from 'react-native';
+import { Image, Platform } from 'react-native';
 import { Container, Content, Button, Text, Grid, Header, Body, Title, View } from 'native-base';
 
 import { CardSection } from '../components/CardSection';
@@ -56,9 +56,9 @@ export default class TodaysCharges extends Component {
 
 const styles = {
     tableStyle: {
-        height: 165,
-        flex: 1, 		//this will stretch it across the screen
-        width: null,
+      height: (Platform.OS === 'ios') ? 165 : 170,
+      flex: 1, 		//this will stretch it across the screen
+      width: null,
     },
     headerStyle: {
   		backgroundColor: 'red'
@@ -74,6 +74,7 @@ const styles = {
     	alignItems: 'center'
     },
     addChargeButton: {
+      backgroundColor: '#007aff',
       marginHorizontal: 20,
   		marginTop: 160,
   		shadowColor: '#000',

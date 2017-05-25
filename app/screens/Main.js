@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Image } from 'react-native';
-import { Container, Content, Button, Text, Grid, Header, Left, Right, Body, Title } from 'native-base';
-import myTheme from '../Themes/myTheme';
+import { Image, Platform } from 'react-native';
+import { Container, Content, Button, Text, Grid, Header, Left, Right, Body, Title, View } from 'native-base';
 
 import { CardSection } from '../components/CardSection';
 import { Card } from '../components/Card';
@@ -19,6 +18,7 @@ export default class Main extends Component {
           >
             <Left>
               <Button
+                large
                 transparent
                 onPress={() => goBack(null)}
               >
@@ -35,13 +35,17 @@ export default class Main extends Component {
           </Header>
           {/* End of Header */}
 
-          <Content theme={myTheme}>
+          <Content>
 
-              <Image
-                style={styles.bannerStyle}
-                source={require('../img/banner.png')}
-                resizeMode="contain"
-              />
+              {/*Banner Image*/}
+              <View style={styles.imageStyle.imageOuter}>
+                <Image
+                  style={styles.imageStyle.imageInner}
+                  source={require('../img/banner.png')}
+                  resizeMode="contain"
+                />
+              </View>
+
               <Card>
                 <CardSection>
                   <Grid style={{ justifyContent: 'center', padding: 10 }}>
@@ -99,19 +103,24 @@ export default class Main extends Component {
 }
 
 const styles = {
-    bannerStyle: {
-        height: 40,
-        flex: 1, 		//this will stretch it across the screen
-        width: null,
-    },
     headerStyle: {
   		backgroundColor: 'red'
   	},
   	headerTextStyle: {
   		color: '#FFF'
   	},
+    imageStyle: {
+      imageOuter: {
+        flexDirection: 'row'
+      },
+      imageInner: {
+        flexShrink: 1,
+        marginTop: (Platform.OS === 'ios') ? -20 : -16
+      }
+    },
     addEntryButton: {
-        marginHorizontal: 20,
+      backgroundColor: '#007aff',
+      marginHorizontal: 20,
   		marginTop: 60,
   		shadowColor: '#000',
   		shadowOffset: { width: 0, height: 2 },
@@ -119,7 +128,8 @@ const styles = {
   		shadowRadius: 2
     },
     selectRecentButton: {
-        marginHorizontal: 20,
+      backgroundColor: '#007aff',
+      marginHorizontal: 20,
   		marginTop: 25,
   		shadowColor: '#000',
   		shadowOffset: { width: 0, height: 2 },

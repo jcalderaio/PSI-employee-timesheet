@@ -3,11 +3,11 @@ import { AsyncStorage, Image } from 'react-native';
 import { Container, Content, Form, Item, Input, Label, Button, Text, Icon, Spinner, View, Header, Body, Title } from 'native-base';
 
 export default class Login extends Component {
-    constructor(props) {
+	constructor(props) {
 		super(props);
 		this.state = {
             loggedIn: false,
-			email: '',
+			windowsId: '',
 			password: '',
 			message: '',
 			loadingSignIn: false
@@ -15,11 +15,8 @@ export default class Login extends Component {
 	}
 
     componentWillMount() {
-		if (this.state.loggedIn) {
-			this.props.navigation.navigate('ModalStack');
-		}
 		this.loadFromStorage('user');
-		console.log('first?');
+		console.log('Johnnys App loaded');
 	}
 
     saveToStorage = async (key, value) => {
@@ -34,7 +31,7 @@ export default class Login extends Component {
 		try {
 			await AsyncStorage.getItem(key).then((value) => {
 				if (value !== null) {
-					this.setState({ email: value });
+					this.setState({ windowsId: value });
 					console.log(value);
 				}
 			}).done();
@@ -44,8 +41,8 @@ export default class Login extends Component {
 	}
 
 	signIn = () => {
-		const { email, password } = this.state;	//refactors out the user and pass out of state
-		const { navigate } = this.props.navigation;
+		const { windowsId, password } = this.state;	//refactors out the user and pass out of state
+        const { navigate } = this.props.navigation;
 
 		// Keep this. Original code.
 		this.setState({
@@ -63,13 +60,13 @@ export default class Login extends Component {
 
 		/*  Replace firebase.auth() with new signIn method
 
-		firebase.auth().signInWithEmailAndPassword(email, password)
+		firebase.auth().signInWithwindowsIdAndPassword(windowsId, password)
 			.then(() => {		//If user found, sign them in
 				// On successful login, store the username in async storage
-				this.saveToStorage('user', email).done();
-				// Clear email, password, make message color green, and no loading
+				this.saveToStorage('user', windowsId).done();
+				// Clear windowsId, password, make message color green, and no loading
 				this.setState({
-					email: '',
+					windowsId: '',
 					password: '',
 					color: 'green',
 					message: 'User Signed In',
@@ -90,8 +87,7 @@ export default class Login extends Component {
     render() {
         return (
             <Container>
-
-                <Header
+				<Header
                     style={styles.headerStyle}
                 >
                     <Body>
@@ -119,9 +115,9 @@ export default class Login extends Component {
 								/>
 								<Label style={{ fontWeight: 'bold' }}>Windows ID</Label>
 								<Input
-									defaultValue={this.state.email}
-									value={this.state.email}
-									onChangeText={email => this.setState({ email })}
+									defaultValue={this.state.windowsId}
+									value={this.state.windowsId}
+									onChangeText={windowsId => this.setState({ windowsId })}
 									returnKeyType={'done'}
 								/>
 							</Item>
@@ -139,7 +135,6 @@ export default class Login extends Component {
 									returnKeyType={'done'}
 								/>
 							</Item>
-							<Text style={styles.errorMessageStyle}>{this.state.message}</Text>
 						</Form>
 						{/* If Sign in pressed, then show a loading screen*/}
 						{this.state.loadingSignIn && <Spinner size='small' />}
@@ -153,6 +148,7 @@ export default class Login extends Component {
 								<Text>Login</Text>
 							</Button>
 						}
+						<Text style={styles.errorMessageStyle}>{this.state.message}</Text>
 					</View>
 				</Content>
 			</Container>
