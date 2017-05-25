@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Image, Platform } from 'react-native';
 import { Container, Content, Button, Text, Grid, Header, Body, Title, View } from 'native-base';
-
-import { CardSection } from '../components/CardSection';
-import { Card } from '../components/Card';
+import moment from 'moment';
 
 export default class TodaysCharges extends Component {
   render() {
@@ -20,6 +18,11 @@ export default class TodaysCharges extends Component {
 
           <Content>
 
+            <Grid style={{ justifyContent: 'center', padding: 10 }}>
+              <Text>
+                <Text style={{ fontWeight: 'bold' }}>Charges for Today: </Text> {moment().format('dddd, MMMM D, YYYY')}
+              </Text>
+            </Grid>
 
             <Image
               style={styles.tableStyle}

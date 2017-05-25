@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Image, Platform } from 'react-native';
 import { Container, Content, Button, Text, Grid, Header, Left, Right, Body, Title, View } from 'native-base';
+import moment from 'moment';
 
 import { CardSection } from '../components/CardSection';
 import { Card } from '../components/Card';
@@ -33,7 +34,6 @@ export default class Main extends Component {
             <Right />
 
           </Header>
-          {/* End of Header */}
 
           <Content>
 
@@ -58,7 +58,7 @@ export default class Main extends Component {
                 <CardSection>
                   <Grid style={{ justifyContent: 'center', padding: 10 }}>
                     <Text>
-                      Friday, May 19th 2017
+                      <Text style={{ fontWeight: 'bold' }}>Today's Date: </Text> {moment().format('dddd, MMMM D, YYYY')}
                     </Text>
                   </Grid>
                 </CardSection>
