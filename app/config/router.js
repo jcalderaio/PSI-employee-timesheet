@@ -26,6 +26,7 @@ export const Tabs = TabNavigator({
     },
   },
 }, {
+    lazy: true,
     headerMode: 'none',
     tabBarPosition: 'bottom',
     tabBarOptions: {
@@ -42,9 +43,20 @@ export const Tabs = TabNavigator({
     },
 });
 
-export const ModalStack = StackNavigator({
+export const LoginStack = StackNavigator({
+  Login: {
+    screen: Login
+  },
   Tabs: {
     screen: Tabs
+  },
+}, {
+  headerMode: 'none'
+});
+
+export const ModalStack = StackNavigator({
+  LoginStack: {
+    screen: LoginStack
   },
   AddEntry: {
 		screen: AddEntry
@@ -54,16 +66,5 @@ export const ModalStack = StackNavigator({
   }
 }, {
     mode: 'modal',
-	  headerMode: 'none' // So no navigation bar pops up
-});
-
-export const LoginStack = StackNavigator({ // This contains both the Tabs
-  Login: {
-    screen: Login
-  },
-  ModalStack: {
-    screen: ModalStack
-  }
-}, {
-  headerMode: 'none'
+	  headerMode: 'none'
 });

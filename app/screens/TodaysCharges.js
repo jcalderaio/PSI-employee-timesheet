@@ -18,38 +18,41 @@ export default class TodaysCharges extends Component {
 
           <Content>
 
+            {/*Todays Date*/}
             <Grid style={{ justifyContent: 'center', padding: 10 }}>
               <Text>
                 <Text style={{ fontWeight: 'bold' }}>Charges for Today: </Text> {moment().format('dddd, MMMM D, YYYY')}
               </Text>
             </Grid>
 
+            {/*Charges Table*/}
             <Image
               style={styles.tableStyle}
               source={require('../img/table.png')}
               resizeMode="contain"
             />
 
+            {/*Charges Table*/}
+            <View style={{ top: 50 }}>
+              <Grid style={{ justifyContent: 'center' }} >
+                  <Text style={{ color: 'steelblue', fontSize: 16 }}>Tap on the 'Hours' column to make changes.</Text>
+              </Grid>
+              <Grid style={{ justifyContent: 'center' }} >
+                  <Text style={{ color: 'steelblue', fontSize: 16 }}>Hint: Type '0' to delete charge.</Text>
+              </Grid>
+            </View>
+
+            {/*Button: "Update Charges"*/}
             <Button
                block
                onPress={() => {
                  alert('Charges Updated!');
                  this.props.navigation.navigate('Today\'s Charges');
                }}
-               style={styles.addChargeButton}
+               style={styles.updateChargeButton}
             >
                <Text>Update Charges</Text>
              </Button>
-
-            <View style={styles.footer}>
-              <Grid style={{ justifyContent: 'center', alignItems: 'flex-end' }} >
-                  <Text style={{ color: 'steelblue', fontSize: 16 }}>Tap on the 'Hours' column to make changes.</Text>
-              </Grid>
-              <Grid style={{ justifyContent: 'center', alignItems: 'flex-end' }} >
-                  <Text style={{ color: 'steelblue', fontSize: 16 }}>Hint: Type '0' to delete charge.</Text>
-              </Grid>
-            </View>
-
 
           </Content>
       </Container>
@@ -76,7 +79,7 @@ const styles = {
     	top: 500,
     	alignItems: 'center'
     },
-    addChargeButton: {
+    updateChargeButton: {
       backgroundColor: '#007aff',
       marginHorizontal: 20,
   		marginTop: 160,

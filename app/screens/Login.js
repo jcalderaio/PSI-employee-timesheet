@@ -7,16 +7,15 @@ export default class Login extends Component {
 		super(props);
 		this.state = {
             loggedIn: false,
+			loadingSignIn: false,
 			windowsId: '',
 			password: '',
-			message: '',
-			loadingSignIn: false
+			message: ''
 		};
 	}
 
     componentWillMount() {
 		this.loadFromStorage('user');
-		console.log('Johnnys App loaded');
 	}
 
     saveToStorage = async (key, value) => {
@@ -50,7 +49,7 @@ export default class Login extends Component {
 			loadingSignIn: true
 		});
 
-		navigate('ModalStack');
+		navigate('Main');
 
 		// Delete this. It is duplicated at the end.
 		this.setState({
