@@ -11,6 +11,7 @@
     "max-len": off,
     "global-require": off,
     "react/jsx-closing-bracket-location": off,
-    "no-else-return": off
+    "no-else-return": off,
+    camelcase: off
   }
 }

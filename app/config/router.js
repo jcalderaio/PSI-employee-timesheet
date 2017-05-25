@@ -26,7 +26,7 @@ export const Tabs = TabNavigator({
     },
   },
 }, {
-    lazy: true,
+    lazyLoad: true,
     headerMode: 'none',
     tabBarPosition: 'bottom',
     tabBarOptions: {

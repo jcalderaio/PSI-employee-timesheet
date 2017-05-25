@@ -8,7 +8,9 @@ import { Card } from '../components/Card';
 
 export default class Main extends Component {
   render() {
-    const { navigate, goBack } = this.props.navigation;
+    const { navigate, goBack, state } = this.props.navigation;
+    //const { First_Name, Last_Name, Employee_No } = state.params;
+    console.log(state.params.data.First_Name);
 
     return (
       <Container>
@@ -49,9 +51,7 @@ export default class Main extends Component {
               <Card>
                 <CardSection>
                   <Grid style={{ justifyContent: 'center', padding: 10 }}>
-                    <Text>
-                      Timesheet for John Calderaio
-                    </Text>
+                    <Text>Timesheet for John Calderaio</Text>
                   </Grid>
                 </CardSection>
 

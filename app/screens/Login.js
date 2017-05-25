@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { AsyncStorage, Image } from 'react-native';
 import { Container, Content, Form, Item, Input, Label, Button, Text, Icon, Spinner, View, Header, Body, Title } from 'native-base';
+import base64 from 'base-64';
+
+import ApiUtils from '../components/ApiUtils';
 
 export default class Login extends Component {
 	constructor(props) {
@@ -10,7 +13,8 @@ export default class Login extends Component {
 			loadingSignIn: false,
 			windowsId: '',
 			password: '',
-			message: ''
+			message: '',
+			employeeInfo: []
 		};
 	}
 
@@ -40,7 +44,7 @@ export default class Login extends Component {
 	}
 
 	signIn = () => {
-		const { windowsId, password } = this.state;	//refactors out the user and pass out of state
+		const { windowsId, password, employeeInfo } = this.state;	//refactors out the user and pass out of state
         const { navigate } = this.props.navigation;
 
 		// Keep this. Original code.
@@ -49,13 +53,34 @@ export default class Login extends Component {
 			loadingSignIn: true
 		});
 
-		navigate('Main');
-
-		// Delete this. It is duplicated at the end.
-		this.setState({
+		fetch(`http://psitime.psnet.com/Api/Employees?Logon=${windowsId}`, {
+	        method: 'get',
+	        headers: {
+	          'Authorization': 'Basic ' + base64.encode(`${windowsId}:${password}`)
+	        }
+	    })
+	    .then(ApiUtils.checkStatus)
+	    .then(response => response.text())
+	    .then(responseData => {
+		  // On successful login, store the username in async storage
+		  this.saveToStorage('user', windowsId).done();
+	      this.setState({
+			password: '',
 			loggedIn: true,
-			loadingSignIn: false
-		});
+	        loadingSignIn: false
+	      });
+		  navigate('Main', { data: JSON.parse(responseData) });
+	    })
+	    .catch(e => {
+	      this.setState({
+	        message: `${e}: there was a problem signing in`,
+			windowsId: '',
+			password: '',
+	        loadingSignIn: false
+	      });
+	    });
+
+		//navigate('Main'); //After Loading is Good
 
 		/*  Replace firebase.auth() with new signIn method
 
