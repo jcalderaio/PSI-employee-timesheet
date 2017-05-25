@@ -115,7 +115,7 @@ const styles = {
       },
       imageInner: {
         flexShrink: 1,
-        marginTop: (Platform.OS === 'ios') ? -20 : -16
+        marginTop: (Platform.OS === 'ios') ? -18 : -16
       }
     },
     addEntryButton: {
