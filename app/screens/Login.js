@@ -77,33 +77,6 @@ export default class Login extends Component {
 	        loadingSignIn: false
 	      });
 	    });
-
-		//navigate('Main'); //After Loading is Good
-
-		/*  Replace firebase.auth() with new signIn method
-
-		firebase.auth().signInWithwindowsIdAndPassword(windowsId, password)
-			.then(() => {		//If user found, sign them in
-				// On successful login, store the username in async storage
-				this.saveToStorage('user', windowsId).done();
-				// Clear windowsId, password, make message color green, and no loading
-				this.setState({
-					windowsId: '',
-					password: '',
-					color: 'green',
-					message: 'User Signed In',
-					loadingSignIn: false
-				});
-			})
-			.catch((error) => {		//If user not found
-				this.setState({
-					color: 'red',
-					message: `${error}`,  // Error is very detailed
-					loadingSignIn: false
-				});
-			});
-
-		*/
 	}
 
     render() {
