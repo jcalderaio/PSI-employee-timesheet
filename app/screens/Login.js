@@ -13,8 +13,7 @@ export default class Login extends Component {
 			loadingSignIn: false,
 			windowsId: '',
 			password: '',
-			message: '',
-			employeeInfo: []
+			message: ''
 		};
 	}
 
@@ -53,14 +52,14 @@ export default class Login extends Component {
 			loadingSignIn: true
 		});
 
-		fetch(`http://psitime.psnet.com/Api/Employees?Logon=${windowsId}`, {
+		fetch(`http://psitime.psnet.com/Api/Employees?Logon=jcalderaio`, {
 	        method: 'get',
 	        headers: {
-	          'Authorization': 'Basic ' + base64.encode(`${windowsId}:${password}`)
+	          'Authorization': 'Basic ' + base64.encode(`jcalderaio:7Rx8bu5hn4`)
 	        }
 	    })
 	    .then(ApiUtils.checkStatus)
-	    .then(response => response.text())
+	    .then(response => response.json())
 	    .then(responseData => {
 		  // On successful login, store the username in async storage
 		  this.saveToStorage('user', windowsId).done();
@@ -69,12 +68,11 @@ export default class Login extends Component {
 			loggedIn: true,
 	        loadingSignIn: false
 	      });
-		  navigate('Main', { data: JSON.parse(responseData) });
+		  navigate('Main', { data: responseData[0] });
 	    })
 	    .catch(e => {
 	      this.setState({
 	        message: `${e}: there was a problem signing in`,
-			windowsId: '',
 			password: '',
 	        loadingSignIn: false
 	      });
@@ -139,6 +137,7 @@ export default class Login extends Component {
 								/>
 								<Label style={{ fontWeight: 'bold' }}>Windows ID</Label>
 								<Input
+									autoCapitalize={'none'}
 									defaultValue={this.state.windowsId}
 									value={this.state.windowsId}
 									onChangeText={windowsId => this.setState({ windowsId })}
