@@ -50,7 +50,7 @@ export default class Main extends Component {
               <Card>
                 <CardSection>
                   <Grid style={{ justifyContent: 'center', padding: 10 }}>
-                    <Text>Timesheet for {First_Name}</Text>
+                    <Text>Timesheet for {First_Name} {Last_Name}</Text>
                   </Grid>
                 </CardSection>
 

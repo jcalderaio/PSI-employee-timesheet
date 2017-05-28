@@ -72,7 +72,7 @@ export default class Login extends Component {
 	    })
 	    .catch(e => {
 	      this.setState({
-	        message: `${e}: there was a problem signing in`,
+	        message: `${e}: bad username/password`,
 			password: '',
 	        loadingSignIn: false
 	      });
@@ -133,7 +133,7 @@ export default class Login extends Component {
 							</Item>
 						</Form>
 						{/* If Sign in pressed, then show a loading screen*/}
-						{this.state.loadingSignIn && <Spinner size='small' />}
+						{(this.state.loadingSignIn) && <Spinner size='small' />}
 						{/* If NOT pressed, then show a login Button*/}
 						{(!this.state.loadingSignIn) &&
 							<Button
