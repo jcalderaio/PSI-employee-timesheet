@@ -28,7 +28,6 @@ class MessageStore {
 }
 
 TODO:
-  -login when press done in password field
   -raise input field to keyboard
   * there will be a function to get todays charges (just a not, not a TODO)
 -MOBX - REALLY FUCKING LEARN!!! BE READY TO USE NEXT WEEK!

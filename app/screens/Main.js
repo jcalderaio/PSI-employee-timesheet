@@ -23,8 +23,8 @@ export default class Main extends Component {
               <Button
                 transparent
                 onPress={() => Alert.alert(
-                  'Do you want to Log Out?',
-                   ' ',
+                  'Alert',
+                   'Do you want to Log Out?',
                    [
                      { text: 'Cancel', onPress: () => console.log('Cancel Pressed!') },
                      { text: 'OK', onPress: () => goBack(null) },
