@@ -42,3 +42,7 @@ WHAT I DID:
   -dont clear windows ID on not good
   -show First_Name Last_Name on Main screen
   -Hid status bar on Android only
+  -changed Logout Icon
+  -Alert and confirmation for Logout now
+  -First keyboard says "Next" and goes to password
+  -Second keboard logs in on submit

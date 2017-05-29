@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { AsyncStorage, Image, StatusBar, Platform } from 'react-native';
 import { Container, Content, Form, Item, Input, Label, Button, Text, Icon, Spinner, View, Header, Body, Title } from 'native-base';
 import base64 from 'base-64';
+import { focusTextInput } from '../components/HelperFunctions';
 
 import ApiUtils from '../components/ApiUtils';
 
@@ -121,7 +122,9 @@ export default class Login extends Component {
 									defaultValue={this.state.windowsId}
 									value={this.state.windowsId}
 									onChangeText={windowsId => this.setState({ windowsId })}
-									returnKeyType={'done'}
+									returnKeyType={'next'}
+									blurOnSubmit={false}
+									onSubmitEditing={() => focusTextInput(this.refs.inputB)}
 								/>
 							</Item>
 							<Item inlineLabel>
@@ -132,10 +135,12 @@ export default class Login extends Component {
 								/>
 								<Label style={{ fontWeight: 'bold' }}>Password</Label>
 								<Input
+									ref='inputB'
 									secureTextEntry
 									value={this.state.password}
 									onChangeText={password => this.setState({ password })}
-									returnKeyType={'done'}
+									returnKeyType={'send'}
+									onSubmitEditing={this.signIn}
 								/>
 							</Item>
 						</Form>

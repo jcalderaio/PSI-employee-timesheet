@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Image, Platform } from 'react-native';
-import { Container, Content, Button, Text, Grid, Header, Left, Right, Body, Title, View, Icon } from 'native-base';
+import { Image, Platform, Alert } from 'react-native';
+import { Container, Content, Button, Text, Grid, Header, Left, Right, Body, Title, View } from 'native-base';
 import moment from 'moment';
 import { SimpleLineIcons } from '@expo/vector-icons';
 
@@ -22,9 +22,16 @@ export default class Main extends Component {
             <Left>
               <Button
                 transparent
-                onPress={() => goBack(null)}
+                onPress={() => Alert.alert(
+                  'Do you want to Log Out?',
+                   ' ',
+                   [
+                     { text: 'Cancel', onPress: () => console.log('Cancel Pressed!') },
+                     { text: 'OK', onPress: () => goBack(null) },
+                   ]
+                )}
               >
-                <SimpleLineIcons name='logout' color='#FFF' size={26} />
+                <SimpleLineIcons name='logout' color='#FFF' size={23} />
 
               </Button>
             </Left>
