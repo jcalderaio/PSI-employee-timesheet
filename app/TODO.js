@@ -29,10 +29,8 @@ class MessageStore {
 
 TODO:
   -login when press done in password field
-  -reduce text for header android
-  -dont clear windows ID on not good
   -raise input field to keyboard
-  -there will be a function to get todays charges (just a not, not a TODO)
+  * there will be a function to get todays charges (just a not, not a TODO)
 -MOBX - REALLY FUCKING LEARN!!! BE READY TO USE NEXT WEEK!
 	https://github.com/mobxjs/mobx-react-boilerplate/issues/8
 	https://www.youtube.com/watch?v=5AMQaWaqjyA
@@ -43,3 +41,4 @@ TODO:
 WHAT I DID:
   -dont clear windows ID on not good
   -show First_Name Last_Name on Main screen
+  -Hid status bar on Android only

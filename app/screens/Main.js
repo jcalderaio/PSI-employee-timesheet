@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Image, Platform } from 'react-native';
-import { Container, Content, Button, Text, Grid, Header, Left, Right, Body, Title, View } from 'native-base';
+import { Container, Content, Button, Text, Grid, Header, Left, Right, Body, Title, View, Icon } from 'native-base';
 import moment from 'moment';
+import { SimpleLineIcons } from '@expo/vector-icons';
 
 import { CardSection } from '../components/CardSection';
 import { Card } from '../components/Card';
@@ -20,11 +21,11 @@ export default class Main extends Component {
           >
             <Left>
               <Button
-                large
                 transparent
                 onPress={() => goBack(null)}
               >
-                <Text style={styles.headerTextStyle}>Logout</Text>
+                <SimpleLineIcons name='logout' color='#FFF' size={26} />
+
               </Button>
             </Left>
 

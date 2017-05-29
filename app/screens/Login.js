@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AsyncStorage, Image } from 'react-native';
+import { AsyncStorage, Image, StatusBar, Platform } from 'react-native';
 import { Container, Content, Form, Item, Input, Label, Button, Text, Icon, Spinner, View, Header, Body, Title } from 'native-base';
 import base64 from 'base-64';
 
@@ -68,7 +68,7 @@ export default class Login extends Component {
 			loggedIn: true,
 	        loadingSignIn: false
 	      });
-		  navigate('Main', { data: responseData[0] });
+		  navigate('Tabs', { data: responseData[0] }); // Data available from BOTH tabs
 	    })
 	    .catch(e => {
 	      this.setState({
@@ -82,6 +82,13 @@ export default class Login extends Component {
     render() {
         return (
             <Container>
+				{/*Hide Status Bar on Android because cuts into header*/}
+				{(Platform.OS === 'android') &&
+					<StatusBar
+						hidden
+					/>
+				}
+
 				<Header
                     style={styles.headerStyle}
                 >

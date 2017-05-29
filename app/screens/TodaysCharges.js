@@ -5,6 +5,9 @@ import moment from 'moment';
 
 export default class TodaysCharges extends Component {
   render() {
+      const { navigate, goBack, state } = this.props.navigation;
+      const { First_Name, Last_Name, Employee_No } = state.params.data;
+
     return (
       <Container>
 
@@ -47,7 +50,7 @@ export default class TodaysCharges extends Component {
                block
                onPress={() => {
                  alert('Charges Updated!');
-                 this.props.navigation.navigate('Today\'s Charges');
+                 navigate('Today\'s Charges');
                }}
                style={styles.updateChargeButton}
             >
