@@ -12,6 +12,8 @@
     "global-require": off,
     "react/jsx-closing-bracket-location": off,
     "no-else-return": off,
-    camelcase: off
+    camelcase: off,
+    prefer-template: off,
+    quote-props: off
   }
 }

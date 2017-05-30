@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { AsyncStorage, Image, StatusBar, Platform, Keyboard, LayoutAnimation, Dimensions, UIManager } from 'react-native';
 import { Container, Content, Form, Item, Input, Label, Button, Text, Icon, Spinner, View, Header, Body, Title } from 'native-base';
-import base64 from 'base-64';
+import base64 from 'base-64';  // converts Authorization password to base-64
 
-import { focusTextInput } from '../components/HelperFunctions';
+import { focusTextInput } from '../components/HelperFunctions';  // Move to next text input
 
-import ApiUtils from '../components/ApiUtils';
+import ApiUtils from '../components/ApiUtils'; // checks for errors in Fetches
 
 export default class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-            loggedIn: false,
+			loggedIn: false,
 			loadingSignIn: false,
 			windowsId: '',
 			password: '',
@@ -25,14 +25,14 @@ export default class Login extends Component {
     	}
 	}
 
-	// Loads username from AsyncStorage and creates Keyboard Listeners for screen move
+	// Loads username from AsyncStorage and creates Keyboard Listeners for keyboard
     componentWillMount() {
 		this.loadFromStorage('user');
 		this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow.bind(this));
     	this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide.bind(this));
 	}
 
-	// removes listeners on unmount component
+	// removes listeners from keyboard on unmount component
 	componentWillUnmount() {
 		this.keyboardDidShowListener.remove();
     	this.keyboardDidHideListener.remove();
@@ -50,7 +50,7 @@ export default class Login extends Component {
   	}
 
 	// When keyboard is shut
-  	keyboardDidHide(e) {
+  	keyboardDidHide() {
 		this.setState({
 		  visibleHeight: 525,  // Reset height to Original
 		  topLogo: { width: Dimensions.get('window').width }
@@ -81,20 +81,19 @@ export default class Login extends Component {
 		}
 	}
 
-	// Pressed when the user "Logs In"
-	signIn = () => {
-		const { windowsId, password, employeeInfo } = this.state;	//refactors out the user and pass out of state
-        const { navigate } = this.props.navigation;
+	getEmployeeInfo = () => {
+		const { windowsId, password } = this.state;	//refactors out the user and pass out of state
+		const { navigate } = this.props.navigation;
 
 		this.setState({
 			message: '', //resets the message to clear
 			loadingSignIn: true
 		});
 
-		fetch(`http://psitime.psnet.com/Api/Employees?Logon=jcalderaio`, {
-	        method: 'get',
+		fetch('http://psitime.psnet.com/Api/Employees?Logon=jcalderaio', {
+	        method: 'GET',
 	        headers: {
-	          'Authorization': 'Basic ' + base64.encode(`jcalderaio:7Rx8bu5hn4`)
+	          'Authorization': 'Basic ' + base64.encode('jcalderaio:7Rx8bu5hn4')
 	        }
 	    })
 	    .then(ApiUtils.checkStatus)
@@ -103,11 +102,16 @@ export default class Login extends Component {
 		  // On successful login, store the username in async storage
 		  this.saveToStorage('user', windowsId).done();
 	      this.setState({
-			password: '',
 			loggedIn: true,
+			password: '',
 	        loadingSignIn: false
 	      });
-		  navigate('Tabs', { data: responseData[0] }); // Data available from BOTH tabs
+
+		  // These Global variables are available in every file!
+		  global.windows_id = windowsId;
+		  global.password = password;
+		  global.employee_info = responseData[0];
+		  navigate('Tabs');  // Put this inside the last container
 	    })
 	    .catch(e => {
 	      this.setState({
@@ -116,6 +120,11 @@ export default class Login extends Component {
 	        loadingSignIn: false
 	      });
 	    });
+	}
+
+	// Pressed when the user "Logs In"
+	signIn = () => {
+		this.getEmployeeInfo();
 	}
 
     render() {

@@ -10,7 +10,6 @@ import { Card } from '../components/Card';
 export default class Main extends Component {
   render() {
     const { navigate, goBack, state } = this.props.navigation;
-    const { First_Name, Last_Name, Employee_No } = state.params.data;
 
     return (
       <Container>
@@ -20,6 +19,7 @@ export default class Main extends Component {
             style={styles.headerStyle}
           >
             <Left>
+              {/*Logout button with option to cancel*/}
               <Button
                 transparent
                 onPress={() => Alert.alert(
@@ -31,7 +31,7 @@ export default class Main extends Component {
                    ]
                 )}
               >
-                <SimpleLineIcons name='logout' color='#FFF' size={21.5} />
+                 <SimpleLineIcons name='logout' color='#FFF' size={21.5} />
 
               </Button>
             </Left>
@@ -43,10 +43,12 @@ export default class Main extends Component {
             <Right />
 
           </Header>
+          {/*End Header*/}
 
+          {/*Body*/}
           <Content>
 
-              {/*Banner Image*/}
+              {/*Banner Image at top of screen*/}
               <View style={styles.imageStyle.imageOuter}>
                 <Image
                   style={styles.imageStyle.imageInner}
@@ -58,7 +60,7 @@ export default class Main extends Component {
               <Card>
                 <CardSection>
                   <Grid style={{ justifyContent: 'center', padding: 10 }}>
-                    <Text>Timesheet for {First_Name} {Last_Name}</Text>
+                    <Text>Timesheet for {global.employee_info.First_Name} {global.employee_info.Last_Name}</Text>
                   </Grid>
                 </CardSection>
 

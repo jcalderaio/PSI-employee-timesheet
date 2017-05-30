@@ -27,14 +27,11 @@ class MessageStore {
   }
 }
 
-<KeyboardAvoidingView style={{ flex: 1, backgroundColor: '#F5F5F5' }} behavior="padding" >
-	<Input placeholder="poop" style={{ flex: 7 }} />
-	<Input placeholder="poop3" style={{ flex: 1 }} />
-</KeyboardAvoidingView>
-
 TODO:
-  -raise input field to keyboard
+
   * there will be a function to get todays charges (just a not, not a TODO)
+-TABLE:
+  https://github.com/Jeepeng/react-native-simple-table
 -MOBX - REALLY FUCKING LEARN!!! BE READY TO USE NEXT WEEK!
 	https://github.com/mobxjs/mobx-react-boilerplate/issues/8
 	https://www.youtube.com/watch?v=5AMQaWaqjyA
@@ -51,3 +48,4 @@ WHAT I DID:
   -First keyboard says "Next" and goes to password
   -Second keboard logs in on submit
   -Unhid login from keyboard and animated logo
+  -Set a bunch of Global variables
