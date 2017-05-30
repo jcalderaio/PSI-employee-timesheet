@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { AsyncStorage, Image, StatusBar, Platform } from 'react-native';
+import { AsyncStorage, Image, StatusBar, Platform, Keyboard, LayoutAnimation, Dimensions, UIManager } from 'react-native';
 import { Container, Content, Form, Item, Input, Label, Button, Text, Icon, Spinner, View, Header, Body, Title } from 'native-base';
 import base64 from 'base-64';
+
 import { focusTextInput } from '../components/HelperFunctions';
 
 import ApiUtils from '../components/ApiUtils';
@@ -14,14 +15,50 @@ export default class Login extends Component {
 			loadingSignIn: false,
 			windowsId: '',
 			password: '',
-			message: ''
+			message: '',
+			visibleHeight: 525,  //Initial height of screen
 		};
+
+		// Gives Android animations
+		if (Platform.OS === 'android') {
+      		UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
+    	}
 	}
 
+	// Loads username from AsyncStorage and creates Keyboard Listeners for screen move
     componentWillMount() {
 		this.loadFromStorage('user');
+		this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow.bind(this));
+    	this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide.bind(this));
 	}
 
+	// removes listeners on unmount component
+	componentWillUnmount() {
+		this.keyboardDidShowListener.remove();
+    	this.keyboardDidHideListener.remove();
+	}
+
+	// When keyboard is shown:
+	keyboardDidShow(e) {
+		// New size of window height
+    	const newSize = Dimensions.get('window').height - e.endCoordinates.height;
+	    this.setState({
+	      visibleHeight: newSize,   // Sets the new height of screen so keyboard out of way
+	      topLogo: { width: 100, height: 70 } // for Logo. Not in use
+	  	});
+		LayoutAnimation.configureNext(LayoutAnimation.Presets.spring); // This is the spring animation
+  	}
+
+	// When keyboard is shut
+  	keyboardDidHide(e) {
+		this.setState({
+		  visibleHeight: 525,  // Reset height to Original
+		  topLogo: { width: Dimensions.get('window').width }
+	  	});
+		LayoutAnimation.configureNext(LayoutAnimation.Presets.spring); // This is the spring animation
+    }
+
+	// Function I made to save values to AsyncStorage
     saveToStorage = async (key, value) => {
 		try {
 			await AsyncStorage.setItem(key, value);
@@ -30,6 +67,7 @@ export default class Login extends Component {
 		}
 	}
 
+	// Function I made to load values from AsyncStorage
     loadFromStorage = async (key) => {
 		try {
 			await AsyncStorage.getItem(key).then((value) => {
@@ -43,11 +81,11 @@ export default class Login extends Component {
 		}
 	}
 
+	// Pressed when the user "Logs In"
 	signIn = () => {
 		const { windowsId, password, employeeInfo } = this.state;	//refactors out the user and pass out of state
         const { navigate } = this.props.navigation;
 
-		// Keep this. Original code.
 		this.setState({
 			message: '', //resets the message to clear
 			loadingSignIn: true
@@ -98,7 +136,10 @@ export default class Login extends Component {
                     </Body>
                 </Header>
 
-				<Content style={{ backgroundColor: '#FFF' }}>
+				<Content
+					style={{ backgroundColor: '#FFF' }}
+					contentContainerStyle={{ height: this.state.visibleHeight }}
+				>
 
 					<View style={{ flex: 1 }}>
 						<Image
@@ -144,6 +185,7 @@ export default class Login extends Component {
 								/>
 							</Item>
 						</Form>
+
 						{/* If Sign in pressed, then show a loading screen*/}
 						{(this.state.loadingSignIn) && <Spinner size='small' />}
 						{/* If NOT pressed, then show a login Button*/}
@@ -156,6 +198,8 @@ export default class Login extends Component {
 								<Text>Login</Text>
 							</Button>
 						}
+
+						{/* If bad username/password then show error */}
 						<Text style={styles.errorMessageStyle}>{this.state.message}</Text>
 					</View>
 				</Content>

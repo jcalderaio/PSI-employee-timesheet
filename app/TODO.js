@@ -27,6 +27,11 @@ class MessageStore {
   }
 }
 
+<KeyboardAvoidingView style={{ flex: 1, backgroundColor: '#F5F5F5' }} behavior="padding" >
+	<Input placeholder="poop" style={{ flex: 7 }} />
+	<Input placeholder="poop3" style={{ flex: 1 }} />
+</KeyboardAvoidingView>
+
 TODO:
   -raise input field to keyboard
   * there will be a function to get todays charges (just a not, not a TODO)
@@ -45,3 +50,4 @@ WHAT I DID:
   -Alert and confirmation for Logout now
   -First keyboard says "Next" and goes to password
   -Second keboard logs in on submit
+  -Unhid login from keyboard and animated logo

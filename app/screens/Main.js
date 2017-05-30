@@ -23,15 +23,15 @@ export default class Main extends Component {
               <Button
                 transparent
                 onPress={() => Alert.alert(
-                  'Alert',
-                   'Do you want to Log Out?',
+                  'Logout?',
+                   ' ',
                    [
                      { text: 'Cancel', onPress: () => console.log('Cancel Pressed!') },
                      { text: 'OK', onPress: () => goBack(null) },
                    ]
                 )}
               >
-                <SimpleLineIcons name='logout' color='#FFF' size={23} />
+                <SimpleLineIcons name='logout' color='#FFF' size={21.5} />
 
               </Button>
             </Left>
