@@ -1,19 +1,66 @@
 import React, { Component } from 'react';
 import { Image, Platform, Alert } from 'react-native';
-import { Container, Content, Button, Text, Grid, Header, Left, Right, Body, Title, View } from 'native-base';
+import { Container, Content, Button, Text, Grid, Header, Left, Right, Body, Title, View, Spinner } from 'native-base';
+import base64 from 'base-64';  // converts Authorization password to base-64
 import moment from 'moment';
 import { SimpleLineIcons } from '@expo/vector-icons';
+
+import ApiUtils from '../components/ApiUtils'; // checks for errors in Fetches
 
 import { CardSection } from '../components/CardSection';
 import { Card } from '../components/Card';
 
 export default class Main extends Component {
+  constructor() {
+    super();
+    this.state = {
+      loading: true
+    };
+  }
+
+  componentDidMount() {
+    this.fetchAPIs();
+  }
+
+  fetchAPIs = () => {
+    this.setState({
+			loading: true
+		});
+
+    fetch(`http://psitime.psnet.com/Api/RecentJobs?Employee_ID=${global.employeeInfo.Employee_No}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Basic ' + base64.encode(`${global.windowsId}:${global.password}`)
+        }
+    })
+    .then(ApiUtils.checkStatus)
+    .then(response => response.json())
+    .then(responseData => {
+      // These Global variables are available in every file!
+      global.recentJobs = responseData;
+      this.setState({
+  			loading: false
+  		});
+    })
+    .catch(e => {
+      console.log(`Retreiving jobs: ${e}`);
+    });
+  }
+
   render() {
     const { navigate, goBack } = this.props.navigation;
 
+    if (this.state.loading) {
+      return (
+        <View style={styles.centerContainter}>
+          <Spinner size='large' />
+        </View>
+      );
+    }
+
     return (
       <Container>
-
+          {console.log(global.recentJobs)}
           {/* Header */}
           <Header
             style={styles.headerStyle}
@@ -145,5 +192,10 @@ const styles = {
   		shadowOffset: { width: 0, height: 2 },
   		shadowOpacity: 0.3,
   		shadowRadius: 2
+    },
+    centerContainter: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
     }
 };

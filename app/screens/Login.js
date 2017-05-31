@@ -12,7 +12,7 @@ export default class Login extends Component {
 		super(props);
 		this.state = {
 			loggedIn: false,
-			loadingSignIn: false,
+			loading: false,
 			windowsId: '',
 			password: '',
 			message: '',
@@ -87,10 +87,10 @@ export default class Login extends Component {
 
 		this.setState({
 			message: '', //resets the message to clear
-			loadingSignIn: true
+			loading: true
 		});
 
-		fetch(`http://psitime.psnet.com/Api/Employees?Logon=${windowsId}`, {
+		fetch(`http://psitime.psnet.com/Api/Employees?Logon=jcalderaio`, {
 	        method: 'GET',
 	        headers: {
 	          'Authorization': 'Basic ' + base64.encode('jcalderaio:7Rx8bu5hn4')
@@ -101,24 +101,23 @@ export default class Login extends Component {
 	    .then(responseData => {
 		  // On successful login, store the username in async storage
 		  this.saveToStorage('user', windowsId).done();
+		  // These Global variables are available in every file!
+		  global.windowsId = 'jcalderaio';
+		  global.password = '7Rx8bu5hn4';
+		  global.employeeInfo = responseData[0];
+		  global.count = 30;
 	      this.setState({
 			loggedIn: true,
 			password: '',
-	        loadingSignIn: false
+	        loading: false
 	      });
-
-		  // These Global variables are available in every file!
-		  global.windowsId = windowsId;
-		  global.password = password;
-		  global.employeeInfo = responseData[0];
-		  global.count = 30;
-		  navigate('Tabs');  // Put this inside the last fetch statement
+		  navigate('Main');  // Put this inside the last fetch statement
 	    })
 	    .catch(e => {
 	      this.setState({
 	        message: `${e}: bad username/password`,
 			password: '',
-	        loadingSignIn: false
+	        loading: false
 	      });
 	    });
 	}
@@ -197,9 +196,9 @@ export default class Login extends Component {
 						</Form>
 
 						{/* If Sign in pressed, then show a loading screen*/}
-						{(this.state.loadingSignIn) && <Spinner size='small' />}
+						{(this.state.loading) && <Spinner size='small' />}
 						{/* If NOT pressed, then show a login Button*/}
-						{(!this.state.loadingSignIn) &&
+						{(!this.state.loading) &&
 							<Button
 								block
 								onPress={this.signIn}

@@ -61,8 +61,8 @@ export default class AddEntry extends Component {
 					block
 					onPress={() => {
 						this.setState((prevState) => ({
-  							count: prevState.count + 1
-							// OR count: global.count++
+  							//count: prevState.count + 1 // Does NOT retain state after leaving
+							count: ++global.count  // Retains state after leaving (cause global)
 						}));
 					}}
 				>
