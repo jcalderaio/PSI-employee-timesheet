@@ -23,10 +23,6 @@ export default class Main extends Component {
   }
 
   fetchAPIs = () => {
-    this.setState({
-			loading: true
-		});
-
     fetch(`http://psitime.psnet.com/Api/RecentJobs?Employee_ID=${global.employeeInfo.Employee_No}`, {
         method: 'GET',
         headers: {
@@ -60,7 +56,6 @@ export default class Main extends Component {
 
     return (
       <Container>
-          {console.log(global.recentJobs)}
           {/* Header */}
           <Header
             style={styles.headerStyle}

@@ -10,6 +10,13 @@ export default class SelectRecent extends Component {
 	};
   }
 
+  // Delete this function
+  addObject = () => {
+	global.recentJobs.push({"Job_Id":666,"Job_Number":"98000-P-01","Client_Name":"Parametric Solutions Inc.","Task":"Personal","Sub_Task":"General"});
+	this.setState(this.state);
+	//OR this.forceUpdate() (however, it's use is discouraged)
+  }
+
   render() {
     return (
         <Container>
@@ -31,15 +38,17 @@ export default class SelectRecent extends Component {
 			</Header>
 			<Content>
 				<Grid style={{ justifyContent: 'center' }} >
-					<H1>{this.state.recentJobs[0].Client_Name}</H1>
+					<H1>{this.state.recentJobs.map(n => n.Client_Name + ', ')}</H1>
 				</Grid>
 
+				{/*Delete this button*/}
 				<Button
 					block
-					onpress={() => this.setState({ recentJobs: global.recentJobs.push( {"Job_Id":13,"Job_Number":"98000-P-01","Client_Name":"Parametric Solutions Inc.","Task":"Personal","Sub_Task":"General"} )})}
+					onPress={this.addObject}
 				>
 					<Text>Add More</Text>
 				</Button>
+
 			</Content>
 		</Container>
     );

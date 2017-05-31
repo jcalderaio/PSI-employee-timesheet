@@ -105,7 +105,6 @@ export default class Login extends Component {
 		  global.windowsId = 'jcalderaio';
 		  global.password = '7Rx8bu5hn4';
 		  global.employeeInfo = responseData[0];
-		  global.count = 30;
 	      this.setState({
 			loggedIn: true,
 			password: '',
