@@ -16,7 +16,7 @@ export default class Login extends Component {
 			windowsId: '',
 			password: '',
 			message: '',
-			visibleHeight: 525,  //Initial height of screen
+			visibleHeight: 525,  //Initial height of screen (used to move keyboard)
 		};
 
 		// Gives Android animations
@@ -90,7 +90,7 @@ export default class Login extends Component {
 			loadingSignIn: true
 		});
 
-		fetch('http://psitime.psnet.com/Api/Employees?Logon=jcalderaio', {
+		fetch(`http://psitime.psnet.com/Api/Employees?Logon=${windowsId}`, {
 	        method: 'GET',
 	        headers: {
 	          'Authorization': 'Basic ' + base64.encode('jcalderaio:7Rx8bu5hn4')
@@ -108,10 +108,11 @@ export default class Login extends Component {
 	      });
 
 		  // These Global variables are available in every file!
-		  global.windows_id = windowsId;
+		  global.windowsId = windowsId;
 		  global.password = password;
-		  global.employee_info = responseData[0];
-		  navigate('Tabs');  // Put this inside the last container
+		  global.employeeInfo = responseData[0];
+		  global.count = 30;
+		  navigate('Tabs');  // Put this inside the last fetch statement
 	    })
 	    .catch(e => {
 	      this.setState({

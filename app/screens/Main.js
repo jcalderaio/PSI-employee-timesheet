@@ -9,7 +9,7 @@ import { Card } from '../components/Card';
 
 export default class Main extends Component {
   render() {
-    const { navigate, goBack, state } = this.props.navigation;
+    const { navigate, goBack } = this.props.navigation;
 
     return (
       <Container>
@@ -60,7 +60,7 @@ export default class Main extends Component {
               <Card>
                 <CardSection>
                   <Grid style={{ justifyContent: 'center', padding: 10 }}>
-                    <Text>Timesheet for {global.employee_info.First_Name} {global.employee_info.Last_Name}</Text>
+                    <Text style={{ fontSize: 20 }}>Timesheet for {global.employeeInfo.First_Name} {global.employeeInfo.Last_Name}</Text>
                   </Grid>
                 </CardSection>
 
@@ -87,6 +87,7 @@ export default class Main extends Component {
                     </Text>
                   </Grid>
                 </CardSection>
+
               </Card>
 
               <Button
@@ -94,7 +95,7 @@ export default class Main extends Component {
       					onPress={() => navigate('AddEntry')}
       					style={styles.addEntryButton}
 			    >
-					    <Text>Add Entry</Text>
+					       <Text>Add Entry</Text>
 			        </Button>
 
               <Button

@@ -5,7 +5,7 @@ import moment from 'moment';
 
 export default class TodaysCharges extends Component {
   render() {
-      //const { navigate, goBack, state } = this.props.navigation;
+      const { navigate, goBack, state } = this.props.navigation;
       //const { First_Name, Last_Name, Employee_No } = state.params.data;
 
     return (
