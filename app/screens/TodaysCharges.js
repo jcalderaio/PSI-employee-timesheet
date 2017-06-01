@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Platform } from 'react-native';
+import { Image, Platform, Alert } from 'react-native';
 import { Container, Content, Button, Text, Grid, Header, Body, Title, View } from 'native-base';
 import moment from 'moment';
 
@@ -35,7 +35,6 @@ export default class TodaysCharges extends Component {
               resizeMode="contain"
             />
 
-            {/*Charges Table*/}
             <View style={{ top: 50 }}>
               <Grid style={{ justifyContent: 'center' }} >
                   <Text style={{ color: 'steelblue', fontSize: 16 }}>Tap on the 'Hours' column to make changes.</Text>
@@ -49,7 +48,10 @@ export default class TodaysCharges extends Component {
             <Button
                block
                onPress={() => {
-                 alert('Charges Updated!');
+                   Alert.alert(
+                     'Charges Updated!',
+                      ' '
+                   );
                  navigate('Today\'s Charges');
                }}
                style={styles.updateChargeButton}

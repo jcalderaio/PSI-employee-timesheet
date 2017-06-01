@@ -49,3 +49,8 @@ WHAT I DID:
   -Second keboard logs in on submit
   -Unhid login from keyboard and animated logo
   -Set a bunch of Global variables
+  -global usernames and passwords
+  -global JSONS
+  -Added real table from Select Recent Data
+  -added buttons to selected recent
+  -Alerts (in bold)

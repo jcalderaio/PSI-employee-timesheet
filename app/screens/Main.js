@@ -136,7 +136,7 @@ export default class Main extends Component {
       					block
       					onPress={() => navigate('AddEntry')}
       					style={styles.addEntryButton}
-			    >
+			        >
 					       <Text>Add Entry</Text>
 			        </Button>
 
@@ -146,7 +146,7 @@ export default class Main extends Component {
         				style={styles.selectRecentButton}
 				      >
 					        <Text>Select Recent</Text>
-				      </Button>
+			        </Button>
 
           </Content>
       </Container>
