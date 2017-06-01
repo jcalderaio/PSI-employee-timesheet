@@ -4828,10 +4828,6 @@ react-native-scrollable-tab-view@^0.7.1:
     react-static-container "^1.0.1"
     react-timer-mixin "^0.13.3"
 
-react-native-simple-table@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/react-native-simple-table/-/react-native-simple-table-0.0.2.tgz#cfa344428c45e64c8186ef0fb6734a83630a4b04"
-
 "react-native-svg@https://github.com/expo/react-native-svg/archive/4.4.1.tar.gz":
   version "4.4.1"
   resolved "https://github.com/expo/react-native-svg/archive/4.4.1.tar.gz#fb1719b0d15fabc1b5c3aca8a94b1629409c1d67"

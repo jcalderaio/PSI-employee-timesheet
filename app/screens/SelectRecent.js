@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, Alert} from 'react-native';
+import { Platform, Alert } from 'react-native';
 import {
 	Container,
 	Content,
@@ -16,24 +16,6 @@ import {
 	View
 } from 'native-base';
 import { Octicons } from '@expo/vector-icons';
-import Table from 'react-native-simple-table';
-
-const columns = [
-	{
-		title: 'Job #',
-		dataIndex: 'Job_Number',
-		width: 100
-	}, {
-		title: 'Client',
-		dataIndex: 'Client_Name',
-		width: 140
-	}, {
-		title: 'Job Title',
-		dataIndex: 'Sub_Task'
-	}, {
-		title: 'Add'
-	}
-];
 
 export default class SelectRecent extends Component {
 	constructor() {
@@ -52,7 +34,6 @@ export default class SelectRecent extends Component {
 
 	render() {
 		const { navigate, goBack } = this.props.navigation;
-		const dataSource = this.state.recentJobs;
 
 		return (
 			<Container>
@@ -96,36 +77,23 @@ export default class SelectRecent extends Component {
 								<Text style={{ fontWeight: 'bold' }}>Add</Text>
 							</Col>
 						</Row>
-						{this.state.recentJobs.map((jobs) => {
-							return (
-								<Row style={{ height: 50 }}>
-									<Col size={27} style={styles.tableStyle.body}>
-										<Text>{jobs.Job_Number}</Text>
-									</Col>
-									<Col size={33} style={styles.tableStyle.body}>
-										<Text>{jobs.Client_Name}</Text>
-									</Col>
-									<Col size={23} style={styles.tableStyle.body}>
-										<Text>{jobs.Sub_Task}</Text>
-									</Col>
-									<Col size={17} style={styles.tableStyle.bodyLast}>
-										<Text>L</Text>
-									</Col>
-								</Row>
-							);
-						})}
+						{this.state.recentJobs.map((jobs, i) =>
+							<Row style={{ height: 50 }} key={i}>
+								<Col size={27} style={styles.tableStyle.body}>
+									<Text>{jobs.Job_Number}</Text>
+								</Col>
+								<Col size={33} style={styles.tableStyle.body}>
+									<Text>{jobs.Client_Name}</Text>
+								</Col>
+								<Col size={23} style={styles.tableStyle.body}>
+									<Text>{jobs.Sub_Task}</Text>
+								</Col>
+								<Col size={17} style={styles.tableStyle.bodyLast}>
+									<Text>L</Text>
+								</Col>
+							</Row>
+						)}
 					</Grid>
-
-					{/*
-					<View style={styles.container}>
-						<Table
-                            columnWidth={60}
-                            columns={columns}
-                            dataSource={dataSource}
-                            key={dataSource.Job_Id}
-                        />
-					</View>
-					*/}
 
 					<Button
                         block
@@ -160,7 +128,6 @@ const styles = {
 	headerTextStyle: {
 		color: '#FFF'
 	},
-	container: {},
 	addSelectedButton: {
 		backgroundColor: '#007aff',
 		marginHorizontal: 20,
