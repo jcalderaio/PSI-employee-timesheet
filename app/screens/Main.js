@@ -36,10 +36,13 @@ export default class Main extends Component {
       global.recentJobs = responseData;
       this.setState({
   			loading: false
-  		});
+  	  });
     })
     .catch(e => {
       console.log(`Retreiving jobs: ${e}`);
+      this.setState({
+          loading: false
+      });
     });
   }
 

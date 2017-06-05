@@ -1,21 +1,10 @@
 import React, { Component } from 'react';
 import { Platform, Alert } from 'react-native';
-import {
-	Container,
-	Content,
-	Button,
-	Grid,
-	Col,
-	Row,
-	Header,
-	Left,
-	Right,
-	Body,
-	Title,
-	Text,
-	View
-} from 'native-base';
+import { Container, Content, Button, Grid, Col, Row, Header, Left, Right, Body, Title, Text, View } from 'native-base';
 import { Octicons } from '@expo/vector-icons';
+
+// Import components
+//import { Table } from '../components/Table';
 
 export default class SelectRecent extends Component {
 	constructor() {
@@ -62,44 +51,58 @@ export default class SelectRecent extends Component {
 		              </Text>
 		            </Grid>
 
-					<Grid style={{ alignItems: 'center' }}>
-						<Row style={{ height: 50 }}>
-							<Col size={27} style={styles.tableStyle.title}>
-								<Text style={{ fontWeight: 'bold' }}>Job #</Text>
-							</Col>
-							<Col size={33} style={styles.tableStyle.title}>
-								<Text style={{ fontWeight: 'bold' }}>Client</Text>
-							</Col>
-							<Col size={23} style={styles.tableStyle.title}>
-								<Text style={{ fontWeight: 'bold' }}>Job Title</Text>
-							</Col>
-							<Col size={17} style={styles.tableStyle.titleLast}>
-								<Text style={{ fontWeight: 'bold' }}>Add</Text>
-							</Col>
-						</Row>
-						{this.state.recentJobs.map((jobs, i) =>
-							<Row style={{ height: 50 }} key={i}>
-								<Col size={27} style={styles.tableStyle.body}>
-									<Text>{jobs.Job_Number}</Text>
+					{/*
+					<Table data={this.state.recentJobs} value1={'Job_Number'} value2={'Client_Name'} value3={'Sub_Task'} />
+					*/}
+
+					{(this.state.recentJobs === null) &&
+						<Grid style={{ justifyContent: 'center', padding: 10, marginTop: 20 }}>
+			              <Text>
+			                You have no recent jobs!
+			              </Text>
+			            </Grid>
+					}
+
+					{(this.state.recentJobs) &&
+						<Grid style={{ alignItems: 'center' }}>
+							<Row style={{ height: 50 }}>
+								<Col size={27} style={styles.tableStyle.title}>
+									<Text style={{ fontWeight: 'bold' }}>Job #</Text>
 								</Col>
-								<Col size={33} style={styles.tableStyle.body}>
-									<Text>{jobs.Client_Name}</Text>
+								<Col size={33} style={styles.tableStyle.title}>
+									<Text style={{ fontWeight: 'bold' }}>Client</Text>
 								</Col>
-								<Col size={23} style={styles.tableStyle.body}>
-									<Text>{jobs.Sub_Task}</Text>
+								<Col size={23} style={styles.tableStyle.title}>
+									<Text style={{ fontWeight: 'bold' }}>Job Title</Text>
 								</Col>
-								<Col size={17} style={styles.tableStyle.bodyLast}>
-									<Text>L</Text>
+								<Col size={17} style={styles.tableStyle.titleLast}>
+									<Text style={{ fontWeight: 'bold' }}>Add</Text>
 								</Col>
 							</Row>
-						)}
-					</Grid>
+							{this.state.recentJobs.map((job, i) =>
+								<Row style={{ height: 50 }} key={i}>
+									<Col size={27} style={styles.tableStyle.body}>
+										<Text>{job.Job_Number}</Text>
+									</Col>
+									<Col size={33} style={styles.tableStyle.body}>
+										<Text>{job.Client_Name}</Text>
+									</Col>
+									<Col size={23} style={styles.tableStyle.body}>
+										<Text>{job.Sub_Task}</Text>
+									</Col>
+									<Col size={17} style={styles.tableStyle.bodyLast}>
+										<Text>L</Text>
+									</Col>
+								</Row>
+							)}
+						</Grid>
+					}
 
 					<Button
                         block
                         onPress={() => {
 						    Alert.alert('Selected Charges Added', ' ');
-							goBack('TodaysCharges');
+							navigate('TodaysCharges');
 					    }}
                         style={styles.addSelectedButton}>
 						<Text>Add Selected</Text>

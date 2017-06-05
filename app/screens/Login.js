@@ -58,7 +58,7 @@ export default class Login extends Component {
 		LayoutAnimation.configureNext(LayoutAnimation.Presets.spring); // This is the spring animation
     }
 
-	// Function I made to save values to AsyncStorage
+	// Function I made to save username to AsyncStorage
     saveToStorage = async (key, value) => {
 		try {
 			await AsyncStorage.setItem(key, value);
@@ -67,7 +67,7 @@ export default class Login extends Component {
 		}
 	}
 
-	// Function I made to load values from AsyncStorage
+	// Function I made to load username from AsyncStorage
     loadFromStorage = async (key) => {
 		try {
 			await AsyncStorage.getItem(key).then((value) => {
@@ -90,10 +90,10 @@ export default class Login extends Component {
 			loading: true
 		});
 
-		fetch(`http://psitime.psnet.com/Api/Employees?Logon=jcalderaio`, {
+		fetch(`http://psitime.psnet.com/Api/Employees?Logon=${windowsId}`, {
 	        method: 'GET',
 	        headers: {
-	          'Authorization': 'Basic ' + base64.encode('jcalderaio:7Rx8bu5hn4')
+	          'Authorization': 'Basic ' + base64.encode(`${windowsId}:${password}`)
 	        }
 	    })
 	    .then(ApiUtils.checkStatus)
@@ -102,8 +102,8 @@ export default class Login extends Component {
 		  // On successful login, store the username in async storage
 		  this.saveToStorage('user', windowsId).done();
 		  // These Global variables are available in every file!
-		  global.windowsId = 'jcalderaio';
-		  global.password = '7Rx8bu5hn4';
+		  global.windowsId = windowsId;
+		  global.password = password;
 		  global.employeeInfo = responseData[0];
 	      this.setState({
 			loggedIn: true,
