@@ -5,6 +5,11 @@ import ApiUtils from '../components/ApiUtils'; // checks for errors in Fetches
 class RecentJobsStore {
    @observable recentJobs = null;
 
+   @computed get isEmpty() {
+       return this.recentJobs.length <= 0;
+   }
+
+   // Retrieve jobs from the server
    fetchRecentJobs = () => {
 		fetch(`http://psitime.psnet.com/Api/RecentJobs?Employee_ID=${global.employeeInfo.Employee_No}`, {
             method: 'GET',
@@ -23,10 +28,6 @@ class RecentJobsStore {
           this.recentJobs = [];
         });
     }
-
-	@computed get isEmpty() {
-    	return this.recentJobs.length <= 0;
-  	}
 }
 
 const recentJobsStore = new RecentJobsStore();

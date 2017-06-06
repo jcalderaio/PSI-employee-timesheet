@@ -34,8 +34,6 @@ TODO:
   -If duplicates, show only once in recent jobs. For todays hours, combine hours.
 
   * there will be a function to get todays charges (just a not, not a TODO)
--TABLE:
-  https://github.com/Jeepeng/react-native-simple-table
 -MOBX - REALLY FUCKING LEARN!!! BE READY TO USE NEXT WEEK!
 	https://github.com/mobxjs/mobx-react-boilerplate/issues/8
 	https://www.youtube.com/watch?v=5AMQaWaqjyA
