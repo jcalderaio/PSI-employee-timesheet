@@ -31,6 +31,7 @@ TODO:
   -option to unhide password
   -new logo. new colors?
   -account for new recent jobs
+  -If duplicates, show only once in recent jobs. For todays hours, combine hours.
 
   * there will be a function to get todays charges (just a not, not a TODO)
 -TABLE:

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Platform, Alert } from 'react-native';
-import { Container, Content, Button, Grid, Col, Row, Header, Left, Right, Body, Title, Text, View } from 'native-base';
+import { Alert } from 'react-native';
+import { Container, Content, Button, Grid, Header, Left, Right, Body, Title, Text } from 'native-base';
 import { Octicons } from '@expo/vector-icons';
 
 // Import components
@@ -51,11 +51,7 @@ export default class SelectRecent extends Component {
 		              </Text>
 		            </Grid>
 
-					{/*
-					<Table data={this.state.recentJobs} value1={'Job_Number'} value2={'Client_Name'} value3={'Sub_Task'} />
-					*/}
-
-					{(this.state.recentJobs === null) &&
+					{(this.state.recentJobs.length < 1) &&
 						<Grid style={{ justifyContent: 'center', padding: 10, marginTop: 20 }}>
 			              <Text>
 			                You have no recent jobs!
@@ -63,7 +59,7 @@ export default class SelectRecent extends Component {
 			            </Grid>
 					}
 
-					{(this.state.recentJobs) &&
+					{(this.state.recentJobs.length > 0) &&
 						<RecentJobsTable data={this.state.recentJobs} />
 					}
 

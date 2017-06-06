@@ -1,6 +1,6 @@
 import React from 'react';
 import Expo from 'expo';
-import { ModalStack } from './app/config/router';
+import { ModalStack } from './app/navigation';
 
 export default class App extends React.Component {
 	constructor(props) {
