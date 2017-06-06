@@ -14,13 +14,6 @@ export default class SelectRecent extends Component {
 		};
 	}
 
-	// Delete this function
-	addObject = () => {
-		global.recentJobs.push({"Job_Id": 666, "Job_Number": "98000-P-01", "Client_Name": "Parametric Solutions Inc.", "Task": "Personal", "Sub_Task": "General"});
-		this.setState(this.state);
-		//OR this.forceUpdate() (however, it's use is discouraged)
-	}
-
 	render() {
 		const { navigate, goBack } = this.props.navigation;
 
