@@ -45,3 +45,5 @@ TODO:
 
 WHAT I DID:
 -Made Table into its own reusable component
+-Added MobX (which is persistent state. I learned it in and out, so I can deal with what's coming)
+-changed around the directory to proper standards in the React Native indusrey'
