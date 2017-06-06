@@ -34,12 +34,13 @@ export default class Main extends Component {
     .then(responseData => {
       // These Global variables are available in every file!
       global.recentJobs = responseData;
+      console.log(responseData);
       this.setState({
   			loading: false
   	  });
     })
     .catch(e => {
-      console.log(`Retreiving jobs: ${e}`);
+      console.log(`Error Retreiving Recent Jobs: ${e}`);
       this.setState({
           loading: false
       });

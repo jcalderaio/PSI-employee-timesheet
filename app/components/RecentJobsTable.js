@@ -4,32 +4,34 @@ import React from 'react';
 import { Text } from 'react-native';
 import { Grid, Col, Row } from 'native-base';
 
-const Table = (props) => (
+const RecentJobsTable = ({ data }) => (
   <Grid style={{ alignItems: 'center' }}>
-    <Row style={{ height: 50 }}>
-      <Col size={27} style={styles.tableStyle.title}>
+    <Row style={{ height: 30 }} >
+    {/*Table Labels*/}
+      <Col size={24} style={styles.tableStyle.title}>
         <Text style={{ fontWeight: 'bold' }}>Job #</Text>
       </Col>
-      <Col size={33} style={styles.tableStyle.title}>
+      <Col size={28} style={styles.tableStyle.title}>
         <Text style={{ fontWeight: 'bold' }}>Client</Text>
       </Col>
-      <Col size={23} style={styles.tableStyle.title}>
+      <Col size={31} style={styles.tableStyle.title}>
         <Text style={{ fontWeight: 'bold' }}>Job Title</Text>
       </Col>
       <Col size={17} style={styles.tableStyle.titleLast}>
         <Text style={{ fontWeight: 'bold' }}>Add</Text>
       </Col>
     </Row>
-    {props.data.map((item, i) =>
-      <Row style={{ height: 50 }} key={i}>
-        <Col size={27} style={styles.tableStyle.body}>
-          <Text>{item.props.value1}</Text>
+    {/*Table Labels*/}
+    {data.map((item, i) =>
+      <Row style={{ minHeight: 50 }} key={i}>
+        <Col size={24} style={styles.tableStyle.body}>
+          <Text>{item.Job_Number}</Text>
         </Col>
-        <Col size={33} style={styles.tableStyle.body}>
-          <Text>{item.props.value2}</Text>
+        <Col size={28} style={styles.tableStyle.body}>
+          <Text>{item.Client_Name}</Text>
         </Col>
-        <Col size={23} style={styles.tableStyle.body}>
-          <Text>{item.props.value3}</Text>
+        <Col size={31} style={styles.tableStyle.body}>
+          <Text>{item.Sub_Task}</Text>
         </Col>
         <Col size={17} style={styles.tableStyle.bodyLast}>
           <Text>L</Text>
@@ -75,4 +77,4 @@ const styles = {
 	}
 };
 
-export { Table };
+export { RecentJobsTable };

@@ -43,19 +43,4 @@ TODO:
 	https://github.com/react-community/react-navigation/issues/143
 
 WHAT I DID:
--unhid screen from keyboard
--First keyboard says "Next" and goes to password
--Second keboard logs in on submit
--Unhid login from keyboard and animated logo
-  -dont clear windows ID on not good
-  -show First_Name Last_Name on Main screen
-  -Hid status bar on Android only
-  -changed Logout Icon
-  -Alert and confirmation for Logout now
-  -Set a bunch of Global variables
-  -global usernames and passwords
-  -global JSONS
-  -Added real table from Select Recent Data
-  -added buttons to selected recent
-  -Alerts (in bold)
-  -made a table from scratch
+-Made Table into its own reusable component
