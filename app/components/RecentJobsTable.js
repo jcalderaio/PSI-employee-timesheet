@@ -25,13 +25,13 @@ const RecentJobsTable = ({ data }) => (
     {data.map((item, i) =>
       <Row style={{ minHeight: 50 }} key={i}>
         <Col size={24} style={styles.tableStyle.body}>
-          <Text>{item.Job_Number}</Text>
+          <Text style={styles.tableStyle.bodyText}>{item.Job_Number}</Text>
         </Col>
         <Col size={28} style={styles.tableStyle.body}>
-          <Text>{item.Client_Name}</Text>
+          <Text style={styles.tableStyle.bodyText}>{item.Client_Name}</Text>
         </Col>
         <Col size={31} style={styles.tableStyle.body}>
-          <Text>{item.Sub_Task}</Text>
+          <Text style={styles.tableStyle.bodyText}>{item.Sub_Task}</Text>
         </Col>
         <Col size={17} style={styles.tableStyle.bodyLast}>
           <Text>L</Text>
@@ -74,6 +74,9 @@ const styles = {
 			justifyContent: 'center',
 			alignItems: 'center'
 		},
+    bodyText: {
+			fontSize: 14
+		}
 	}
 };
 

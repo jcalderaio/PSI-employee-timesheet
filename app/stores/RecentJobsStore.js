@@ -12,10 +12,10 @@ class RecentJobsStore {
    /*DELETE - FOR TESTING*/
    addJob = () => {
        this.recentJobs.push({
-           'Job_Id': 666,
-           'Job_Number': '666',
+           'Job_Id': 777,
+           'Job_Number': '777',
            'Client_Name': 'John Inc.',
-           'Task': 'Sexual',
+           'Task': 'Have fun!',
            'Sub_Task': 'Awesometime'
        });
    }

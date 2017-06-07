@@ -48,9 +48,9 @@ export default class SelectRecent extends Component {
 				</Header>
 				<Content>
 					{/*Heading*/}
-					<Grid style={{ justifyContent: 'center', padding: 10 }}>
-		              <Text>
-		                <Text style={{ fontWeight: 'bold' }}>Charges from: </Text> Last 2 Weeks
+					<Grid style={{ justifyContent: 'center', padding: 20 }}>
+		              <Text style={{ fontSize: 18 }}>
+		                <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Charges from: </Text> Last 2 Weeks
 		              </Text>
 		            </Grid>
 
@@ -83,13 +83,13 @@ export default class SelectRecent extends Component {
 					      {recentJobsStore.recentJobs.map((item, i) =>
 					        <Row style={{ minHeight: 50 }} key={i}>
 					          <Col size={24} style={styles.tableStyle.body}>
-					            <Text>{item.Job_Number}</Text>
+					            <Text style={styles.tableStyle.bodyText}>{item.Job_Number}</Text>
 					          </Col>
 					          <Col size={28} style={styles.tableStyle.body}>
-					            <Text>{item.Client_Name}</Text>
+					            <Text style={styles.tableStyle.bodyText}>{item.Client_Name}</Text>
 					          </Col>
 					          <Col size={31} style={styles.tableStyle.body}>
-					            <Text>{item.Sub_Task}</Text>
+					            <Text style={styles.tableStyle.bodyText}>{item.Sub_Task}</Text>
 					          </Col>
 					          <Col size={17} style={styles.tableStyle.bodyLast}>
 					            <Text>L</Text>
@@ -204,5 +204,8 @@ const styles = {
 			justifyContent: 'center',
 			alignItems: 'center'
 		},
+		bodyText: {
+			fontSize: 14
+		}
 	}
 };

@@ -5,8 +5,7 @@ import moment from 'moment';
 
 export default class TodaysCharges extends Component {
   render() {
-      const { navigate, goBack, state } = this.props.navigation;
-      //const { First_Name, Last_Name, Employee_No } = state.params.data;
+      const { navigate } = this.props.navigation;
 
     return (
       <Container>
@@ -22,9 +21,9 @@ export default class TodaysCharges extends Component {
           <Content>
 
             {/*Todays Date*/}
-            <Grid style={{ justifyContent: 'center', padding: 10 }}>
-              <Text>
-                <Text style={{ fontWeight: 'bold' }}>Charges for Today: </Text> {moment().format('dddd, MMMM D, YYYY')}
+            <Grid style={{ justifyContent: 'center', padding: 20 }}>
+              <Text style={{ fontSize: 18 }}>
+                <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Charges for Today: </Text> {moment().format('dddd, MMMM D, YYYY')}
               </Text>
             </Grid>
 
