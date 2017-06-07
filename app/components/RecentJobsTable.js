@@ -1,4 +1,4 @@
-/* @flow weak */
+/* Unused for Now */
 
 import React from 'react';
 import { Text } from 'react-native';

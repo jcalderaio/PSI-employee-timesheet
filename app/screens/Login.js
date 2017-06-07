@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { AsyncStorage, Image, StatusBar, Platform, Keyboard, LayoutAnimation, Dimensions, UIManager } from 'react-native';
 import { Container, Content, Form, Item, Input, Label, Button, Text, Icon, Spinner, View, Header, Body, Title } from 'native-base';
 import base64 from 'base-64';  // converts Authorization password to base-64
+import { Ionicons } from '@expo/vector-icons';
 
 import { focusTextInput } from '../components/HelperFunctions';  // Move to next text input
 
@@ -13,6 +14,7 @@ export default class Login extends Component {
 		this.state = {
 			loggedIn: false,
 			loading: false,
+			passwordEncrypted: true,
 			windowsId: '',
 			password: '',
 			message: '',
@@ -185,12 +187,31 @@ export default class Login extends Component {
 								<Label style={{ fontWeight: 'bold' }}>Password</Label>
 								<Input
 									ref='inputB'
-									secureTextEntry
+									secureTextEntry={this.state.passwordEncrypted}
 									value={this.state.password}
 									onChangeText={password => this.setState({ password })}
 									returnKeyType={'send'}
 									onSubmitEditing={this.signIn}
 								/>
+								{/*Eye Button*/}
+								<Button
+									transparent
+									onPress={() => this.setState({ passwordEncrypted: !this.state.passwordEncrypted })}
+									style={{ flexDirection: 'column', justifyContent: 'center' }}
+								>
+									<Ionicons
+										name='ios-eye'
+										size={26}
+									/>
+									{/*"Show" if password encrypted*/}
+									{(this.state.passwordEncrypted) &&
+										<Text style={{ fontSize: 12, color: 'black', marginTop: -10 }}>Show</Text>
+									}
+									{/*"Hide" if password not encrypted*/}
+									{!(this.state.passwordEncrypted) &&
+										<Text style={{ fontSize: 12, color: 'black', marginTop: -10 }}>Hide</Text>
+									}
+								</Button>
 							</Item>
 						</Form>
 

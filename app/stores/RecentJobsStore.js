@@ -9,7 +9,19 @@ class RecentJobsStore {
        return this.recentJobs.length <= 0;
    }
 
-   // Retrieve jobs from the server
+   /*DELETE - FOR TESTING*/
+   addJob = () => {
+       this.recentJobs.push({
+           'Job_Id': 666,
+           'Job_Number': '666',
+           'Client_Name': 'John Inc.',
+           'Task': 'Sexual',
+           'Sub_Task': 'Awesometime'
+       });
+   }
+   /*END DELETE - FOR TESTING*/
+
+   // Retrieve jobs from the server EVERY TIME RECENT JOBS BUTTON IS PRESSED!!!
    fetchRecentJobs = () => {
 		fetch(`http://psitime.psnet.com/Api/RecentJobs?Employee_ID=${global.employeeInfo.Employee_No}`, {
             method: 'GET',
