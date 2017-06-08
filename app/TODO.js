@@ -28,6 +28,10 @@ class MessageStore {
 }
 
 TODO:
+  -make "todays jobs" store
+  -load it on main page, show hours
+  -show all on todays charges
+  -show "checks" on recent
   -new logo. new colors?
   -If duplicates, show only once in recent jobs. For todays hours, combine hours.
   -(first make a store), then Show todays_charges array on "Today's Charges"

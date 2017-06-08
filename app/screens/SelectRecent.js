@@ -12,8 +12,12 @@ import recentJobStore from '../stores/RecentJobStore';
 
 @observer
 export default class SelectRecent extends Component {
-	render() {
+
+	componentWillMount() {
 		recentJobStore.fetchRecentJobs();
+	}
+
+	render() {
 		const { navigate, goBack } = this.props.navigation;
 
 		if (recentJobStore.recentJobs === null) {
