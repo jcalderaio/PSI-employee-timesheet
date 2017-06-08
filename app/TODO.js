@@ -47,3 +47,4 @@ WHAT I DID:
 -Added MobX (which is persistent state. I learned it in and out, so I can deal with what's coming)
 -changed around the directory to proper standards in the React Native industry'
 -show/hide button on password screen
+-Lots of debugging (new MobX has decorators which only certain JavaScript libraries can use). The directions I found online wouldn't let me use it with Expo, so I had to find a workaround. This took a long time.

@@ -2,11 +2,15 @@ import { observable, computed } from 'mobx';
 import base64 from 'base-64';
 import ApiUtils from '../components/ApiUtils'; // checks for errors in Fetches
 
-class RecentJobsStore {
+class RecentJobStore {
    @observable recentJobs = null;
 
    @computed get isEmpty() {
-       return this.recentJobs.length <= 0;
+       return !this.recentJobs.length;
+   }
+
+   constructor() {
+       this.fetchRecentJobs();
    }
 
    /*DELETE - FOR TESTING*/
@@ -33,7 +37,7 @@ class RecentJobsStore {
         .then(response => response.json())
         .then(responseData => {
           this.recentJobs = responseData;
-          console.log(`Just filled recentJobStore with ${responseData}`);
+          console.log(`Just filled recentRecentJobStore with ${responseData}`);
         })
         .catch(e => {
           console.log(`Error Retreiving Recent Jobs: ${e}`);
@@ -42,5 +46,5 @@ class RecentJobsStore {
     }
 }
 
-const recentJobsStore = new RecentJobsStore();
-export default recentJobsStore;
+const recentJobStore = new RecentJobStore();
+export default recentJobStore;

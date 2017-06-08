@@ -5,21 +5,17 @@ import { Octicons } from '@expo/vector-icons';
 
 // MobX
 import { observer } from 'mobx-react/native';
-import recentJobsStore from '../stores/RecentJobsStore';
+import recentJobStore from '../stores/RecentJobStore';
 
 // Import components
 //import { RecentJobsTable } from '../components/RecentJobsTable';
 
 @observer
 export default class SelectRecent extends Component {
-	componentWillMount() {
-		recentJobsStore.fetchRecentJobs();
-	}
-
 	render() {
 		const { navigate, goBack } = this.props.navigation;
 
-		if (recentJobsStore.recentJobs === null) {
+		if (recentJobStore.recentJobs === null) {
 	      return (
 	        <View style={styles.centerContainter}>
 	          <Spinner size='large' />
@@ -55,14 +51,14 @@ export default class SelectRecent extends Component {
 		            </Grid>
 
 					{/*If No Recent Jobs*/}
-					{(recentJobsStore.isEmpty) &&
+					{(recentJobStore.isEmpty) &&
 						<Grid style={{ justifyContent: 'center', padding: 10, marginTop: 20 }}>
 			              <Text style={{ fontWeight: 'bold', fontSize: 19 }}> You have no recent jobs!</Text>
 			            </Grid>
 					}
 
 					{/*Start Table*/}
-					{(!recentJobsStore.isEmpty) &&
+					{(!recentJobStore.isEmpty) &&
 						<Grid style={{ alignItems: 'center' }}>
 					      <Row style={{ height: 30 }} >
 					      {/*Table Labels*/}
@@ -80,7 +76,7 @@ export default class SelectRecent extends Component {
 					        </Col>
 					      </Row>
 					      {/*Table Labels*/}
-					      {recentJobsStore.recentJobs.map((item, i) =>
+					      {recentJobStore.recentJobs.map((item, i) =>
 					        <Row style={{ minHeight: 50 }} key={i}>
 					          <Col size={24} style={styles.tableStyle.body}>
 					            <Text style={styles.tableStyle.bodyText}>{item.Job_Number}</Text>
@@ -124,8 +120,8 @@ export default class SelectRecent extends Component {
 					<Button
                         block
                         onPress={() => {
-							recentJobsStore.addJob();
-						    console.log(recentJobsStore.recentJobs);
+							recentJobStore.addJob();
+						    console.log(recentJobStore.recentJobs);
 					    }}
                         style={styles.addAllButton}>
 						<Text>Add to Store</Text>
