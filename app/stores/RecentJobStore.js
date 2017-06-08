@@ -1,16 +1,13 @@
-import { observable, computed } from 'mobx';
+import { observable, computed, action } from 'mobx';
 import base64 from 'base-64';
 import ApiUtils from '../components/ApiUtils'; // checks for errors in Fetches
 
 class RecentJobStore {
    @observable recentJobs = null;
+   @observable errorMessage = null;
 
    @computed get isEmpty() {
        return !this.recentJobs.length;
-   }
-
-   constructor() {
-       this.fetchRecentJobs();
    }
 
    /*DELETE - FOR TESTING*/
@@ -26,7 +23,7 @@ class RecentJobStore {
    /*END DELETE - FOR TESTING*/
 
    // Retrieve jobs from the server EVERY TIME RECENT JOBS BUTTON IS PRESSED!!!
-   fetchRecentJobs = () => {
+   @action fetchRecentJobs() {
 		fetch(`http://psitime.psnet.com/Api/RecentJobs?Employee_ID=${global.employeeInfo.Employee_No}`, {
             method: 'GET',
             headers: {
@@ -37,11 +34,9 @@ class RecentJobStore {
         .then(response => response.json())
         .then(responseData => {
           this.recentJobs = responseData;
-          console.log(`Just filled recentRecentJobStore with ${responseData}`);
         })
         .catch(e => {
-          console.log(`Error Retreiving Recent Jobs: ${e}`);
-          this.recentJobs = [];
+          this.errorMessage = `Error Retreiving Recent Jobs: ${e}`;
         });
     }
 }

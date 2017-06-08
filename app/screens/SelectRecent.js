@@ -13,6 +13,7 @@ import recentJobStore from '../stores/RecentJobStore';
 @observer
 export default class SelectRecent extends Component {
 	render() {
+		recentJobStore.fetchRecentJobs();
 		const { navigate, goBack } = this.props.navigation;
 
 		if (recentJobStore.recentJobs === null) {
@@ -50,10 +51,17 @@ export default class SelectRecent extends Component {
 		              </Text>
 		            </Grid>
 
+					{/*If error*/}
+					{(recentJobStore.errorMessage) &&
+						<Grid style={{ justifyContent: 'center', padding: 10, marginTop: 20 }}>
+			              <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'red' }}>{recentJobStore.errorMessage}</Text>
+			            </Grid>
+					}
+
 					{/*If No Recent Jobs*/}
 					{(recentJobStore.isEmpty) &&
 						<Grid style={{ justifyContent: 'center', padding: 10, marginTop: 20 }}>
-			              <Text style={{ fontWeight: 'bold', fontSize: 19 }}> You have no recent jobs!</Text>
+			              <Text style={{ fontWeight: 'bold', fontSize: 18 }}> You have no recent jobs!</Text>
 			            </Grid>
 					}
 
