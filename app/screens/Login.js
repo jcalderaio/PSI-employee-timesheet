@@ -8,6 +8,8 @@ import { focusTextInput } from '../components/HelperFunctions';  // Move to next
 
 import ApiUtils from '../components/ApiUtils'; // checks for errors in Fetches
 
+import userStore from '../stores/UserStore';
+
 export default class Login extends Component {
 	constructor(props) {
 		super(props);
@@ -101,12 +103,16 @@ export default class Login extends Component {
 	    .then(ApiUtils.checkStatus)
 	    .then(response => response.json())
 	    .then(responseData => {
+
 		  // On successful login, store the username in async storage
 		  this.saveToStorage('user', windowsId).done();
-		  // These Global variables are available in every file!
-		  global.windowsId = windowsId;
-		  global.password = password;
-		  global.employeeInfo = responseData[0];
+
+		  // Add these variables to MobX
+		  userStore.windowsId = windowsId;
+		  userStore.password = password;
+		  userStore.employeeInfo = responseData[0];
+		  userStore.loggedIn = true;
+
 	      this.setState({
 			loggedIn: true,
 			password: '',

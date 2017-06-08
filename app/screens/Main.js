@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { Image, Platform, Alert } from 'react-native';
 import { Container, Content, Button, Text, Grid, Header, Left, Right, Body, Title, View, Spinner } from 'native-base';
 import moment from 'moment';
+import { observer } from 'mobx-react/native';
 import { SimpleLineIcons } from '@expo/vector-icons';
-
 import { CardSection } from '../components/CardSection';
 import { Card } from '../components/Card';
+import userStore from '../stores/UserStore';
 
+@observer
 export default class Main extends Component {
  render() {
     const { navigate, goBack } = this.props.navigation;
@@ -59,7 +61,7 @@ export default class Main extends Component {
               <Card>
                 <CardSection>
                   <Grid style={{ justifyContent: 'center', padding: 10 }}>
-                    <Text style={{ fontSize: 20 }}>Timesheet for {global.employeeInfo.First_Name} {global.employeeInfo.Last_Name}</Text>
+                    <Text style={{ fontSize: 20 }}>Timesheet for {userStore.employeeInfo.First_Name} {userStore.employeeInfo.Last_Name}</Text>
                   </Grid>
                 </CardSection>
 
