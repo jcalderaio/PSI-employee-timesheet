@@ -28,15 +28,16 @@ class MessageStore {
 }
 
 TODO:
-  -make "todays jobs" store
-  -load it on main page, show hours
-  -show all on todays charges
+  -Check for duplicates: cant add jobs from "Select Recent" or "Add Charge" thats already in Today's Charges list. Just tell them to update "Today's Charges"
+  -Never Fetch the data more than once:
+        -Update Charge: status codes are '0' by default. If someone changes the amount of hours, the status changes to 1 'update'.
+        -Select Recent- select recent jobs, and they are added to TodaysJobStore.todaysJobs (with a status of 3, add new) without updating the database.
+        -Add Entry: input all the data and put status code to 2 (Add New). Then add this to "Todays Jobs", without touching the database
+        -Changing todays_hours - if change todays hours, status code changes to update.
+
   -show "checks" on recent
   -new logo. new colors?
-  -If duplicates, show only once in recent jobs. For todays hours, combine hours.
-  -(first make a store), then Show todays_charges array on "Today's Charges"
   -(make a function in todaysChargesStore?) For "Add Charge", use authorized jobs and filter JSON to fill in component
- -Should this all be one store???
 
   * there will be a function to get todays charges (just a not, not a TODO)
 -MOBX - REALLY FUCKING LEARN!!! BE READY TO USE NEXT WEEK!
@@ -63,3 +64,4 @@ Tell Nick:
 
 Bugs:
 -Select Recent - when press either button and transferred to "Todays Charges" screen, theres 4 second lag on Android. I think it has to do with sliding the tabs, because when I turned on sliding tabs for iOS, the table looked messed up. When I took it off, it was fixed.
+-lagging to o
