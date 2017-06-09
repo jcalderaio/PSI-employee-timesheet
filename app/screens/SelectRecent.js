@@ -8,25 +8,12 @@ import { observer } from 'mobx-react/native';
 import recentJobStore from '../stores/RecentJobStore';
 
 // Import components
-//import { RecentJobsTable } from '../components/RecentJobsTable';
+import { RecentJobsTable } from '../components/RecentJobsTable';
 
 @observer
 export default class SelectRecent extends Component {
-
-	componentWillMount() {
-		recentJobStore.fetchRecentJobs();
-	}
-
 	render() {
 		const { navigate, goBack } = this.props.navigation;
-
-		if (recentJobStore.recentJobs === null) {
-	      return (
-	        <View style={styles.centerContainter}>
-	          <Spinner size='large' />
-	        </View>
-	      );
-	    }
 
 		return (
 			<Container>
@@ -49,7 +36,7 @@ export default class SelectRecent extends Component {
 				</Header>
 				<Content>
 					{/*Heading*/}
-					<Grid style={{ justifyContent: 'center', padding: 20 }}>
+					<Grid style={{ justifyContent: 'center', paddingVertical: 30 }}>
 		              <Text style={{ fontSize: 18 }}>
 		                <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Charges from: </Text> Last 2 Weeks
 		              </Text>
@@ -71,40 +58,7 @@ export default class SelectRecent extends Component {
 
 					{/*Start Table*/}
 					{(!recentJobStore.isEmpty) &&
-						<Grid style={{ alignItems: 'center' }}>
-					      <Row style={{ height: 30 }} >
-					      {/*Table Labels*/}
-					        <Col size={24} style={styles.tableStyle.title}>
-					          <Text style={{ fontWeight: 'bold' }}>Job #</Text>
-					        </Col>
-					        <Col size={28} style={styles.tableStyle.title}>
-					          <Text style={{ fontWeight: 'bold' }}>Client</Text>
-					        </Col>
-					        <Col size={31} style={styles.tableStyle.title}>
-					          <Text style={{ fontWeight: 'bold' }}>Job Title</Text>
-					        </Col>
-					        <Col size={17} style={styles.tableStyle.titleLast}>
-					          <Text style={{ fontWeight: 'bold' }}>Add</Text>
-					        </Col>
-					      </Row>
-					      {/*Table Labels*/}
-					      {recentJobStore.recentJobs.map((item, i) =>
-					        <Row style={{ minHeight: 50 }} key={i}>
-					          <Col size={24} style={styles.tableStyle.body}>
-					            <Text style={styles.tableStyle.bodyText}>{item.Job_Number}</Text>
-					          </Col>
-					          <Col size={28} style={styles.tableStyle.body}>
-					            <Text style={styles.tableStyle.bodyText}>{item.Client_Name}</Text>
-					          </Col>
-					          <Col size={31} style={styles.tableStyle.body}>
-					            <Text style={styles.tableStyle.bodyText}>{item.Sub_Task}</Text>
-					          </Col>
-					          <Col size={17} style={styles.tableStyle.bodyLast}>
-					            <Text>L</Text>
-					          </Col>
-					        </Row>
-					      )}
-					    </Grid>
+						<RecentJobsTable data={recentJobStore.recentJobs} />
 					}
 					{/*End of Table*/}
 
@@ -127,18 +81,6 @@ export default class SelectRecent extends Component {
                         style={styles.addAllButton}>
 						<Text>Add All</Text>
 					</Button>
-
-					{/*DELETE - FOR TESTING*/}
-					<Button
-                        block
-                        onPress={() => {
-							recentJobStore.addJob();
-						    console.log(recentJobStore.recentJobs);
-					    }}
-                        style={styles.addAllButton}>
-						<Text>Add to Store</Text>
-					</Button>
-					{/*END DELETE - FOR TESTING*/}
 
 				</Content>
 			</Container>
@@ -176,7 +118,7 @@ const styles = {
 		},
 		shadowOpacity: 0.3,
 		shadowRadius: 2,
-		marginBottom: 40
+		marginBottom: 60
 	},
 	centerContainter: {
       flex: 1,

@@ -52,3 +52,14 @@ WHAT I DID:
 -changed around the directory to proper standards in the React Native industry'
 -show/hide button on password screen
 -Lots of debugging (new MobX has decorators which only certain JavaScript libraries can use). The directions I found online wouldn't let me use it with Expo, so I had to find a workaround. This took a long time.
+-Fixed excessive hours. Only shows if more than 24 now.
+-Added Today's hours
+-Fixed many of the buttons
+-complain about logo
+
+Tell Nick:
+-I could not make the checkmark because I need a boolean property that I can change called "checked" in recentJobs so, I can check and uncheck it. Then, when I submit, it will need to iterate through the list and it will need the checked property to see if we add it to Today's Charges or not. Please set to "false".
+-please add a similar property called "changed" in today's charges, so I know whether they changed their hours and I need to update them.
+
+Bugs:
+-Select Recent - when press either button and transferred to "Todays Charges" screen, theres 4 second lag on Android. I think it has to do with sliding the tabs, because when I turned on sliding tabs for iOS, the table looked messed up. When I took it off, it was fixed.

@@ -8,20 +8,10 @@ class RecentJobStore {
    @observable errorMessage = null;
 
    @computed get isEmpty() {
-       return !this.recentJobs.length;
+       if (this.recentJobs !== null) {
+           return !this.recentJobs.length;
+       }
    }
-
-   /*DELETE - FOR TESTING*/
-   @action addJob() {
-       this.recentJobs.push({
-           'Job_Id': 777,
-           'Job_Number': '777',
-           'Client_Name': 'John Inc.',
-           'Task': 'Have fun!',
-           'Sub_Task': 'Awesometime'
-       });
-   }
-   /*END DELETE - FOR TESTING*/
 
    // Retrieve jobs from the server EVERY TIME RECENT JOBS BUTTON IS PRESSED!!!
    @action fetchRecentJobs() {
@@ -37,6 +27,7 @@ class RecentJobStore {
           this.recentJobs = responseData;
         })
         .catch(e => {
+          this.recentJobs = [];
           this.errorMessage = `Error Retreiving Recent Jobs: ${e}`;
         });
     }

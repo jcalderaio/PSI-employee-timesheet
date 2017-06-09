@@ -8,7 +8,9 @@ class TodaysJobStore {
    @observable errorMessage = null;
 
    @computed get isEmpty() {
-       return !this.recentJobs.length;
+      if (this.todaysJobs !== null) {
+         return !this.todaysJobs.length;
+      }
    }
 
    @computed get totalHours() {
@@ -36,6 +38,7 @@ class TodaysJobStore {
           this.todaysJobs = responseData;
         })
         .catch(e => {
+          this.recentJobs = [];
           this.errorMessage = `Error Retreiving Todays Jobs: ${e}`;
         });
     }

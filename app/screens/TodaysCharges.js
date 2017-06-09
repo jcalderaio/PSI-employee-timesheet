@@ -1,11 +1,28 @@
 import React, { Component } from 'react';
-import { Image, Platform, Alert } from 'react-native';
-import { Container, Content, Button, Text, Grid, Header, Body, Title, View } from 'native-base';
+import { Platform, Alert } from 'react-native';
+import { Container, Content, Button, Text, Grid, Header, Body, Title, View, Spinner } from 'native-base';
 import moment from 'moment';
 
+// MobX
+import { observer } from 'mobx-react/native';
+import todaysJobStore from '../stores/TodaysJobStore';
+import recentJobStore from '../stores/RecentJobStore';
+
+// Import components
+import { TodaysJobsTable } from '../components/TodaysJobsTable';
+
+@observer
 export default class TodaysCharges extends Component {
   render() {
       const { navigate } = this.props.navigation;
+
+      if ((recentJobStore.recentJobs === null) || (todaysJobStore.todaysJobs == null)) {
+        return (
+          <View style={styles.centerContainter}>
+            <Spinner size='large' />
+          </View>
+        );
+      }
 
     return (
       <Container>
@@ -20,21 +37,35 @@ export default class TodaysCharges extends Component {
 
           <Content>
 
-            {/*Todays Date*/}
-            <Grid style={{ justifyContent: 'center', padding: 20 }}>
+            {/*Heading*/}
+            <Grid style={{ justifyContent: 'center', paddingVertical: 30 }}>
               <Text style={{ fontSize: 18 }}>
                 <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Charges for Today: </Text> {moment().format('dddd, MMMM D, YYYY')}
               </Text>
             </Grid>
 
-            {/*Charges Table*/}
-            <Image
-              style={styles.tableStyle}
-              source={require('../img/table.png')}
-              resizeMode="contain"
-            />
+            {/*If error*/}
+  					{(todaysJobStore.errorMessage) &&
+  						<Grid style={{ justifyContent: 'center', padding: 10, marginTop: 20 }}>
+  			              <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'red' }}>{todaysJobStore.errorMessage}</Text>
+  			            </Grid>
+  					}
 
-            <View style={{ top: 50 }}>
+  					{/*If No Recent Jobs*/}
+  					{(todaysJobStore.isEmpty) &&
+  						<Grid style={{ justifyContent: 'center', padding: 10, marginTop: 20 }}>
+  			              <Text style={{ fontWeight: 'bold', fontSize: 18 }}> You have no recent jobs!</Text>
+  			            </Grid>
+  					}
+
+  					{/*Start Table*/}
+  					{(!todaysJobStore.isEmpty) &&
+  						<TodaysJobsTable data={todaysJobStore.todaysJobs} />
+  					}
+  					{/*End of Table*/}
+
+
+            <View style={{ paddingTop: 60 }}>
               <Grid style={{ justifyContent: 'center' }} >
                   <Text style={{ color: 'steelblue', fontSize: 16 }}>Tap on the 'Hours' column to make changes.</Text>
               </Grid>
@@ -76,20 +107,14 @@ const styles = {
   	headerTextStyle: {
   		color: '#FFF'
   	},
-    footer: {
-    	position: 'absolute',
-    	left: 0,
-    	right: 0,
-    	top: 500,
-    	alignItems: 'center'
-    },
     updateChargeButton: {
       backgroundColor: '#007aff',
       marginHorizontal: 20,
-  		marginTop: 160,
   		shadowColor: '#000',
   		shadowOffset: { width: 0, height: 2 },
   		shadowOpacity: 0.3,
-  		shadowRadius: 2
+  		shadowRadius: 2,
+      marginTop: 60,
+      marginBottom: 60
     }
 };

@@ -7,11 +7,27 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 import { CardSection } from '../components/CardSection';
 import { Card } from '../components/Card';
 import userStore from '../stores/UserStore';
+import todaysJobStore from '../stores/TodaysJobStore';
+import recentJobStore from '../stores/RecentJobStore';
 
 @observer
 export default class Main extends Component {
+    componentWillMount() {
+        todaysJobStore.fetchTodaysJobs();
+        recentJobStore.fetchRecentJobs();
+    }
+
  render() {
     const { navigate, goBack } = this.props.navigation;
+
+    if ((recentJobStore.recentJobs === null) || (todaysJobStore.todaysJobs == null)) {
+      return (
+        <View style={styles.centerContainter}>
+          <Spinner size='large' />
+          <Text style={{ marginTop: -7, color: '#0BD318' }}>LOADING</Text>
+        </View>
+      );
+    }
 
     return (
       <Container>
@@ -23,14 +39,17 @@ export default class Main extends Component {
               {/*Logout button with option to cancel*/}
               <Button
                 transparent
-                onPress={() => Alert.alert(
-                  'Logout?',
-                   ' ',
-                   [
-                     { text: 'Cancel', onPress: () => console.log('Cancel Pressed!') },
-                     { text: 'OK', onPress: () => goBack(null) },
-                   ]
-                )}
+                onPress={() => {
+                    userStore.loggedIn = false;
+                    Alert.alert(
+                      'Logout?',
+                       ' ',
+                       [
+                         { text: 'Cancel', onPress: () => console.log('Cancel Pressed!') },
+                         { text: 'OK', onPress: () => goBack(null) },
+                       ]
+                    );
+                }}
               >
                  <SimpleLineIcons name='logout' color='#FFF' size={21.5} />
 
@@ -76,18 +95,20 @@ export default class Main extends Component {
                 <CardSection>
                   <Grid style={{ justifyContent: 'center', padding: 10 }}>
                     <Text>
-                      Hours charged today: <Text style={{ fontWeight: 'bold' }}>9</Text>
+                      Hours charged today: <Text style={{ fontWeight: 'bold' }}>{todaysJobStore.totalHours}</Text>
                     </Text>
                   </Grid>
                 </CardSection>
 
-                <CardSection>
-                  <Grid style={{ justifyContent: 'center', padding: 10 }}>
-                    <Text style={{ color: 'red', fontWeight: 'bold' }}>
-                      Warning! Excessive hours today!
-                    </Text>
-                  </Grid>
-                </CardSection>
+                {(todaysJobStore.totalHours >= 24) &&
+                    <CardSection>
+                      <Grid style={{ justifyContent: 'center', padding: 10 }}>
+                        <Text style={{ color: 'red', fontWeight: 'bold' }}>
+                          Warning! Excessive hours today!
+                        </Text>
+                      </Grid>
+                    </CardSection>
+                }
 
               </Card>
 
@@ -147,4 +168,9 @@ const styles = {
   		shadowOpacity: 0.3,
   		shadowRadius: 2
     },
+    centerContainter: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
+  	},
 };
