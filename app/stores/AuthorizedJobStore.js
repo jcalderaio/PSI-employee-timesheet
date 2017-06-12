@@ -3,18 +3,18 @@ import base64 from 'base-64';
 import ApiUtils from '../components/ApiUtils'; // checks for errors in Fetches
 import userStore from './UserStore';
 
-class RecentJobStore {
-   @observable recentJobs = null;
+class AuthorizedJobStore {
+   @observable authorizedJobs = null;
    @observable errorMessage = null;
 
    @computed get isEmpty() {
-       if (this.recentJobs !== null) {
-           return !this.recentJobs.length;
+       if (this.authorizedJobs !== null) {
+           return !this.authorizedJobs.length;
        }
    }
 
-   @action fetchRecentJobs() {
-		fetch(`http://psitime.psnet.com/Api/RecentJobs?Employee_ID=${userStore.employeeInfo.Employee_No}`, {
+   @action fetchAuthorizedJobs() {
+		fetch(`http://psitime.psnet.com/Api/AuthorizedJobs?Employee_ID=${userStore.employeeInfo.Employee_No}`, {
             method: 'GET',
             headers: {
               'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
@@ -23,14 +23,14 @@ class RecentJobStore {
         .then(ApiUtils.checkStatus)
         .then(response => response.json())
         .then(responseData => {
-          this.recentJobs = responseData;
+          this.authorizedJobs = responseData;
         })
         .catch(e => {
-          this.recentJobs = [];
-          this.errorMessage = `Error Retreiving Recent Jobs: ${e}`;
+          this.authorizedJobs = [];
+          this.errorMessage = `Error Retreiving Authorized Jobs: ${e}`;
         });
     }
 }
 
-const recentJobStore = new RecentJobStore();
-export default recentJobStore;
+const authorizedJobStore = new AuthorizedJobStore();
+export default authorizedJobStore;

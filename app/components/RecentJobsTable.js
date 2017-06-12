@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text } from 'react-native';
 import { Grid, Col, Row } from 'native-base';
 import CheckBox from 'react-native-check-box';
 
 class RecentJobsTable extends Component {
-    onClick(item) {
+    onClick = (item) => {
       item.Is_Checked = !item.Is_Checked;
     }
 
-    renderCheckBox(item) {
+    renderCheckBox = (item) => {
       return (
         <CheckBox
           style={{ flex: 1, padding: 10 }}
@@ -110,12 +110,7 @@ const styles = {
     bodyText: {
 			fontSize: 14
 		}
-	},
-  checkBoxContainer: {
-      flex: 1,
-      backgroundColor: '#f3f2f2',
-      marginTop: 30
-  },
+	}
 };
 
 export { RecentJobsTable };

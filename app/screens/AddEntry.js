@@ -8,9 +8,6 @@ import { Card } from '../components/Card';
 export default class AddEntry extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            count: global.count
-        };
     }
 
   render() {
@@ -40,34 +37,12 @@ export default class AddEntry extends Component {
 
 			{/*Body*/}
 			<Content>
-
-				{/*Top Label*/}
-				<Grid style={{ justifyContent: 'center' }} >
-					<H1>Add Entry screen</H1>
+				{/*Heading*/}
+				<Grid style={{ justifyContent: 'center', paddingVertical: 30 }}>
+				  <Text style={{ fontSize: 18 }}>
+					<Text style={{ fontWeight: 'bold', fontSize: 18 }}>Please, </Text>Add a New Entry
+				  </Text>
 				</Grid>
-
-				{/*Global Holder*/}
-                <Card>
-                    <CardSection>
-                      <Grid style={{ justifyContent: 'center', padding: 10 }}>
-                        <Text>
-                          {this.state.count}
-                        </Text>
-                      </Grid>
-                    </CardSection>
-                </Card>
-
-				<Button
-					block
-					onPress={() => {
-						this.setState((prevState) => ({
-  							//count: prevState.count + 1 // Does NOT retain state after leaving
-							count: ++global.count  // Retains state after leaving (cause global)
-						}));
-					}}
-				>
-					<Text>Add to Array</Text>
-				</Button>
 
 			</Content>
 			{/*End Body*/}
@@ -79,7 +54,7 @@ export default class AddEntry extends Component {
 
 const styles = {
 	headerStyle: {
-	backgroundColor: 'red'
+	    backgroundColor: 'red'
 	},
 	headerTextStyle: {
 		color: '#FFF'
