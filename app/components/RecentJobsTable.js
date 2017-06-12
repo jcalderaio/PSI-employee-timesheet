@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
-import { Grid, Col, Row, CheckBox } from 'native-base';
+import { Text, View } from 'react-native';
+import { Grid, Col, Row } from 'native-base';
+import CheckBox from 'react-native-check-box';
 
 class RecentJobsTable extends Component {
-    conditionalRender = (condition) => {
-      const flag = condition ? true : false;
-      return flag;
-    }
-
-    /*
-    pressCheck = (item) => {
+    onClick(item) {
       item.Is_Checked = !item.Is_Checked;
     }
-    */
+
+    renderCheckBox(item) {
+      return (
+        <CheckBox
+          style={{ flex: 1, padding: 10 }}
+          onClick={() => this.onClick(item)}
+          isChecked={item.Is_Checked}
+        />
+      );
+    }
 
     render() {
       return (
@@ -55,7 +59,7 @@ class RecentJobsTable extends Component {
               </Col>
                {/*Checkbox*/}
               <Col size={17} style={styles.tableStyle.bodyLast}>
-                <Text>{this.conditionalRender(item.Is_Checked).toString()}</Text>
+                  {this.renderCheckBox(item)}
               </Col>
 
             </Row>
@@ -106,7 +110,12 @@ const styles = {
     bodyText: {
 			fontSize: 14
 		}
-	}
+	},
+  checkBoxContainer: {
+      flex: 1,
+      backgroundColor: '#f3f2f2',
+      marginTop: 30
+  },
 };
 
 export { RecentJobsTable };
