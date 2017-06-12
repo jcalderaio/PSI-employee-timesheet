@@ -38,6 +38,7 @@ TODO:
   -show "checks" on recent
   -new logo. new colors?
   -(make a function in todaysChargesStore?) For "Add Charge", use authorized jobs and filter JSON to fill in component
+  -Fetch data from server when there is an update?
 
   * there will be a function to get todays charges (just a not, not a TODO)
 -MOBX - REALLY FUCKING LEARN!!! BE READY TO USE NEXT WEEK!

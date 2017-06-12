@@ -14,7 +14,6 @@ export default class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			loggedIn: false,
 			loading: false,
 			passwordEncrypted: true,
 			windowsId: '',
@@ -114,9 +113,9 @@ export default class Login extends Component {
 		  userStore.loggedIn = true;
 
 	      this.setState({
-			loggedIn: true,
 			password: '',
-	        loading: false
+	        loading: false,
+			passwordEncrypted: true
 	      });
 		  navigate('Main');  // Put this inside the last fetch statement
 	    })

@@ -3,13 +3,16 @@ import { Text } from 'react-native';
 import { Grid, Col, Row, CheckBox } from 'native-base';
 
 class RecentJobsTable extends Component {
-    pressCheck = (item) => {
-      if (item.checked) {
-        item.checked = false;
-        return;
-      }
-      item.checked = true;
+    conditionalRender = (condition) => {
+      const flag = condition ? true : false;
+      return flag;
     }
+
+    /*
+    pressCheck = (item) => {
+      item.Is_Checked = !item.Is_Checked;
+    }
+    */
 
     render() {
       return (
@@ -52,8 +55,7 @@ class RecentJobsTable extends Component {
               </Col>
                {/*Checkbox*/}
               <Col size={17} style={styles.tableStyle.bodyLast}>
-                {item.checked = false}
-                <CheckBox checked={item.checked} onPress={() => this.pressCheck(item)} />
+                <Text>{this.conditionalRender(item.Is_Checked).toString()}</Text>
               </Col>
 
             </Row>
