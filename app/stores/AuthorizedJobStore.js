@@ -40,16 +40,16 @@ class AuthorizedJobStore {
       }
    }
 
-   @action setClientFilter(filter) {
-      this.clientFilter = filter;
+   @action setClientFilter(value) {
+      this.clientFilter = value;
    }
 
-   @action setTaskFilter(filter) {
-      this.taskFilter = filter;
+   @action setTaskFilter(value) {
+      this.taskFilter = value;
    }
 
-   @action setSubTask(subTask) {
-      this.subTask = subTask;
+   @action setSubTask(value) {
+      this.subTask = value;
    }
 
    @action fetchAuthorizedJobs() {

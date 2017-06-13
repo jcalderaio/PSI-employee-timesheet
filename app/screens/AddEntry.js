@@ -1,13 +1,32 @@
 import React, { Component } from 'react';
-import { Text, Container, Content, Button, Grid, Header, Left, Right, Body, Title } from 'native-base';
+import { Text, Container, Content, Button, Grid, Header, Left, Right, Body, Title, Picker } from 'native-base';
 import { Octicons } from '@expo/vector-icons';
+import { observer } from 'mobx-react/native';
 
 // Import ONLY map from lodash (DELETE)
-import { map, uniq } from 'lodash';
+import { map } from 'lodash';
 
 import authorizedJobStore from '../stores/AuthorizedJobStore';
 
+const Item = Picker.Item;
+
+@observer
 export default class AddEntry extends Component {
+	constructor(props) {
+        super(props);
+        this.state = {
+            selectedClient: authorizedJobStore.clientNamesWithoutDupes[0]
+        };
+		authorizedJobStore.setClientFilter(this.state.selectedClient);
+    }
+
+	onValueChangeClient(value) {
+        this.setState({
+            selectedClient: value
+        });
+		authorizedJobStore.setClientFilter(value);
+    }
+
   render() {
     const { goBack } = this.props.navigation;
 
@@ -35,12 +54,20 @@ export default class AddEntry extends Component {
 
 			{/*Body*/}
 			<Content>
-				{/*Heading*/}
-				<Grid style={{ justifyContent: 'center', paddingVertical: 30 }}>
-				  <Text style={{ fontSize: 18 }}>
-					Please, Add a New Entry
-				  </Text>
-				</Grid>
+
+				<Text style={{ padding: 20, fontSize: 20 }}>Select Your Client</Text>
+				{/*Client_Name Picker*/}
+				<Picker
+					style={{ borderWidth: 1, borderColor: 'black' }}
+                    selectedValue={this.state.selectedClient}
+                    onValueChange={this.onValueChangeClient.bind(this)}
+				>
+                    {map(authorizedJobStore.clientNamesWithoutDupes, (item, i) =>
+						<Item label={item} value={item} key={i} />
+					)}
+				</Picker>
+
+				<Text>{authorizedJobStore.clientFilter}</Text>
 
 
 			</Content>
