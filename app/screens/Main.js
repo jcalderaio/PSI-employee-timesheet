@@ -9,12 +9,14 @@ import { Card } from '../components/Card';
 import userStore from '../stores/UserStore';
 import todaysJobStore from '../stores/TodaysJobStore';
 import recentJobStore from '../stores/RecentJobStore';
+import authorizedJobStore from '../stores/AuthorizedJobStore';
 
 @observer
 export default class Main extends Component {
     componentWillMount() {
         todaysJobStore.fetchTodaysJobs();
         recentJobStore.fetchRecentJobs();
+        authorizedJobStore.fetchAuthorizedJobs();
     }
 
  render() {
@@ -67,7 +69,6 @@ export default class Main extends Component {
 
           {/*Body*/}
           <Content>
-
               {/*Banner Image at top of screen*/}
               <View style={styles.imageStyle.imageOuter}>
                 <Image

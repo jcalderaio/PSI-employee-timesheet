@@ -1,14 +1,22 @@
 import React, { Component } from 'react';
-import { Text, Container, Content, Button, Grid, Header, Left, Right, Body, Title, H1 } from 'native-base';
+import { Text, Container, Content, Button, Grid, Header, Left, Right, Body, Title } from 'native-base';
 import { Octicons } from '@expo/vector-icons';
 
-import { CardSection } from '../components/CardSection';
-import { Card } from '../components/Card';
+// Import ONLY map from lodash (DELETE)
+import { map, uniq } from 'lodash';
+
+import authorizedJobStore from '../stores/AuthorizedJobStore';
 
 export default class AddEntry extends Component {
-    constructor(props) {
-        super(props);
-    }
+  // DELETE
+  componentWillMount() {
+	this.renderJobsNoDupes();
+  }
+  // DELETE
+  renderJobsNoDupes() {
+	// JSON to array with property you want
+    const clientNamesWithoutDupes = uniq(map(authorizedJobStore.authorizedJobs, 'Client_Name'));
+  }
 
   render() {
     const { goBack } = this.props.navigation;
@@ -40,13 +48,17 @@ export default class AddEntry extends Component {
 				{/*Heading*/}
 				<Grid style={{ justifyContent: 'center', paddingVertical: 30 }}>
 				  <Text style={{ fontSize: 18 }}>
-					<Text style={{ fontWeight: 'bold', fontSize: 18 }}>Please, </Text>Add a New Entry
+					Please, Add a New Entry
 				  </Text>
 				</Grid>
 
+				{/*Example of how to use lodash
+				<Text>{map(authorizedJobStore.authorizedJobs, (item) => {
+					return item.Client_Name;
+				})}</Text> */}
+
 			</Content>
 			{/*End Body*/}
-
 		</Container>
     );
   }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text } from 'react-native';
 import { Grid, Col, Row } from 'native-base';
+import { map } from 'lodash';
 import CheckBox from 'react-native-check-box';
 
 class RecentJobsTable extends Component {
@@ -43,8 +44,8 @@ class RecentJobsTable extends Component {
             </Col>
           </Row>
           {/*Table Labels*/}
-          {this.props.data.map((item, i) =>
-            <Row style={{ minHeight: 50 }} key={i}>
+          {map(this.props.data, (item) =>
+            <Row style={{ minHeight: 50 }} key={item.Job_Id}>
                {/*Job # Data*/}
               <Col size={24} style={styles.tableStyle.body}>
                 <Text style={styles.tableStyle.bodyText}>{item.Job_Number}</Text>
