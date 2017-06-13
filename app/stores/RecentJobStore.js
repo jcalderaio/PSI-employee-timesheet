@@ -29,7 +29,7 @@ class RecentJobStore {
           this.recentJobs = [];
           this.errorMessage = `Error Retreiving Recent Jobs: ${e}`;
         });
-    }
+   }
 }
 
 const recentJobStore = new RecentJobStore();

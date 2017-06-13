@@ -1,6 +1,6 @@
 import { observable, computed, action } from 'mobx';
 import base64 from 'base-64';
-import { map, uniq } from 'lodash';
+import { map, uniq } from 'lodash';  // Import ONLY used functions from Lodash
 import ApiUtils from '../components/ApiUtils'; // checks for errors in Fetches
 import userStore from './UserStore';
 
@@ -9,10 +9,10 @@ class AuthorizedJobStore {
    @observable errorMessage = null;
 
    // Use these filters to compute the other arrays
-   @observable clientFilter;
-   @observable taskFilter;
-   @observable subTask;
-   @observable hours;
+   @observable clientFilter = null;
+   @observable taskFilter = null;
+   @observable subTask = null;
+   @observable hours = null;
 
    @computed get isEmpty() {
        if (this.authorizedJobs !== null) {
@@ -22,6 +22,7 @@ class AuthorizedJobStore {
        }
    }
 
+   // Retrieves an array of Client_Names without duplicates
    @computed get clientNamesWithoutDupes() {
       if (this.authorizedJobs !== null) {
          return uniq(map(this.authorizedJobs, 'Client_Name'));
@@ -30,8 +31,13 @@ class AuthorizedJobStore {
       }
    }
 
+   // Retrieves an array of Tasks without duplicates
    @computed get tasksWithoutDupes() {
-
+      if (this.authorizedJobs !== null && this.clientFilter !== null) {
+         return uniq(map(this.authorizedJobs, 'Client_Name'));
+      } else {
+         throw new Error('authorizedJobs or clientFilter is null!');
+      }
    }
 
    @action setClientFilter(filter) {

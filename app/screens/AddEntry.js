@@ -8,16 +8,6 @@ import { map, uniq } from 'lodash';
 import authorizedJobStore from '../stores/AuthorizedJobStore';
 
 export default class AddEntry extends Component {
-  // DELETE
-  componentWillMount() {
-	this.renderJobsNoDupes();
-  }
-  // DELETE
-  renderJobsNoDupes() {
-	// JSON to array with property you want
-    const clientNamesWithoutDupes = uniq(map(authorizedJobStore.authorizedJobs, 'Client_Name'));
-  }
-
   render() {
     const { goBack } = this.props.navigation;
 
@@ -52,10 +42,6 @@ export default class AddEntry extends Component {
 				  </Text>
 				</Grid>
 
-				{/*Example of how to use lodash
-				<Text>{map(authorizedJobStore.authorizedJobs, (item) => {
-					return item.Client_Name;
-				})}</Text> */}
 
 			</Content>
 			{/*End Body*/}

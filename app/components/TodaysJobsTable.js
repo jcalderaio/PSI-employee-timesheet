@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { Grid, Col, Row } from 'native-base';
+import { map } from 'lodash';
 
 const TodaysJobsTable = ({ data }) => {
     return (
@@ -21,8 +22,8 @@ const TodaysJobsTable = ({ data }) => {
             </Col>
           </Row>
           {/*Table Labels*/}
-          {data.map((item, i) =>
-            <Row style={{ minHeight: 50 }} key={i}>
+          {map(data, (item) =>
+            <Row style={{ minHeight: 50 }} key={item.Job_Id}>
               <Col size={24} style={styles.tableStyle.bodyFirst}>
                 <Text style={styles.tableStyle.bodyText}>{item.Job_Number}</Text>
               </Col>
