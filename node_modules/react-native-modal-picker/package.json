@@ -1,0 +1,37 @@
+{
+  "name": "react-native-modal-picker",
+  "version": "0.0.16",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postversion": "git push && git push --tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/d-a-n/react-native-modal-picker.git"
+  },
+  "keywords": [
+    "react-native",
+    "dropdown",
+    "popover",
+    "select",
+    "picker",
+    "modal",
+    "ios",
+    "android",
+    "react-component"
+  ],
+  "author": "Daniel Korger <dan@imake.io>",
+  "contributors": [
+    {
+      "name": "Alex Spring",
+      "email": "notlose@hotmail.com"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/d-a-n/react-native-modal-picker/issues"
+  },
+  "homepage": "https://github.com/d-a-n/react-native-modal-picker"
+}

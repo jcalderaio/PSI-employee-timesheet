@@ -14,21 +14,21 @@ class RecentJobStore {
    }
 
    @action fetchRecentJobs() {
-		fetch(`http://psitime.psnet.com/Api/RecentJobs?Employee_ID=${userStore.employeeInfo.Employee_No}`, {
-            method: 'GET',
-            headers: {
-              'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
-            }
-        })
-        .then(ApiUtils.checkStatus)
-        .then(response => response.json())
-        .then(responseData => {
-          this.recentJobs = responseData;
-        })
-        .catch(e => {
-          this.recentJobs = [];
-          this.errorMessage = `Error Retreiving Recent Jobs: ${e}`;
-        });
+       fetch(`http://psitime.psnet.com/Api/RecentJobs?Employee_ID=${userStore.employeeInfo.Employee_No}`, {
+           method: 'GET',
+           headers: {
+             'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
+           }
+       })
+       .then(ApiUtils.checkStatus)
+       .then(response => response.json())
+       .then(responseData => {
+         this.recentJobs = responseData;
+       })
+       .catch(e => {
+         this.recentJobs = [];
+         this.errorMessage = `Error Retreiving Recent Jobs: ${e}`;
+       });
    }
 }
 

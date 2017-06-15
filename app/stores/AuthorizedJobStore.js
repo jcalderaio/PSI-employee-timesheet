@@ -1,6 +1,6 @@
 import { observable, computed, action } from 'mobx';
 import base64 from 'base-64';
-import { map, uniq } from 'lodash';  // Import ONLY used functions from Lodash
+import { map, uniq, filter } from 'lodash';  // Import ONLY used functions from Lodash
 import ApiUtils from '../components/ApiUtils'; // checks for errors in Fetches
 import userStore from './UserStore';
 
@@ -11,7 +11,9 @@ class AuthorizedJobStore {
    // Use these filters to compute the other arrays
    @observable clientFilter = null;
    @observable taskFilter = null;
-   @observable subTask = null;
+   @observable subTaskFilter = null;
+
+   @observable jobNumber = null;
    @observable hours = null;
 
    @computed get isEmpty() {
@@ -26,17 +28,29 @@ class AuthorizedJobStore {
    @computed get clientNamesWithoutDupes() {
       if (this.authorizedJobs !== null) {
          return uniq(map(this.authorizedJobs, 'Client_Name'));
-      } else {
-         throw new Error('authorizedJobs is null!');
       }
    }
 
    // Retrieves an array of Tasks without duplicates
    @computed get tasksWithoutDupes() {
       if (this.authorizedJobs !== null && this.clientFilter !== null) {
-         return uniq(map(this.authorizedJobs, 'Client_Name'));
-      } else {
-         throw new Error('authorizedJobs or clientFilter is null!');
+         const temp = filter(this.authorizedJobs, { 'Client_Name': this.clientFilter });
+         return uniq(map(temp, 'Task'));
+      }
+   }
+
+   // Retrieves an array of Tasks without duplicates
+   @computed get subTasksWithoutDupes() {
+      if (this.authorizedJobs !== null && this.clientFilter !== null && this.taskFilter !== null) {
+         const temp = filter(this.authorizedJobs, { 'Client_Name': this.clientFilter, 'Task': this.taskFilter });
+         return uniq(map(temp, 'Sub_Task'));
+      }
+   }
+
+   @action setJobNumber() {
+      if (this.authorizedJobs !== null && this.clientFilter !== null && this.taskFilter !== null && this.subTaskFilter !== null) {
+         const temp = filter(this.authorizedJobs, { 'Client_Name': this.clientFilter, 'Task': this.taskFilter, 'Sub_Task': this.subTaskFilter });
+         this.jobNumber = uniq(map(temp, 'Job_Number'));
       }
    }
 
@@ -48,8 +62,8 @@ class AuthorizedJobStore {
       this.taskFilter = value;
    }
 
-   @action setSubTask(value) {
-      this.subTask = value;
+   @action setSubTaskFilter(value) {
+      this.subTaskFilter = value;
    }
 
    @action fetchAuthorizedJobs() {

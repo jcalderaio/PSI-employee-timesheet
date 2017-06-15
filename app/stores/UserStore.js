@@ -1,12 +1,9 @@
-import { observable, computed, action } from 'mobx';
-import base64 from 'base-64';
-import ApiUtils from '../components/ApiUtils'; // checks for errors in Fetches
+import { observable } from 'mobx';
 
 class UserStore {
    @observable windowsId = null;
    @observable password = null;
    @observable employeeInfo = null;
-
    @observable loggedIn = false;
 
 }

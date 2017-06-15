@@ -34,6 +34,7 @@
         "react": "16.0.0-alpha.6",
         "react-native": "^0.43.4",
         "react-native-check-box": "^1.0.4",
+        "react-native-modal-picker": "^0.0.16",
         "react-navigation": "^1.0.0-beta.9"
     }
 }

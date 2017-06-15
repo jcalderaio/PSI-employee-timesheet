@@ -22,7 +22,7 @@ export default class Main extends Component {
  render() {
     const { navigate, goBack } = this.props.navigation;
 
-    if ((recentJobStore.recentJobs === null) || (todaysJobStore.todaysJobs == null)) {
+    if ((recentJobStore.recentJobs === null) || (todaysJobStore.todaysJobs === null)) {
       return (
         <View style={styles.centerContainter}>
           <Spinner size='large' />
