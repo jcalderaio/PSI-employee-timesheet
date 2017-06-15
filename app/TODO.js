@@ -48,3 +48,5 @@ WHAT I DID:
 Bugs:
 -Select Recent - when press either button and transferred to "Todays Charges" screen, theres 4 second lag on Android. I think it has to do with sliding the tabs, because when I turned on sliding tabs for iOS, the table looked messed up. When I took it off, it was fixed.
 -Recent Jobs button lagging big time!
+-Add Entry - label not changing when pick different box.
+-Add Entry - Job Numbers doubling up

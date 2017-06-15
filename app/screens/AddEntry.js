@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Text, Container, Content, Button, Grid, Header, Left, Right, Body, Title, View, Item, Input } from 'native-base';
-import { Octicons } from '@expo/vector-icons';
+import { Alert } from 'react-native';
+import { Text, Container, Content, Button, Grid, Header, Left, Right, Body, Title, View, Item, Input, Icon, Label } from 'native-base';
+import { Octicons, Ionicons } from '@expo/vector-icons';
 import { observer } from 'mobx-react/native';
 import ModalPicker from 'react-native-modal-picker';
 
@@ -11,8 +12,8 @@ import authorizedJobStore from '../stores/AuthorizedJobStore';
 
 @observer
 export default class AddEntry extends Component {
-  render() {
-    const { goBack } = this.props.navigation;
+	render() {
+    const { goBack, navigate } = this.props.navigation;
 	// Add data to clientData from authorizedJobStore
 	const clientData = map(authorizedJobStore.clientNamesWithoutDupes, (item, i) => (
 		{ key: i, label: item }
@@ -45,7 +46,10 @@ export default class AddEntry extends Component {
 				<Right>
 					<Button
 						transparent
-						onPress={() => goBack(null)}
+						onPress={() => {
+							authorizedJobStore.clearAll();
+							goBack(null);
+						}}
 					>
 						<Octicons name='x' size={23} style={{ color: '#FFF' }} />
 					</Button>
@@ -57,57 +61,113 @@ export default class AddEntry extends Component {
 			<Content>
 
 				{/*Select Client*/}
-				<View style={{ paddingVertical: 30 }}>
+				<View style={{ paddingBottom: 25 }}>
 					<Grid style={{ justifyContent: 'center', paddingBottom: 15 }}>
 					  <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Select a Client</Text>
 					</Grid>
 
 					<ModalPicker
+						ref='clientModal'
 						data={clientData}
 						initValue='Clients'
-						onChange={(value) => authorizedJobStore.setClientFilter(value.label)}
+						onChange={(value) => {
+							authorizedJobStore.setClientFilter(value.label);
+							authorizedJobStore.jobNumber = null;
+							authorizedJobStore.taskFilter = null;
+							authorizedJobStore.subTaskFilter = null;
+						}}
 						style={{ paddingHorizontal: 35 }}
 					/>
 				</View>
 
 				{/*Select Task*/}
-				<View style={{ paddingBottom: 30 }}>
-					<Grid style={{ justifyContent: 'center', paddingBottom: 15 }}>
-					  <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Select a Task</Text>
-					</Grid>
+				{(authorizedJobStore.clientFilter) &&
+					<View style={{ paddingBottom: 25 }}>
+						<Grid style={{ justifyContent: 'center', paddingBottom: 15 }}>
+						  <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Select a Task</Text>
+						</Grid>
 
-					<ModalPicker
-						data={taskData}
-						initValue='Tasks'
-						onChange={(value) => {
-							authorizedJobStore.setTaskFilter(value.label);
-							authorizedJobStore.jobNumber = null;
-						}}
-						style={{ paddingHorizontal: 35 }}
-					/>
-				</View>
+						<ModalPicker
+							ref='taskModal'
+							data={taskData}
+							initValue='Tasks'
+							onChange={(value) => {
+								authorizedJobStore.setTaskFilter(value.label);
+								authorizedJobStore.jobNumber = null;
+								authorizedJobStore.subTaskFilter = null;
+							}}
+							style={{ paddingHorizontal: 35 }}
+						/>
+					</View>
+				}
 
 				{/*Select Sub-Task*/}
-				<View style={{ paddingBottom: 30 }}>
-					<Grid style={{ justifyContent: 'center', paddingBottom: 15 }}>
-					  <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Select a Sub-Task</Text>
+				{(authorizedJobStore.taskFilter) &&
+					<View style={{ paddingBottom: 25 }}>
+						<Grid style={{ justifyContent: 'center', paddingBottom: 15 }}>
+						  <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Select a Sub-Task</Text>
+						</Grid>
+
+						<ModalPicker
+							ref='subTaskModal'
+							data={subTaskData}
+							initValue='Sub-Tasks'
+							onChange={(value) => {
+								authorizedJobStore.setSubTaskFilter(value.label);
+								authorizedJobStore.setJobNumber();
+							}}
+							style={{ paddingHorizontal: 35 }}
+						/>
+					</View>
+				}
+
+				{/*Job Number (pre-filled)*/}
+				{(authorizedJobStore.jobNumber) &&
+					<Grid style={{ flexDirection: 'row', justifyContent: 'center', paddingBottom: 25 }}>
+						<Text style={{ fontSize: 18, fontWeight: 'bold' }}>Job Number: </Text>
+						<Text style={styles.jobNumberBorder}>{authorizedJobStore.jobNumber}</Text>
 					</Grid>
+				}
 
-					<ModalPicker
-						data={subTaskData}
-						initValue='Sub-Tasks'
-						onChange={(value) => {
-							authorizedJobStore.setSubTaskFilter(value.label);
-							authorizedJobStore.setJobNumber();
-						}}
-						style={{ paddingHorizontal: 35 }}
-					/>
-				</View>
+				{/*Select Hours*/}
+				{(authorizedJobStore.jobNumber) &&
+					<Grid style={{ flexDirection: 'row', justifyContent: 'center', paddingBottom: 25 }}>
+						<Icon
+							active
+							name='timer'
+							style={{ paddingRight: 3 }}
+						/>
+						<Text style={{ fontSize: 18, fontWeight: 'bold' }}>Hours: </Text>
+						<View>
+							<Input
+								style={styles.hoursEntryBorder}
+								value={authorizedJobStore.hours}
+								onChangeText={value => authorizedJobStore.setHours(value)}
+								returnKeyType='send'
+								keyboardType='numeric'
+								onSubmitEditing={() => alert('Submitted!')}
+							/>
+						</View>
+					</Grid>
+				}
 
-				<View style={{ paddingBottom: 30, flexDirection: 'row', paddingHorizontal: 5 }}>
-					<Text style={{ fontSize: 18, fontWeight: 'bold' }}>Job Number: </Text>
-                    <Text>{authorizedJobStore.jobNumber}</Text>
-                </View>
+				{/*Add Charge Button*/}
+				{(authorizedJobStore.jobNumber) &&
+					<Button
+		               block
+		               onPress={() => {
+		                   Alert.alert(
+		                     'Charge Added!',
+		                      ' '
+		                   );
+						   authorizedJobStore.clearAll();
+		                   navigate('TodaysCharges');
+		               }}
+		               style={styles.addChargeButton}
+		            >
+		               <Text>Add Charge</Text>
+		            </Button>
+				}
 
 			</Content>
 			{/*End Body*/}
@@ -130,5 +190,29 @@ const styles = {
 	},
 	innerContainer: {
 		flex: 1
+	},
+	addChargeButton: {
+      backgroundColor: '#007aff',
+      marginHorizontal: 20,
+  		shadowColor: '#000',
+  		shadowOffset: { width: 0, height: 2 },
+  		shadowOpacity: 0.3,
+  		shadowRadius: 2
+  	},
+	jobNumberBorder: {
+		backgroundColor: '#a0a6ab',
+		borderWidth: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		fontSize: 18
+	},
+	hoursEntryBorder: {
+		borderWidth: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		fontSize: 18,
+		height: 25,
+		width: 50
 	}
+
 };

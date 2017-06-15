@@ -6,7 +6,6 @@ import userStore from './UserStore';
 
 class AuthorizedJobStore {
    @observable authorizedJobs = null;
-   @observable errorMessage = null;
 
    // Use these filters to compute the other arrays
    @observable clientFilter = null;
@@ -20,7 +19,7 @@ class AuthorizedJobStore {
        if (this.authorizedJobs !== null) {
            return !this.authorizedJobs.length;
        } else {
-          throw new Error('authorizedJobs is null!');
+          return 0;
        }
    }
 
@@ -64,6 +63,18 @@ class AuthorizedJobStore {
 
    @action setSubTaskFilter(value) {
       this.subTaskFilter = value;
+   }
+
+   @action setHours(value) {
+      this.hours = value;
+   }
+
+   @action clearAll() {
+       this.clientFilter = null;
+       this.taskFilter = null;
+       this.subTaskFilter = null;
+       this.jobNumber = null;
+       this.hours = null;
    }
 
    @action fetchAuthorizedJobs() {

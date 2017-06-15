@@ -82,7 +82,7 @@ export default class TodaysCharges extends Component {
                      'Charges Updated!',
                       ' '
                    );
-                 navigate('Today\'s Charges');
+                 navigate('TodaysCharges');
                }}
                style={styles.updateChargeButton}
             >
