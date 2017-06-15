@@ -71,10 +71,8 @@ export default class AddEntry extends Component {
 						data={clientData}
 						initValue='Clients'
 						onChange={(value) => {
+							authorizedJobStore.clearAll();
 							authorizedJobStore.setClientFilter(value.label);
-							authorizedJobStore.jobNumber = null;
-							authorizedJobStore.taskFilter = null;
-							authorizedJobStore.subTaskFilter = null;
 						}}
 						style={{ paddingHorizontal: 35 }}
 					/>
@@ -92,9 +90,11 @@ export default class AddEntry extends Component {
 							data={taskData}
 							initValue='Tasks'
 							onChange={(value) => {
+								authorizedJobStore.taskFilter = null;
+					          	authorizedJobStore.subTaskFilter = null;
+					          	authorizedJobStore.jobNumber = null;
+					          	authorizedJobStore.hours = null;
 								authorizedJobStore.setTaskFilter(value.label);
-								authorizedJobStore.jobNumber = null;
-								authorizedJobStore.subTaskFilter = null;
 							}}
 							style={{ paddingHorizontal: 35 }}
 						/>
@@ -113,6 +113,9 @@ export default class AddEntry extends Component {
 							data={subTaskData}
 							initValue='Sub-Tasks'
 							onChange={(value) => {
+								authorizedJobStore.subTaskFilter = null;
+					          	authorizedJobStore.jobNumber = null;
+					          	authorizedJobStore.hours = null;
 								authorizedJobStore.setSubTaskFilter(value.label);
 								authorizedJobStore.setJobNumber();
 							}}
@@ -145,7 +148,14 @@ export default class AddEntry extends Component {
 								onChangeText={value => authorizedJobStore.setHours(value)}
 								returnKeyType='send'
 								keyboardType='numeric'
-								onSubmitEditing={() => alert('Submitted!')}
+								onSubmitEditing={() => {
+									Alert.alert(
+		 		                     'Charge Added!',
+		 		                      ' '
+		 		                   );
+								   authorizedJobStore.addEntry();
+				                   navigate('TodaysCharges');
+								}}
 							/>
 						</View>
 					</Grid>
@@ -155,15 +165,15 @@ export default class AddEntry extends Component {
 				{(authorizedJobStore.jobNumber) &&
 					<Button
 		               block
+					   style={styles.addChargeButton}
 		               onPress={() => {
 		                   Alert.alert(
 		                     'Charge Added!',
 		                      ' '
 		                   );
-						   authorizedJobStore.clearAll();
+						   authorizedJobStore.addEntry();
 		                   navigate('TodaysCharges');
 		               }}
-		               style={styles.addChargeButton}
 		            >
 		               <Text>Add Charge</Text>
 		            </Button>

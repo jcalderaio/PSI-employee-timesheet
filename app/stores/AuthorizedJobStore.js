@@ -94,6 +94,11 @@ class AuthorizedJobStore {
           this.errorMessage = `Error Retreiving Authorized Jobs: ${e}`;
         });
     }
+
+   @action addEntry() {
+      // DO STUFF....
+      this.clearAll();
+   }
 }
 
 const authorizedJobStore = new AuthorizedJobStore();
