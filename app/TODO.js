@@ -42,11 +42,14 @@ TODO:
 
 
 WHAT I DID:
--Added checkmark (it works now)
--
+-Added checkmarks to the "Select Recent" page
+-Added an authorizedJobsStore that holds all information for jobs being Added
+-Finished the frontend for the "Add New Entry" part
+-It only shows one at a time, until you are done with them in order (so select client, then select a task, then select a sub-task, then Job Number is found automatically, then fill in hours, then press send, or press the button).
+-It connects to a function i authorizedJobsStore and it checks to make sure hours are a multiple of 5. If not, it tells the user, if yes, I will add to the array stack with the correct status
+-On Today's charges, you can edit the number of hours and submit
+-Need the backend functions at this point to go much further.
 
 Bugs:
 -Select Recent - when press either button and transferred to "Todays Charges" screen, theres 4 second lag on Android. I think it has to do with sliding the tabs, because when I turned on sliding tabs for iOS, the table looked messed up. When I took it off, it was fixed.
 -Recent Jobs button lagging big time!
--Add Entry - label not changing when pick different box.
--Add Entry - Job Numbers doubling up

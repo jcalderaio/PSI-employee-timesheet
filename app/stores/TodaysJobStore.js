@@ -6,6 +6,7 @@ import userStore from './UserStore';
 class TodaysJobStore {
    @observable todaysJobs = null;
    @observable errorMessage = null;
+   @observable updatedHours = null;
 
    @computed get isEmpty() {
       if (this.todaysJobs !== null) {
@@ -22,6 +23,14 @@ class TodaysJobStore {
          count += job.Hours
       );
       return count;
+   }
+
+   @action setUpdatedHours(value) {
+      this.updatedHours = value;
+   }
+
+   @action updateEntry() {
+      // do stuff
    }
 
    // Retrieve jobs from the server EVERY TIME RECENT JOBS BUTTON IS PRESSED!!!

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Text } from 'react-native';
-import { Grid, Col, Row } from 'native-base';
+import { Grid, Col, Row, View, Input } from 'native-base';
 import { map } from 'lodash';
+import todaysJobStore from '../stores/TodaysJobStore';
 
 const TodaysJobsTable = ({ data }) => {
     return (
@@ -34,7 +35,17 @@ const TodaysJobsTable = ({ data }) => {
                 <Text style={styles.tableStyle.bodyText}>{item.Sub_Task}</Text>
               </Col>
               <Col size={17} style={styles.tableStyle.bodyLast}>
-                <Text style={styles.tableStyle.bodyText}>{item.Hours}</Text>
+                  <View>
+                      <Input
+                          style={styles.hoursEntryBorder}
+                          defaultValue={String(item.Hours)}
+                          value={todaysJobStore.updatedHours}
+                          onChangeText={value => todaysJobStore.setUpdatedHours(value)}
+                          returnKeyType='send'
+                          keyboardType='numeric'
+                          //onSubmitEditing={() => alert('Update Entry!')}
+                      />
+                  </View>
               </Col>
             </Row>
           )}
@@ -92,6 +103,14 @@ const styles = {
     bodyText: {
 			fontSize: 14
 		}
+	},
+    hoursEntryBorder: {
+		borderWidth: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		fontSize: 18,
+		height: 25,
+		width: 50
 	}
 };
 
