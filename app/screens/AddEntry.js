@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
-import { Text, Container, Content, Button, Grid, Header, Left, Right, Body, Title, View, Item, Input, Icon, Label } from 'native-base';
-import { Octicons, Ionicons } from '@expo/vector-icons';
+import { Text, Container, Content, Button, Grid, Header, Left, Right, Body, Title, View, Input, Icon } from 'native-base';
+import { Octicons } from '@expo/vector-icons';
 import { observer } from 'mobx-react/native';
 import ModalPicker from 'react-native-modal-picker';
 
@@ -61,7 +61,7 @@ export default class AddEntry extends Component {
 			<Content>
 
 				{/*Select Client*/}
-				<View style={{ paddingBottom: 25 }}>
+				<View style={{ paddingBottom: 25, paddingTop: 15 }}>
 					<Grid style={{ justifyContent: 'center', paddingBottom: 15 }}>
 					  <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Select a Client</Text>
 					</Grid>
@@ -148,14 +148,7 @@ export default class AddEntry extends Component {
 								onChangeText={value => authorizedJobStore.setHours(value)}
 								returnKeyType='send'
 								keyboardType='numeric'
-								onSubmitEditing={() => {
-									Alert.alert(
-		 		                     'Charge Added!',
-		 		                      ' '
-		 		                   );
-								   authorizedJobStore.addEntry();
-				                   navigate('TodaysCharges');
-								}}
+								onSubmitEditing={() => authorizedJobStore.addEntry(navigate)}
 							/>
 						</View>
 					</Grid>
@@ -166,14 +159,7 @@ export default class AddEntry extends Component {
 					<Button
 		               block
 					   style={styles.addChargeButton}
-		               onPress={() => {
-		                   Alert.alert(
-		                     'Charge Added!',
-		                      ' '
-		                   );
-						   authorizedJobStore.addEntry();
-		                   navigate('TodaysCharges');
-		               }}
+		               onPress={() => authorizedJobStore.addEntry(navigate)}
 		            >
 		               <Text>Add Charge</Text>
 		            </Button>

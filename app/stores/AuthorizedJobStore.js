@@ -1,3 +1,4 @@
+import { Alert } from 'react-native';
 import { observable, computed, action } from 'mobx';
 import base64 from 'base-64';
 import { map, uniq, filter } from 'lodash';  // Import ONLY used functions from Lodash
@@ -95,9 +96,19 @@ class AuthorizedJobStore {
         });
     }
 
-   @action addEntry() {
-      // DO STUFF....
-      this.clearAll();
+   @action addEntry(navigate) {
+      if (this.hours % 0.5 !== 0) {
+          alert('You must enter hours in denominations of 0.5');
+          return;
+      } else {
+         // Do stuff
+         Alert.alert(
+            'Charge Added!',
+            ' '
+         );
+         this.clearAll();
+         navigate('TodaysCharges');
+      }
    }
 }
 
