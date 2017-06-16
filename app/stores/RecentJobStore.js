@@ -1,5 +1,7 @@
 import { observable, computed, action } from 'mobx';
+import { Alert } from 'react-native';
 import base64 from 'base-64';
+import { map } from 'lodash';
 import ApiUtils from '../components/ApiUtils'; // checks for errors in Fetches
 import userStore from './UserStore';
 
@@ -29,6 +31,20 @@ class RecentJobStore {
          this.recentJobs = [];
          this.errorMessage = `Error Retreiving Recent Jobs: ${e}`;
        });
+   }
+
+   @action clearChecks() {
+       if (this.recentJobs !== null) {
+           map(this.recentJobs, (item) => {
+               item.Is_Checked = false;
+           });
+       }
+   }
+
+   @action addRecent(navigate) {
+      Alert.alert('All Charges Added!', ' ');
+      this.clearChecks();
+      navigate('TodaysCharges');
    }
 }
 

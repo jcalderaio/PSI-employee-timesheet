@@ -40,7 +40,9 @@ const TodaysJobsTable = ({ data }) => {
                           style={styles.hoursEntryBorder}
                           defaultValue={String(item.Hours)}
                           value={todaysJobStore.updatedHours}
-                          onChangeText={value => todaysJobStore.setUpdatedHours(value)}
+                          onChangeText={value => {
+                              item.Hours = value;
+                          }}
                           returnKeyType='send'
                           keyboardType='numeric'
                           //onSubmitEditing={() => alert('Update Entry!')}

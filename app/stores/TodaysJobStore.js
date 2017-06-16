@@ -6,7 +6,6 @@ import userStore from './UserStore';
 class TodaysJobStore {
    @observable todaysJobs = null;
    @observable errorMessage = null;
-   @observable updatedHours = null;
 
    @computed get isEmpty() {
       if (this.todaysJobs !== null) {

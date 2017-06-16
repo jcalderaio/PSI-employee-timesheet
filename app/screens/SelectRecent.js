@@ -25,7 +25,11 @@ export default class SelectRecent extends Component {
 					<Right>
 						<Button
                             transparent
-                            onPress={() => goBack(null)}>
+                            onPress={() => {
+								recentJobStore.clearChecks();
+								goBack(null);
+							}}
+						>
 							<Octicons
                                 name='x'
                                 size={26}
@@ -74,10 +78,7 @@ export default class SelectRecent extends Component {
 
 					<Button
                         block
-                        onPress={() => {
-						    Alert.alert('All Charges Added!', ' ');
-						    navigate('TodaysCharges');
-					    }}
+                        onPress={() => recentJobStore.addRecent(navigate)}
                         style={styles.addAllButton}>
 						<Text>Add All</Text>
 					</Button>
