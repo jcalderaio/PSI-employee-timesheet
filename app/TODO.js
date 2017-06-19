@@ -41,23 +41,12 @@ TODO:
   -Fetch data from server when there is an update?
 
 WHat to DO:
--fix hour page by fixing them to themselves. Todays Pages, set their own hour to value
+Bugs:
+-"Job Number" doubles up sometimes
+-Hour edit not sticking on Today's Charges screen
+-Hours concatenating when go back to main screen from Today's Charges
+*** If figure out bugs early let him know
 
 what to say:
 -you dont know if the suggested "status" will work. you dont know how someone will exit the app. swiping?
-
-WHAT I DID:
--Added checkmarks to the "Select Recent" page
--Added many new functions to selectRecentJobStore
--Added an authorizedJobsStore that holds all information for jobs being Added
--Added many new functions to authorizedJobsStore
--Finished the frontend for the "Add New Entry" part
--It only shows one at a time, until you are done with them in order (so select client, then select a task, then select a sub-task, then Job Number is found automatically, then fill in hours, then press send, or press the button).
--It connects to a function i authorizedJobsStore and it checks to make sure hours are a multiple of 5. If not, it tells the user, if yes, I will add to the array stack with the correct status
--On Today's charges, you can edit the number of hours and submit
 -Need the backend functions at this point to go much further.
-
-Bugs:
--"Job Number" doubles up sometimes
--Select Recent - when press either button and transferred to "Todays Charges" screen, theres 4 second lag on Android. I think it has to do with sliding the tabs, because when I turned on sliding tabs for iOS, the table looked messed up. When I took it off, it was fixed.
--Recent Jobs button lagging big time!
