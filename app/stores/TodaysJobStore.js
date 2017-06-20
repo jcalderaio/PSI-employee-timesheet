@@ -1,6 +1,6 @@
 import { observable, computed, action, autorun } from 'mobx';
 import base64 from 'base-64';
-import { map } from 'lodash';  // Import ONLY used functions from Lodash
+import { sum, map } from 'lodash';  // Import ONLY used functions from Lodash
 import ApiUtils from '../components/ApiUtils'; // checks for errors in Fetches
 import userStore from './UserStore';
 
@@ -27,20 +27,9 @@ class TodaysJobStore {
       if (this.todaysJobs === null) {
          return 0;
      } else {
-        return this.computedHours();
+        const arr = map(this.todaysJobs, 'Hours');
+        return sum(arr);
      }
-   }
-
-   @action computedHours() {
-      let count = 0;
-      map(this.todaysJobs, (job) => {
-         count += job.Hours;
-      });
-      return count;
-   }
-
-   @action setUpdatedHours(value) {
-      this.updatedHours = value;
    }
 
    @action updateEntry() {
@@ -61,7 +50,7 @@ class TodaysJobStore {
           this.todaysJobs = responseData;
         })
         .catch(e => {
-          this.recentJobs = [];
+          this.todaysJobs = [];
           this.errorMessage = `Error Retreiving Todays Jobs: ${e}`;
         });
    }

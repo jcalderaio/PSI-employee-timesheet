@@ -12,6 +12,8 @@ class RecentJobStore {
    @computed get isEmpty() {
        if (this.recentJobs !== null) {
            return !this.recentJobs.length;
+       } else {
+           return true;
        }
    }
 

@@ -20,6 +20,7 @@ export default class TodaysCharges extends Component {
         return (
           <View style={styles.centerContainter}>
             <Spinner size='large' />
+            <Text style={{ marginTop: -7, color: '#0BD318' }}>LOADING</Text>
           </View>
         );
       }
@@ -116,5 +117,10 @@ const styles = {
   		shadowRadius: 2,
       marginTop: 60,
       marginBottom: 60
-    }
+    },
+    centerContainter: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
+  	},
 };

@@ -39,9 +39,9 @@ const TodaysJobsTable = ({ data }) => {
                       <Input
                           style={styles.hoursEntryBorder}
                           defaultValue={String(item.Hours)}
-                          value={todaysJobStore.updatedHours}
+                          //value={String(item.Hours)}
                           onChangeText={value => {
-                              item.Hours = value;
+                              item.Hours = Number(value);
                           }}
                           returnKeyType='send'
                           keyboardType='numeric'

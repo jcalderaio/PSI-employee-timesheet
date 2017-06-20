@@ -11,12 +11,18 @@ import todaysJobStore from '../stores/TodaysJobStore';
 import recentJobStore from '../stores/RecentJobStore';
 import authorizedJobStore from '../stores/AuthorizedJobStore';
 
+let flag = true;
+
 @observer
 export default class Main extends Component {
     componentWillMount() {
-        todaysJobStore.fetchTodaysJobs();
-        recentJobStore.fetchRecentJobs();
-        authorizedJobStore.fetchAuthorizedJobs();
+        // Only fetch initial jobs on first launch
+        if (flag) {
+            todaysJobStore.fetchTodaysJobs();
+            recentJobStore.fetchRecentJobs();
+            authorizedJobStore.fetchAuthorizedJobs();
+            flag = false;
+        }
     }
 
  render() {

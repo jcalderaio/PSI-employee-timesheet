@@ -40,12 +40,6 @@ TODO:
   -(make a function in todaysChargesStore?) For "Add Charge", use authorized jobs and filter JSON to fill in component
   -Fetch data from server when there is an update?
 
-WHat to DO:
-Bugs:
--Hour edit not sticking on Today's Charges screen
--Hours concatenating when go back to main screen from Today's Charges
-*** If figure out bugs early let him know
-
 what to say:
 -you dont know if the suggested "status" will work. you dont know how someone will exit the app. swiping?
 -Need the backend functions at this point to go much further.
@@ -54,3 +48,5 @@ What I did:
 -Fixed the doubling up numbers on 'Add Entry' screen:
     1) I added a "unique" tag to the ones that were doubling the same numbers
     2) For those with different numbers, I added another place to pick the job number
+-Doesn't reload from API upon subsequent reloads. Only loads when I want them too, giving me grain control of the app.
+-Fixed the main screen with the hours. Before, on todays charges, when you edited an hour and flipped back to the main screen, the number of hours would not add properly. This is because it was concatenating it like a string. I had to force it into a number, and then it worked just fine.
