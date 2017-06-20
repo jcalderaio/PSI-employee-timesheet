@@ -42,7 +42,7 @@ TODO:
 
 WHat to DO:
 Bugs:
--"Job Number" doubles up sometimes
+-"Job Number" doubles up sometimes - figured out. Fixed "uniq" and backend needs to fix (non-unique numbers).
 -Hour edit not sticking on Today's Charges screen
 -Hours concatenating when go back to main screen from Today's Charges
 *** If figure out bugs early let him know
@@ -50,3 +50,8 @@ Bugs:
 what to say:
 -you dont know if the suggested "status" will work. you dont know how someone will exit the app. swiping?
 -Need the backend functions at this point to go much further.
+
+What I did:
+-Fixed the doubling up numbers on 'Add Entry' screen:
+    1) I added a "unique" tag to the ones that were doubling the same numbers
+    2) For those with different numbers, I added another place to pick the job number

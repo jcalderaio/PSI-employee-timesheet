@@ -1,5 +1,6 @@
 import { observable, computed, action } from 'mobx';
 import base64 from 'base-64';
+import { map } from 'lodash';  // Import ONLY used functions from Lodash
 import ApiUtils from '../components/ApiUtils'; // checks for errors in Fetches
 import userStore from './UserStore';
 
@@ -16,11 +17,16 @@ class TodaysJobStore {
    @computed get totalHours() {
       if (this.todaysJobs === null) {
          return 0;
-      }
+     } else {
+        return this.computedHours();
+     }
+   }
+
+   @action computedHours() {
       let count = 0;
-      this.todaysJobs.map(job =>
-         count += job.Hours
-      );
+      map(this.todaysJobs, (job) => {
+         count += job.Hours;
+      });
       return count;
    }
 

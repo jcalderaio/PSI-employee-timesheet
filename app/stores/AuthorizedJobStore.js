@@ -20,6 +20,14 @@ class AuthorizedJobStore {
        if (this.authorizedJobs !== null) {
            return !this.authorizedJobs.length;
        } else {
+          return true;
+       }
+   }
+
+   @computed get jobNumberSize() {
+       if (this.jobNumber !== null) {
+           return this.jobNumber.length;
+       } else {
           return 0;
        }
    }

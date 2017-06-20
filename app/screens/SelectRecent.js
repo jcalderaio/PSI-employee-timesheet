@@ -68,17 +68,14 @@ export default class SelectRecent extends Component {
 
 					<Button
                         block
-                        onPress={() => {
-						    Alert.alert('Selected Charges Added', ' ');
-							navigate('TodaysCharges');
-					    }}
+                        onPress={() => recentJobStore.addRecent('Selected', navigate)}
                         style={styles.addSelectedButton}>
 						<Text>Add Selected</Text>
 					</Button>
 
 					<Button
                         block
-                        onPress={() => recentJobStore.addRecent(navigate)}
+                        onPress={() => recentJobStore.addRecent('All', navigate)}
                         style={styles.addAllButton}>
 						<Text>Add All</Text>
 					</Button>

@@ -41,8 +41,19 @@ class RecentJobStore {
        }
    }
 
-   @action addRecent(navigate) {
-      Alert.alert('All Charges Added!', ' ');
+   @action addRecent(flag, navigate) {
+      if (flag === 'Selected') {
+         let count = 0;
+         map(this.recentJobs, (item) => {
+             if (item.Is_Checked) {
+                 ++count;
+             }
+         });
+         Alert.alert(`${count} Charges Added!`, ' ');
+      } else {
+         Alert.alert('All Charges Added!', ' ');
+      }
+      // Do stuff
       this.clearChecks();
       navigate('TodaysCharges');
    }

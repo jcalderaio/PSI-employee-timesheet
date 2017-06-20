@@ -32,6 +32,12 @@ export default class AddEntry extends Component {
 	));
 	subTaskData.unshift({ key: -3, section: true, label: 'Sub-Tasks' });
 
+	// Add data to jobNumberData from authorizedJobStore
+	const jobNumberData = map(authorizedJobStore.jobNumber, (item, i) => (
+		{ key: i, label: item }
+	));
+	jobNumberData.unshift({ key: -4, section: true, label: 'Job Numbers' });
+
     return (
         <Container>
 
@@ -124,13 +130,39 @@ export default class AddEntry extends Component {
 					</View>
 				}
 
+
 				{/*Job Number (pre-filled)*/}
-				{(authorizedJobStore.jobNumber) &&
+				{/*If there is 1 unique Job_Number*/}
+				{(authorizedJobStore.jobNumberSize === 1) &&
 					<Grid style={{ flexDirection: 'row', justifyContent: 'center', paddingBottom: 25 }}>
 						<Text style={{ fontSize: 18, fontWeight: 'bold' }}>Job Number: </Text>
 						<Text style={styles.jobNumberBorder}>{authorizedJobStore.jobNumber}</Text>
 					</Grid>
 				}
+
+				{/*ORR*/}
+
+				{/*Job Number (pre-filled)*/}
+				{/*If there are 2 or more job numbers*/}
+				{(authorizedJobStore.jobNumberSize >= 2) &&
+					<View style={{ paddingBottom: 25 }}>
+						<Grid style={{ justifyContent: 'center', paddingBottom: 15 }}>
+						  <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Select a Job Number</Text>
+						</Grid>
+
+						<ModalPicker
+							ref='jobNoModal'
+							data={jobNumberData}
+							initValue='Job Numbers'
+							onChange={(value) => {
+					          	authorizedJobStore.jobNumber = null;
+								authorizedJobStore.jobNumber = value.label;
+							}}
+							style={{ paddingHorizontal: 35 }}
+						/>
+					</View>
+				}
+
 
 				{/*Select Hours*/}
 				{(authorizedJobStore.jobNumber) &&
@@ -207,7 +239,7 @@ const styles = {
 		justifyContent: 'center',
 		alignItems: 'center',
 		fontSize: 18,
-		height: 25,
+		height: 20,
 		width: 50
 	}
 
