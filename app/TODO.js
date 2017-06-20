@@ -42,7 +42,6 @@ TODO:
 
 WHat to DO:
 Bugs:
--"Job Number" doubles up sometimes - figured out. Fixed "uniq" and backend needs to fix (non-unique numbers).
 -Hour edit not sticking on Today's Charges screen
 -Hours concatenating when go back to main screen from Today's Charges
 *** If figure out bugs early let him know

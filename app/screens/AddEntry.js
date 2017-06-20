@@ -10,28 +10,27 @@ import { map } from 'lodash';
 
 import authorizedJobStore from '../stores/AuthorizedJobStore';
 
+// Add this to show that it will update the observables in the MobX stores
 @observer
 export default class AddEntry extends Component {
 	render() {
+		// These are from React Navigation
     const { goBack, navigate } = this.props.navigation;
 	// Add data to clientData from authorizedJobStore
 	const clientData = map(authorizedJobStore.clientNamesWithoutDupes, (item, i) => (
 		{ key: i, label: item }
 	));
 	clientData.unshift({ key: -1, section: true, label: 'Clients' });
-
 	// Add data to taskData from authorizedJobStore
 	const taskData = map(authorizedJobStore.tasksWithoutDupes, (item, i) => (
 		{ key: i, label: item }
 	));
 	taskData.unshift({ key: -2, section: true, label: 'Tasks' });
-
 	// Add data to subTaskData from authorizedJobStore
 	const subTaskData = map(authorizedJobStore.subTasksWithoutDupes, (item, i) => (
 		{ key: i, label: item }
 	));
 	subTaskData.unshift({ key: -3, section: true, label: 'Sub-Tasks' });
-
 	// Add data to jobNumberData from authorizedJobStore
 	const jobNumberData = map(authorizedJobStore.jobNumber, (item, i) => (
 		{ key: i, label: item }
@@ -68,7 +67,7 @@ export default class AddEntry extends Component {
 
 				{/*Select Client*/}
 				<View style={{ paddingBottom: 25, paddingTop: 15 }}>
-					<Grid style={{ justifyContent: 'center', paddingBottom: 15 }}>
+					<Grid style={{ justifyContent: 'center', paddingBottom: 10 }}>
 					  <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Select a Client</Text>
 					</Grid>
 
@@ -87,7 +86,7 @@ export default class AddEntry extends Component {
 				{/*Select Task*/}
 				{(authorizedJobStore.clientFilter) &&
 					<View style={{ paddingBottom: 25 }}>
-						<Grid style={{ justifyContent: 'center', paddingBottom: 15 }}>
+						<Grid style={{ justifyContent: 'center', paddingBottom: 10 }}>
 						  <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Select a Task</Text>
 						</Grid>
 
@@ -110,7 +109,7 @@ export default class AddEntry extends Component {
 				{/*Select Sub-Task*/}
 				{(authorizedJobStore.taskFilter) &&
 					<View style={{ paddingBottom: 25 }}>
-						<Grid style={{ justifyContent: 'center', paddingBottom: 15 }}>
+						<Grid style={{ justifyContent: 'center', paddingBottom: 10 }}>
 						  <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Select a Sub-Task</Text>
 						</Grid>
 
@@ -140,13 +139,13 @@ export default class AddEntry extends Component {
 					</Grid>
 				}
 
-				{/*ORR*/}
+				{/*OR*/}
 
 				{/*Job Number (pre-filled)*/}
 				{/*If there are 2 or more job numbers*/}
 				{(authorizedJobStore.jobNumberSize >= 2) &&
 					<View style={{ paddingBottom: 25 }}>
-						<Grid style={{ justifyContent: 'center', paddingBottom: 15 }}>
+						<Grid style={{ justifyContent: 'center', paddingBottom: 10 }}>
 						  <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Select a Job Number</Text>
 						</Grid>
 
@@ -166,11 +165,11 @@ export default class AddEntry extends Component {
 
 				{/*Select Hours*/}
 				{(authorizedJobStore.jobNumber) &&
-					<Grid style={{ flexDirection: 'row', justifyContent: 'center', paddingBottom: 25 }}>
+					<Grid style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingBottom: 25 }}>
 						<Icon
 							active
 							name='timer'
-							style={{ paddingRight: 3 }}
+							style={{ paddingRight: 5 }}
 						/>
 						<Text style={{ fontSize: 18, fontWeight: 'bold' }}>Hours: </Text>
 						<View>
