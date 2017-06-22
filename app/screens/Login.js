@@ -103,7 +103,6 @@ export default class Login extends Component {
 	    .then(ApiUtils.checkStatus)
 	    .then(response => response.json())
 	    .then(responseData => {
-
 		  // On successful login, store the username in async storage
 		  this.saveToStorage('user', windowsId).done();
 
@@ -137,12 +136,13 @@ export default class Login extends Component {
     render() {
         return (
             <Container>
-				{/*Hide Status Bar on Android because cuts into header*/}
+				{/*Hide Status Bar on Android because cuts into header
 				{(Platform.OS === 'android') &&
 					<StatusBar
 						hidden
 					/>
 				}
+				*/}
 
 				<Header
                     style={styles.headerStyle}

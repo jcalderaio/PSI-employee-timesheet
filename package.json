@@ -1,7 +1,9 @@
 {
     "name": "timesheet-navigation",
-    "version": "0.2.0",
+    "description": "An app for the employees of Parametric Solutions to log their charges (Client, Task, Sub-Task, Hours). They may add, remove, or update their charges.",
+    "version": "3.0.0",
     "private": true,
+    "orientation": "portrait",
     "devDependencies": {
         "babel-plugin-transform-decorators-legacy": "^1.3.4",
         "eslint-config-rallycoding": "^3.2.0",

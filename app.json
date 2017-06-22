@@ -1,5 +1,6 @@
 {
-  "expo": {
-    "sdkVersion": "16.0.0"
-  }
+    "expo": {
+        "sdkVersion": "16.0.0",
+        "orientation": "portrait"
+    }
 }

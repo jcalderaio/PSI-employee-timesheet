@@ -49,4 +49,5 @@ What I did:
 -Doesn't reload from API upon subsequent reloads. Only loads when I want them too, giving me grain control of the app.
 -Fixed the main screen with the hours. Before, on todays charges, when you edited an hour and flipped back to the main screen, the number of hours would not add properly. This is because it was concatenating it like a string. I had to force it into a number, and then it worked just fine.
   3) Added the new Logo
-    -Added black around the screen and the input areas. Looks like how many professional apps look.
+-Added black around the screen and the input areas. Looks like how many professional apps look.
+  4) Status bar. Before, Android's status bar was being smushed. But, now, the Android status bar is configured to fit into the screen.  

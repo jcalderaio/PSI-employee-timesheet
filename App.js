@@ -1,5 +1,6 @@
 import React from 'react';
-import Expo from 'expo';
+import { View } from 'react-native';
+import Expo, { Constants } from 'expo'; // Constants for Android status bar
 import { ModalStack } from './app/navigation';
 
 export default class App extends React.Component {
@@ -12,9 +13,12 @@ export default class App extends React.Component {
 
 	async componentWillMount() {
 		// Need for NativeBase + Android
-		await Expo.Font.loadAsync({ 'Roboto': require('native-base/Fonts/Roboto.ttf'), 'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf')});
+		await Expo.Font.loadAsync({ 'Roboto': require('native-base/Fonts/Roboto.ttf'), 'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf') });
 
-		this.setState({ isReady: true }); // Need for NativeBase + Android
+		// Need for NativeBase + Android
+		this.setState({
+			isReady: true
+		});
 	}
 
 	render() {
@@ -23,6 +27,21 @@ export default class App extends React.Component {
 			return <Expo.AppLoading />;
 		}
 
-		return (<ModalStack />);
+		// Allows the status bar to fit on Android screens
+		return (
+			<View style={[styles.container, !Constants.platform && styles.androidStatusBarPadding]}>
+				<ModalStack />
+			</View>
+		);
 	}
 }
+
+// For android Status bar
+const styles = {
+  container: {
+    flex: 1,
+  },
+  androidStatusBarPadding: {
+    paddingTop: Constants.statusBarHeight
+  }
+};
