@@ -19,7 +19,7 @@ export default class Login extends Component {
 			windowsId: '',
 			password: '',
 			message: '',
-			visibleHeight: 525,  //Initial height of screen (used to move keyboard)
+			visibleHeight: 525,  //Initial height of screen (used to move keyboard) (was 525)
 		};
 
 		// Gives Android animations
@@ -33,6 +33,7 @@ export default class Login extends Component {
 		this.loadFromStorage('user');
 		this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow.bind(this));
     	this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide.bind(this));
+		//alert(`Height = ${Dimensions.get('window').height}`);
 	}
 
 	// removes listeners from keyboard on unmount component
@@ -152,9 +153,10 @@ export default class Login extends Component {
                 </Header>
 
 				<Content
-					style={{ backgroundColor: '#FFF' }}
+					style={{ backgroundColor: 'black' }}
 					contentContainerStyle={{ height: this.state.visibleHeight }}
 				>
+
 
 					<View style={{ flex: 1 }}>
 						<Image
@@ -165,7 +167,9 @@ export default class Login extends Component {
 					</View>
 
 					<View style={{ flex: 1.3 }}>
-						<Form>
+						<Form
+							style={{ backgroundColor: 'white', marginHorizontal: 20 }}
+						>
 							<Item inlineLabel>
 								<Icon
 									active
@@ -236,6 +240,8 @@ export default class Login extends Component {
 						{/* If bad username/password then show error */}
 						<Text style={styles.errorMessageStyle}>{this.state.message}</Text>
 					</View>
+
+
 				</Content>
 			</Container>
         );

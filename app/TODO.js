@@ -34,11 +34,9 @@ TODO:
         -Select Recent- select recent jobs, and they are added to TodaysJobStore.todaysJobs (with a status of 3, add new) without updating the database.
         -Add Entry: input all the data and put status code to 2 (Add New). Then add this to "Todays Jobs", without touching the database
         -Changing todays_hours - if change todays hours, status code changes to update.
-
-  -show "checks" on recent
   -new logo. new colors?
-  -(make a function in todaysChargesStore?) For "Add Charge", use authorized jobs and filter JSON to fill in component
   -Fetch data from server when there is an update?
+  -Make app only work in portrait mode
 
 what to say:
 -you dont know if the suggested "status" will work. you dont know how someone will exit the app. swiping?
@@ -47,6 +45,8 @@ what to say:
 What I did:
 -Fixed the doubling up numbers on 'Add Entry' screen:
     1) I added a "unique" tag to the ones that were doubling the same numbers
-    2) For those with different numbers, I added another place to pick the job number
+    2) For those that returned more than one different number, I added another "picker" for the user to choose from
 -Doesn't reload from API upon subsequent reloads. Only loads when I want them too, giving me grain control of the app.
 -Fixed the main screen with the hours. Before, on todays charges, when you edited an hour and flipped back to the main screen, the number of hours would not add properly. This is because it was concatenating it like a string. I had to force it into a number, and then it worked just fine.
+  3) Added the new Logo
+    -Added black around the screen and the input areas. Looks like how many professional apps look.
