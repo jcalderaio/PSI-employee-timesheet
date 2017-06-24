@@ -37,8 +37,18 @@ TODO:
   -new logo. new colors?
   -Fetch data from server when there is an update?
   -Make app only work in portrait mode
+  -on Todays charges, if select text, highlight all text
+  -highlight things that have not been changed (pink lines?) ??? (have uncommitted information)
+PTO
+  -Hours in database in variable vs hours there
+  -PTO - show PTO hours left on main screen
+  -make sure not negative and does not exceed PTO hours
+Flex
+  -show flex on main
+  -allows to bank time
+  -expected - worked = most negative on flex
 
-what to say:
+What to say:
 -you dont know if the suggested "status" will work. you dont know how someone will exit the app. swiping?
 -Need the backend functions at this point to go much further.
 
@@ -50,4 +60,4 @@ What I did:
 -Fixed the main screen with the hours. Before, on todays charges, when you edited an hour and flipped back to the main screen, the number of hours would not add properly. This is because it was concatenating it like a string. I had to force it into a number, and then it worked just fine.
   3) Added the new Logo
 -Added black around the screen and the input areas. Looks like how many professional apps look.
-  4) Status bar. Before, Android's status bar was being smushed. But, now, the Android status bar is configured to fit into the screen.  
+  4) Status bar. Before, Android's status bar was being smushed. But, now, the Android status bar is configured to fit into the screen.
