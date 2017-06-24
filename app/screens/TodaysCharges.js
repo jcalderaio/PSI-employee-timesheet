@@ -55,7 +55,7 @@ export default class TodaysCharges extends Component {
   					{/*If No Recent Jobs*/}
   					{(todaysJobStore.isEmpty) &&
   						<Grid style={{ justifyContent: 'center', padding: 10, marginTop: 20 }}>
-  			              <Text style={{ fontWeight: 'bold', fontSize: 18 }}> You have no recent jobs!</Text>
+  			              <Text style={{ fontWeight: 'bold', fontSize: 18 }}> You have no charges for today!</Text>
   			            </Grid>
   					}
 

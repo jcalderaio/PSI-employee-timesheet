@@ -51,7 +51,15 @@ class RecentJobStore {
                  ++count;
              }
          });
-         Alert.alert(`${count} Charges Added!`, ' ');
+         // If no charges selected, do nothing & exit function
+         if (count === 0) {
+            Alert.alert('No charges selected!', ' ');
+            return;
+         } else if (count === 1) {
+            Alert.alert('1 Charge Added!', ' ');
+         } else {
+            Alert.alert(`${count} Charges Added!`, ' ');
+         }
       } else {
          Alert.alert('All Charges Added!', ' ');
       }
