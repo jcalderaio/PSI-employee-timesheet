@@ -55,10 +55,11 @@ class AuthorizedJobStore {
       }
    }
 
-   @action setJobNumber() {
+   // Retrieves an array of Job Number's without duplicates
+   @computed get jobNumberWithoutDupes() {
       if (this.authorizedJobs !== null && this.clientFilter !== null && this.taskFilter !== null && this.subTaskFilter !== null) {
          const temp = filter(this.authorizedJobs, { 'Client_Name': this.clientFilter, 'Task': this.taskFilter, 'Sub_Task': this.subTaskFilter });
-         this.jobNumber = uniq(map(temp, 'Job_Number'));
+         return uniq(map(temp, 'Job_Number'));
       }
    }
 
@@ -72,6 +73,10 @@ class AuthorizedJobStore {
 
    @action setSubTaskFilter(value) {
       this.subTaskFilter = value;
+   }
+
+   @action setJobNumber(value) {
+       this.jobNumber = value;
    }
 
    @action setHours(value) {
@@ -105,11 +110,17 @@ class AuthorizedJobStore {
     }
 
    @action addEntry(navigate) {
-      if (this.hours % 0.5 !== 0) {
+      if (this.hours == 0) {
+          alert('You cannot enter \'0\' for hours');
+          return;
+      } else if (this.hours % 0.5 !== 0) {
           alert('You must enter hours in denominations of 0.5');
           return;
       } else {
-         // Do stuff
+         this.hours = Number(this.hours);
+
+         //Do Stuff
+         
          Alert.alert(
             'Charge Added!',
             ' '

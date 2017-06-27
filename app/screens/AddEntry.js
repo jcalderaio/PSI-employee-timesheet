@@ -32,7 +32,7 @@ export default class AddEntry extends Component {
 	));
 	subTaskData.unshift({ key: -3, section: true, label: 'Sub-Tasks' });
 	// Add data to jobNumberData from authorizedJobStore
-	const jobNumberData = map(authorizedJobStore.jobNumber, (item, i) => (
+	const jobNumberData = map(authorizedJobStore.jobNumberWithoutDupes, (item, i) => (
 		{ key: i, label: item }
 	));
 	jobNumberData.unshift({ key: -4, section: true, label: 'Job Numbers' });
@@ -122,28 +122,23 @@ export default class AddEntry extends Component {
 					          	authorizedJobStore.jobNumber = null;
 					          	authorizedJobStore.hours = null;
 								authorizedJobStore.setSubTaskFilter(value.label);
-								authorizedJobStore.setJobNumber();
 							}}
 							style={{ paddingHorizontal: 35 }}
 						/>
 					</View>
 				}
 
-
-				{/*Job Number (pre-filled)*/}
-				{/*If there is 1 unique Job_Number*/}
+				{/*Was for when number auto-filled if less than 1*/}
+				{/*}
 				{(authorizedJobStore.jobNumberSize === 1) &&
 					<Grid style={{ flexDirection: 'row', justifyContent: 'center', paddingBottom: 25 }}>
 						<Text style={{ fontSize: 18, fontWeight: 'bold' }}>Job Number: </Text>
 						<Text style={styles.jobNumberBorder}>{authorizedJobStore.jobNumber}</Text>
 					</Grid>
-				}
+				} */}
 
-				{/*OR*/}
-
-				{/*Job Number (pre-filled)*/}
-				{/*If there are 2 or more job numbers*/}
-				{(authorizedJobStore.jobNumberSize >= 2) &&
+				{/*Select Job Number*/}
+				{(authorizedJobStore.subTaskFilter) &&
 					<View style={{ paddingBottom: 25 }}>
 						<Grid style={{ justifyContent: 'center', paddingBottom: 10 }}>
 						  <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Select a Job Number</Text>
@@ -154,14 +149,14 @@ export default class AddEntry extends Component {
 							data={jobNumberData}
 							initValue='Job Numbers'
 							onChange={(value) => {
-					          	authorizedJobStore.jobNumber = null;
-								authorizedJobStore.jobNumber = value.label;
+								authorizedJobStore.jobNumber = null;
+								authorizedJobStore.hours = null;
+								authorizedJobStore.setJobNumber(value.label);
 							}}
 							style={{ paddingHorizontal: 35 }}
 						/>
 					</View>
 				}
-
 
 				{/*Select Hours*/}
 				{(authorizedJobStore.jobNumber) &&
@@ -176,7 +171,10 @@ export default class AddEntry extends Component {
 							<Input
 								style={styles.hoursEntryBorder}
 								value={authorizedJobStore.hours}
-								onChangeText={value => authorizedJobStore.setHours(value)}
+								onChangeText={value => {
+									authorizedJobStore.hours = null;
+									authorizedJobStore.setHours(value);
+								}}
 								returnKeyType='send'
 								keyboardType='numeric'
 								onSubmitEditing={() => authorizedJobStore.addEntry(navigate)}
@@ -186,7 +184,7 @@ export default class AddEntry extends Component {
 				}
 
 				{/*Add Charge Button*/}
-				{(authorizedJobStore.jobNumber) &&
+				{(authorizedJobStore.hours !== null && authorizedJobStore.hours !== '') &&
 					<Button
 		               block
 					   style={styles.addChargeButton}
@@ -194,6 +192,14 @@ export default class AddEntry extends Component {
 		            >
 		               <Text>Add Charge</Text>
 		            </Button>
+				}
+
+				{(authorizedJobStore.hours === null || authorizedJobStore.hours === '') &&
+					<View style={{ paddingHorizontal: 35 }}>
+					  <Grid style={{ justifyContent: 'center' }} >
+						  <Text style={{ color: 'steelblue', fontSize: 16, textAlign: 'center' }}>Click the bottom-most field and make a selection to reveal the next one.</Text>
+					  </Grid>
+					</View>
 				}
 
 			</Content>
