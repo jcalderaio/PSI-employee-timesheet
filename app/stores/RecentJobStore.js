@@ -1,7 +1,7 @@
 import { observable, computed, action } from 'mobx';
 import { Alert } from 'react-native';
 import base64 from 'base-64';
-import { map, filter, some, concat } from 'lodash';
+import { map, filter, some } from 'lodash';
 import ApiUtils from '../components/ApiUtils'; // checks for errors in Fetches
 import userStore from './UserStore';
 
@@ -51,9 +51,11 @@ class RecentJobStore {
          Alert.alert('No recent charges available!', ' ');
          return;
       }
+      let dupeFlag = false;
+      let dupeCount = 0;
+      let count = 0;
 
       if (flag === 'Selected') {
-         let count = 0;
          map(this.recentJobs, (item) => {
              if (item.Is_Checked) {
                  ++count;
@@ -69,14 +71,50 @@ class RecentJobStore {
                //Initialize todaysJobs array
                todaysJobStore.todaysJobs = filter(this.recentJobs, { 'Is_Checked': true });
             } else {
+               count = 0;
+               //Put all checked rows into one array
                const tempRecent = filter(this.recentJobs, { 'Is_Checked': true });
-               map(tempRecent, e => todaysJobStore.todaysJobs.push(e));
+               //Iterate through all in array
+               map(tempRecent, e => {
+                  //Only add rows if not found in TodaysJobs (no duplicates)
+                  if (!some(todaysJobStore.todaysJobs, ['Job_Number'.trim(), e.Job_Number.trim()])) {
+                     todaysJobStore.todaysJobs.push(e);
+                     ++count;
+                  } else {
+                     ++dupeCount;
+                     dupeFlag = true;
+                  }
+               });
             }
-            Alert.alert('Selected Charges Added!', ' ');
+            const balance = count - dupeCount;
+            if (balance < 0) {
+               Alert.alert('No Charges Added! All duplicates!', ' ');
+            } else if (dupeFlag) {
+               Alert.alert(`${count} Charges Added!`, `${dupeCount} duplicates NOT added.`);
+            } else {
+               Alert.alert(`${count} Charges Added!`, ' ');
+            }
          }
+         //Flag == Add All
       } else {
-         map(this.recentJobs, e => todaysJobStore.todaysJobs.push(e));
-         Alert.alert('All Charges Added!', ' ');
+         map(this.recentJobs, e => {
+            //Only add rows if not found in TodaysJobs (no duplicates)
+            if (!some(todaysJobStore.todaysJobs, ['Job_Number'.trim(), e.Job_Number.trim()])) {
+               todaysJobStore.todaysJobs.push(e);
+               ++count;
+            } else {
+               ++dupeCount;
+               dupeFlag = true;
+            }
+         });
+         const balance = count - dupeCount;
+         if (balance < 0) {
+            Alert.alert('No Charges Added! All duplicates!', ' ');
+         } else if (dupeFlag) {
+            Alert.alert(`All Charges (Except for ${dupeCount} duplicates) Added!`, ' ');
+         } else {
+            Alert.alert('All Charges Added!', ' ');
+         }
       }
 
       this.clearChecks();

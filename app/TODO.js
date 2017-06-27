@@ -16,4 +16,5 @@ What I did:
 -Fixed the "Add Entry" screen. Numbers were splitting into characters, so I fixed that. Also, checks if hours are '0' and if hours are not 0.5 intervals
 -Added directions to the "Add Entry" screen that delete when the "Add Charge" button shows up
 -App only works in portrait mode
--Select Recent now adds non-duplicates to TodaysJobStore.todaysJobs
+-Select Recent now adds non-duplicates to TodaysJobStore.todaysJobs (proven by a row count on todays jobs)
+-Tons of debugging for Select Recent, such as, how many successfully added, how many were duplicates and not added, if non-are selected, etc.
