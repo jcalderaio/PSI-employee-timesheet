@@ -27,6 +27,8 @@ export default class Main extends Component {
 
  render() {
     const { navigate, goBack } = this.props.navigation;
+    console.log('Todays Jobs:', todaysJobStore.todaysJobs);
+    console.log('Recent Jobs:', recentJobStore.recentJobs);
 
     if ((recentJobStore.recentJobs === null) || (todaysJobStore.todaysJobs === null)) {
       return (

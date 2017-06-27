@@ -110,6 +110,7 @@ class AuthorizedJobStore {
     }
 
    @action addEntry(navigate) {
+         // Compares to string version of '0'
       if (this.hours == 0) {
           alert('You cannot enter \'0\' for hours');
           return;
@@ -120,7 +121,7 @@ class AuthorizedJobStore {
          this.hours = Number(this.hours);
 
          //Do Stuff
-         
+
          Alert.alert(
             'Charge Added!',
             ' '

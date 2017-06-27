@@ -23,6 +23,14 @@ class TodaysJobStore {
      }
    }
 
+   @computed get size() {
+      if (this.todaysJobs === null) {
+         return 0;
+     } else {
+         return this.todaysJobs.length;
+     }
+   }
+
    @computed get totalHours() {
       if (this.todaysJobs === null) {
          return 0;

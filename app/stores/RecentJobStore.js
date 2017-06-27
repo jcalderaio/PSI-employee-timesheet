@@ -1,9 +1,12 @@
 import { observable, computed, action } from 'mobx';
 import { Alert } from 'react-native';
 import base64 from 'base-64';
-import { map } from 'lodash';
+import { map, filter, some, concat } from 'lodash';
 import ApiUtils from '../components/ApiUtils'; // checks for errors in Fetches
 import userStore from './UserStore';
+
+//MobX
+import todaysJobStore from '../stores/TodaysJobStore';
 
 class RecentJobStore {
    @observable recentJobs = null;
@@ -44,6 +47,11 @@ class RecentJobStore {
    }
 
    @action addRecent(flag, navigate) {
+      if (this.isEmpty) {
+         Alert.alert('No recent charges available!', ' ');
+         return;
+      }
+
       if (flag === 'Selected') {
          let count = 0;
          map(this.recentJobs, (item) => {
@@ -55,15 +63,22 @@ class RecentJobStore {
          if (count === 0) {
             Alert.alert('No charges selected!', ' ');
             return;
-         } else if (count === 1) {
-            Alert.alert('1 Charge Added!', ' ');
          } else {
-            Alert.alert(`${count} Charges Added!`, ' ');
+            // Todays jobs empty, so just return all recentJobs
+            if (todaysJobStore.isEmpty) {
+               //Initialize todaysJobs array
+               todaysJobStore.todaysJobs = filter(this.recentJobs, { 'Is_Checked': true });
+            } else {
+               const tempRecent = filter(this.recentJobs, { 'Is_Checked': true });
+               map(tempRecent, e => todaysJobStore.todaysJobs.push(e));
+            }
+            Alert.alert('Selected Charges Added!', ' ');
          }
       } else {
+         map(this.recentJobs, e => todaysJobStore.todaysJobs.push(e));
          Alert.alert('All Charges Added!', ' ');
       }
-      // Do stuff
+
       this.clearChecks();
       navigate('TodaysCharges');
    }

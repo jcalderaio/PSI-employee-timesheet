@@ -39,11 +39,16 @@ export default class TodaysCharges extends Component {
           <Content>
 
             {/*Heading*/}
-            <Grid style={{ justifyContent: 'center', paddingVertical: 30 }}>
-              <Text style={{ fontSize: 18 }}>
-                <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Charges for Today: </Text> {moment().format('dddd, MMMM D, YYYY')}
-              </Text>
-            </Grid>
+            <View style={{ paddingVertical: 30 }}>
+              <Grid style={{ justifyContent: 'center' }}>
+                <Text style={{ fontSize: 18 }}>
+                  <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Charges for Today: </Text> {moment().format('dddd, MMMM D, YYYY')}
+                </Text>
+              </Grid>
+              <Grid style={{ justifyContent: 'center', paddingTop: 10 }} >
+                  <Text style={{ color: 'red', fontSize: 16 }}>ALWAYS Update after changing ANYTHING!</Text>
+              </Grid>
+            </View>
 
             {/*If error*/}
   					{(todaysJobStore.errorMessage) &&
@@ -89,6 +94,8 @@ export default class TodaysCharges extends Component {
             >
                <Text>Update Charges</Text>
              </Button>
+
+             <Text>Size: {todaysJobStore.size}</Text>
 
           </Content>
       </Container>

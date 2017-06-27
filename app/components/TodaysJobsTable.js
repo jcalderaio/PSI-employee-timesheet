@@ -56,16 +56,16 @@ const TodaysJobsTable = ({ data }) => {
 };
 
 const styles = {
-  container: {
-    flex: 1,
-  },
-  tableStyle: {
-    titleFirst: {
-      backgroundColor: '#a0a6ab',
+	container: {
+		flex: 1
+	},
+	tableStyle: {
+		titleFirst: {
+			backgroundColor: '#a0a6ab',
 			borderWidth: 1,
 			justifyContent: 'center',
 			alignItems: 'center'
-    },
+		},
 		title: {
 			backgroundColor: '#a0a6ab',
 			borderTopWidth: 1,
@@ -81,14 +81,14 @@ const styles = {
 			justifyContent: 'center',
 			alignItems: 'center'
 		},
-    bodyFirst: {
-      backgroundColor: '#fff',
-      borderLeftWidth: 1,
+		bodyFirst: {
+			backgroundColor: '#fff',
+			borderLeftWidth: 1,
 			borderBottomWidth: 1,
 			borderRightWidth: 1,
 			justifyContent: 'center',
 			alignItems: 'center'
-    },
+		},
 		body: {
 			backgroundColor: '#fff',
 			borderBottomWidth: 1,
@@ -102,11 +102,11 @@ const styles = {
 			justifyContent: 'center',
 			alignItems: 'center'
 		},
-    bodyText: {
+		bodyText: {
 			fontSize: 14
 		}
 	},
-    hoursEntryBorder: {
+	hoursEntryBorder: {
 		borderWidth: 1,
 		justifyContent: 'center',
 		alignItems: 'center',

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
-import { Container, Content, Button, Grid, Row, Col, Header, Left, Right, Body, Title, Text, Spinner, View } from 'native-base';
+import { Container, Content, Button, Grid, Header, Left, Right, Body, Title, Text } from 'native-base';
 import { Octicons } from '@expo/vector-icons';
 
 // MobX
