@@ -41,14 +41,10 @@ export default class TodaysCharges extends Component {
             {/*Heading*/}
             <View style={{ paddingVertical: 30 }}>
               <Grid style={{ justifyContent: 'center' }}>
-                <Text style={{ fontSize: 18 }}>
+                <Text style={{ fontSize: 18, textAlign: 'center' }}>
                   <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Charges for Today: </Text> {moment().format('dddd, MMMM D, YYYY')}
                 </Text>
               </Grid>
-              {/*
-              <Grid style={{ justifyContent: 'center', paddingTop: 10 }} >
-                  <Text style={{ color: 'red', fontSize: 16 }}>ALWAYS Update after changing ANYTHING!</Text>
-              </Grid> */}
             </View>
 
             {/*If error*/}
@@ -78,6 +74,9 @@ export default class TodaysCharges extends Component {
               </Grid>
               <Grid style={{ justifyContent: 'center' }} >
                   <Text style={{ color: 'steelblue', fontSize: 16 }}>Hint: Type '0' to delete charge.</Text>
+              </Grid>
+              <Grid style={{ justifyContent: 'center', paddingTop: 10, paddingVertical: 15 }} >
+                  <Text style={{ color: 'red', fontSize: 16, textAlign: 'center' }}>Rows in PINK are uncommitted. Click 'Update Charges' to commit.</Text>
               </Grid>
             </View>
 

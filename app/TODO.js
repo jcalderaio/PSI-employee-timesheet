@@ -18,3 +18,4 @@ What I did:
 -App only works in portrait mode
 -Select Recent now adds non-duplicates to TodaysJobStore.todaysJobs (proven by a row count on todays jobs)
 -Tons of debugging for Select Recent, such as, how many successfully added, how many were duplicates and not added, if non-are selected, etc.
+-Rows that are uncommitted are colored pink. Once you commit the rows, they will turn to white.

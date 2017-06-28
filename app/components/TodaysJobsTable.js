@@ -23,34 +23,67 @@ const TodaysJobsTable = ({ data }) => {
             </Col>
           </Row>
           {/*Table Labels*/}
-          {map(data, (item) =>
-            <Row style={{ minHeight: 50 }} key={item.Job_Id}>
-              <Col size={24} style={styles.tableStyle.bodyFirst}>
-                <Text style={styles.tableStyle.bodyText}>{item.Job_Number}</Text>
-              </Col>
-              <Col size={28} style={styles.tableStyle.body}>
-                <Text style={styles.tableStyle.bodyText}>{item.Client_Name}</Text>
-              </Col>
-              <Col size={31} style={styles.tableStyle.body}>
-                <Text style={styles.tableStyle.bodyText}>{item.Sub_Task}</Text>
-              </Col>
-              <Col size={17} style={styles.tableStyle.bodyLast}>
-                  <View>
-                      <Input
-                          style={styles.hoursEntryBorder}
-                          defaultValue={String(item.Hours)}
-                          //value={String(item.Hours)}
-                          onChangeText={value => {
-                              item.Hours = Number(value);
-                          }}
-                          returnKeyType='send'
-                          keyboardType='numeric'
-                          //onSubmitEditing={() => alert('Update Entry!')}
-                      />
-                  </View>
-              </Col>
-            </Row>
-          )}
+          {map(data, (item) => {
+              if (item.Status === 0) {
+                  return (
+                      <Row style={{ minHeight: 50 }} key={item.Job_Id}>
+                        <Col size={24} style={styles.tableStyle.bodyFirst}>
+                          <Text style={styles.tableStyle.bodyText}>{item.Job_Number}</Text>
+                        </Col>
+                        <Col size={28} style={styles.tableStyle.body}>
+                          <Text style={styles.tableStyle.bodyText}>{item.Client_Name}</Text>
+                        </Col>
+                        <Col size={31} style={styles.tableStyle.body}>
+                          <Text style={styles.tableStyle.bodyText}>{item.Sub_Task}</Text>
+                        </Col>
+                        <Col size={17} style={styles.tableStyle.bodyLast}>
+                            <View>
+                                <Input
+                                    style={styles.hoursEntryBorder}
+                                    defaultValue={String(item.Hours)}
+                                    //value={String(item.Hours)}
+                                    onChangeText={value => {
+                                        item.Hours = Number(value);
+                                    }}
+                                    returnKeyType='send'
+                                    keyboardType='numeric'
+                                    //onSubmitEditing={() => alert('Update Entry!')}
+                                />
+                            </View>
+                        </Col>
+                      </Row>
+                  );
+              } else {
+                  return (
+                      <Row style={{ minHeight: 50 }} key={item.Job_Id}>
+                        <Col size={24} style={styles.pinkTableStyle.bodyFirst}>
+                          <Text style={styles.tableStyle.bodyText}>{item.Job_Number}</Text>
+                        </Col>
+                        <Col size={28} style={styles.pinkTableStyle.body}>
+                          <Text style={styles.tableStyle.bodyText}>{item.Client_Name}</Text>
+                        </Col>
+                        <Col size={31} style={styles.pinkTableStyle.body}>
+                          <Text style={styles.tableStyle.bodyText}>{item.Sub_Task}</Text>
+                        </Col>
+                        <Col size={17} style={styles.pinkTableStyle.bodyLast}>
+                            <View>
+                                <Input
+                                    style={styles.hoursEntryBorder}
+                                    defaultValue={String(item.Hours)}
+                                    //value={String(item.Hours)}
+                                    onChangeText={value => {
+                                        item.Hours = Number(value);
+                                    }}
+                                    returnKeyType='send'
+                                    keyboardType='numeric'
+                                    //onSubmitEditing={() => alert('Update Entry!')}
+                                />
+                            </View>
+                        </Col>
+                      </Row>
+                  );
+              }
+          })}
         </Grid>
     );
 };
@@ -107,23 +140,23 @@ const styles = {
 		}
 	},
     pinkTableStyle: {
-		pinkBodyFirst: {
-			backgroundColor: '#fff',
+		bodyFirst: {
+			backgroundColor: '#FFC0CB',
 			borderLeftWidth: 1,
 			borderBottomWidth: 1,
 			borderRightWidth: 1,
 			justifyContent: 'center',
 			alignItems: 'center'
 		},
-		pinkBody: {
-			backgroundColor: '#fff',
+		body: {
+			backgroundColor: '#FFC0CB',
 			borderBottomWidth: 1,
 			borderRightWidth: 1,
 			justifyContent: 'center',
 			alignItems: 'center'
 		},
-		pinkBodyLast: {
-			backgroundColor: '#fff',
+		bodyLast: {
+			backgroundColor: '#FFC0CB',
 			borderBottomWidth: 1,
 			justifyContent: 'center',
 			alignItems: 'center'
