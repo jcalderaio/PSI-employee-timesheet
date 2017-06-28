@@ -45,9 +45,10 @@ export default class TodaysCharges extends Component {
                   <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Charges for Today: </Text> {moment().format('dddd, MMMM D, YYYY')}
                 </Text>
               </Grid>
+              {/*
               <Grid style={{ justifyContent: 'center', paddingTop: 10 }} >
                   <Text style={{ color: 'red', fontSize: 16 }}>ALWAYS Update after changing ANYTHING!</Text>
-              </Grid>
+              </Grid> */}
             </View>
 
             {/*If error*/}
@@ -64,7 +65,7 @@ export default class TodaysCharges extends Component {
   			            </Grid>
   					}
 
-  					{/*Start Table*/}
+  					{/*Start TodaysJobs Table*/}
   					{(!todaysJobStore.isEmpty) &&
   						<TodaysJobsTable data={todaysJobStore.todaysJobs} />
   					}
@@ -88,7 +89,7 @@ export default class TodaysCharges extends Component {
                      'Charges Updated!',
                       ' '
                    );
-                 navigate('TodaysCharges');
+                  navigate('TodaysCharges');
                }}
                style={styles.updateChargeButton}
             >

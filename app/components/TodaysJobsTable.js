@@ -106,6 +106,29 @@ const styles = {
 			fontSize: 14
 		}
 	},
+    pinkTableStyle: {
+		pinkBodyFirst: {
+			backgroundColor: '#fff',
+			borderLeftWidth: 1,
+			borderBottomWidth: 1,
+			borderRightWidth: 1,
+			justifyContent: 'center',
+			alignItems: 'center'
+		},
+		pinkBody: {
+			backgroundColor: '#fff',
+			borderBottomWidth: 1,
+			borderRightWidth: 1,
+			justifyContent: 'center',
+			alignItems: 'center'
+		},
+		pinkBodyLast: {
+			backgroundColor: '#fff',
+			borderBottomWidth: 1,
+			justifyContent: 'center',
+			alignItems: 'center'
+		}
+	},
 	hoursEntryBorder: {
 		borderWidth: 1,
 		justifyContent: 'center',
