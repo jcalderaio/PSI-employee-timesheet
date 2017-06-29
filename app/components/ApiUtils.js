@@ -2,6 +2,7 @@
 const ApiUtils = {
   checkStatus: function (response) {
     if (response.status >= 200 && response.status < 300) {
+      console.log('Request Response: ', response);
       return response;
     } else {
       const error = new Error(response.statusText);

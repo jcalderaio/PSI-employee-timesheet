@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { Platform, Alert } from 'react-native';
+import { Platform, Alert, Dimensions } from 'react-native';
 import { Container, Content, Button, Text, Grid, Header, Body, Title, View, Spinner } from 'native-base';
 import moment from 'moment';
+
+// Variable that is half the height of the screen
+const halfHeight = Dimensions.get('window').height / 4;
 
 // MobX
 import { observer } from 'mobx-react/native';
@@ -42,7 +45,7 @@ export default class TodaysCharges extends Component {
             <View style={{ paddingVertical: 30 }}>
               <Grid style={{ justifyContent: 'center' }}>
                 <Text style={{ fontSize: 18, textAlign: 'center' }}>
-                  <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Charges for Today: </Text> {moment().format('dddd, MMMM D, YYYY')}
+                  <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Charges for Today:</Text> {moment().format('dddd, MMMM D, YYYY')}
                 </Text>
               </Grid>
             </View>
@@ -50,15 +53,17 @@ export default class TodaysCharges extends Component {
             {/*If error*/}
   					{(todaysJobStore.errorMessage) &&
   						<Grid style={{ justifyContent: 'center', padding: 10, marginTop: 20 }}>
-  			              <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'red' }}>{todaysJobStore.errorMessage}</Text>
-  			            </Grid>
+  			        <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'red' }}>{todaysJobStore.errorMessage}</Text>
+  			      </Grid>
   					}
 
   					{/*If No Recent Jobs*/}
   					{(todaysJobStore.isEmpty) &&
-  						<Grid style={{ justifyContent: 'center', padding: 10, marginTop: 20 }}>
-  			              <Text style={{ fontWeight: 'bold', fontSize: 18 }}> You have no charges for today!</Text>
-  			            </Grid>
+              <View style={styles.centerContainter}>
+    						<Grid style={{ justifyContent: 'center', marginTop: halfHeight }}>
+    			        <Text style={{ fontWeight: 'bold', fontSize: 18 }}> You have no charges for today!</Text>
+    			      </Grid>
+              </View>
   					}
 
   					{/*Start TodaysJobs Table*/}

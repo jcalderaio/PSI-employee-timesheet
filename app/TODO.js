@@ -20,3 +20,6 @@ What I did:
 -Tons of debugging for Select Recent, such as, how many successfully added, how many were duplicates and not added, if non-are selected, etc.
 -Rows that are uncommitted are colored pink. Once you commit the rows, they will turn to white.
 -Added directions to todays charges that only show if there is something there.
+-Moves textbox into view when typing in hours on add entry
+-retrieves JobId after you choose all from "Add Entry"
+-

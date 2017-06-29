@@ -1,9 +1,12 @@
 import { Alert } from 'react-native';
 import { observable, computed, action } from 'mobx';
 import base64 from 'base-64';
-import { map, uniq, filter } from 'lodash';  // Import ONLY used functions from Lodash
+import { map, uniq, filter, some } from 'lodash';  // Import ONLY used functions from Lodash
 import ApiUtils from '../components/ApiUtils'; // checks for errors in Fetches
 import userStore from './UserStore';
+
+//MobX
+import todaysJobStore from '../stores/TodaysJobStore';
 
 class AuthorizedJobStore {
    @observable authorizedJobs = null;
@@ -66,9 +69,12 @@ class AuthorizedJobStore {
       }
    }
 
-   // Finish
-   @computed get getJobId() {
-      // Do stuff
+   @action setJobId() {
+      if (this.authorizedJobs !== null && this.clientFilter !== null && this.taskFilter !== null && this.subTaskFilter !== null && this.jobNumber !== null) {
+          const temp = filter(this.authorizedJobs, { 'Job_Number': this.jobNumber });
+          this.jobId = uniq(map(temp, 'Job_Id'));
+          this.jobId = this.jobId[0];
+      }
    }
 
    @action setClientFilter(value) {
@@ -119,7 +125,15 @@ class AuthorizedJobStore {
 
    // Finish
    @action addEntry(navigate) {
-         // Compares to string version of '0'
+      //   Use for debugging
+      //console.log('empNo type: ', typeof userStore.employeeInfo.Employee_No, ' ', userStore.employeeInfo.Employee_No, ' ', userStore.employeeInfo.Employee_No.length);
+      //console.log('jobid type: ', typeof this.jobId, ' ', this.jobId, ' ', this.jobId.length);
+      //console.log('hours type: ', typeof this.hours, ' ', this.hours, ' ', this.hours.length);
+
+      // Run algorithm to retrieve JobId
+      this.setJobId();
+      this.hours = Number(this.hours);
+
       if (this.hours == 0) {
           alert('You cannot enter \'0\' for hours');
           return;
@@ -128,27 +142,41 @@ class AuthorizedJobStore {
           console.log();
           return;
       } else {
-         //Do Stuff
+         // If a duplicate is found, then alert the user and return
+         if (some(todaysJobStore.todaysJobs, ['Job_Id', this.jobId])) {
+            Alert.alert(
+               'You cannot add a duplicate! Please edit hours in Today\'s Charges',
+               ' '
+            );
+            return;
+         }
          if (this.jobId !== null) {
-            fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Job_Id=${this.jobId}&Hours=${Number(this.hours)}&Status=2`, {
-                method: 'POST',
+            // Add new entry to the database!
+            fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Job_Id=${this.jobId}&Hours=${this.hours}&Status=2`, {
+                method: 'PUT',
                 headers: {
                   'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
                 }
             })
             .then(ApiUtils.checkStatus)
             .catch(e => {
-               alert(`Charge NOT added: ${e}`);
+               console.log(e.response);
+               console.log(e.responseData);
+               alert(`${e}: Charge NOT added`);
                return;
             });
-         }
 
-         Alert.alert(
-            'Charge Added!',
-            ' '
-         );
-         this.clearAll();
-         navigate('TodaysCharges');
+            Alert.alert(
+               'Charge Added!',
+               ' '
+            );
+            this.clearAll();
+            navigate('TodaysCharges');
+            // Reload the jobs for today
+            todaysJobStore.fetchTodaysJobs();
+         } else {
+            alert('No JobId was found for this job!');
+         }
       }
    }
 }
