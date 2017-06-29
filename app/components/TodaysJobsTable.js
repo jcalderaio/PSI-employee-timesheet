@@ -24,6 +24,7 @@ const TodaysJobsTable = ({ data }) => {
           </Row>
           {/*Table Labels*/}
           {map(data, (item) => {
+              // Items committed. Show as WHITE rows
               if (item.Status === 0) {
                   return (
                       <Row style={{ minHeight: 50 }} key={item.Job_Id}>
@@ -54,6 +55,7 @@ const TodaysJobsTable = ({ data }) => {
                       </Row>
                   );
               } else {
+                // Items NOT committed. Show as PINK rows
                   return (
                       <Row style={{ minHeight: 50 }} key={item.Job_Id}>
                         <Col size={24} style={styles.pinkTableStyle.bodyFirst}>

@@ -16,6 +16,9 @@ class AuthorizedJobStore {
    @observable jobNumber = null;
    @observable hours = null;
 
+   // Used to Add new Entry
+   @observable jobId = null;
+
    @computed get isEmpty() {
        if (this.authorizedJobs !== null) {
            return !this.authorizedJobs.length;
@@ -61,6 +64,11 @@ class AuthorizedJobStore {
          const temp = filter(this.authorizedJobs, { 'Client_Name': this.clientFilter, 'Task': this.taskFilter, 'Sub_Task': this.subTaskFilter });
          return uniq(map(temp, 'Job_Number'));
       }
+   }
+
+   // Finish
+   @computed get getJobId() {
+      // Do stuff
    }
 
    @action setClientFilter(value) {
@@ -109,6 +117,7 @@ class AuthorizedJobStore {
         });
     }
 
+   // Finish
    @action addEntry(navigate) {
          // Compares to string version of '0'
       if (this.hours == 0) {
@@ -116,11 +125,23 @@ class AuthorizedJobStore {
           return;
       } else if (this.hours % 0.5 !== 0) {
           alert('You must enter hours in denominations of 0.5');
+          console.log();
           return;
       } else {
-         this.hours = Number(this.hours);
-
          //Do Stuff
+         if (this.jobId !== null) {
+            fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Job_Id=${this.jobId}&Hours=${Number(this.hours)}&Status=2`, {
+                method: 'POST',
+                headers: {
+                  'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
+                }
+            })
+            .then(ApiUtils.checkStatus)
+            .catch(e => {
+               alert(`Charge NOT added: ${e}`);
+               return;
+            });
+         }
 
          Alert.alert(
             'Charge Added!',

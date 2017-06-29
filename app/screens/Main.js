@@ -29,7 +29,7 @@ export default class Main extends Component {
     const { navigate, goBack } = this.props.navigation;
 
     // For testing purposes
-    console.log('Todays Jobs:', todaysJobStore.todaysJobs);
+    //console.log('Todays Jobs:', todaysJobStore.todaysJobs);
     //console.log('Recent Jobs:', recentJobStore.recentJobs);
 
     if ((recentJobStore.recentJobs === null) || (todaysJobStore.todaysJobs === null)) {

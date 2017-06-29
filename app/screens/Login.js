@@ -136,13 +136,6 @@ export default class Login extends Component {
     render() {
         return (
             <Container>
-				{/*Hide Status Bar on Android because cuts into header
-				{(Platform.OS === 'android') &&
-					<StatusBar
-						hidden
-					/>
-				}
-				*/}
 
 				<Header
                     style={styles.headerStyle}

@@ -177,7 +177,7 @@ export default class AddEntry extends Component {
 								}}
 								returnKeyType='send'
 								keyboardType='numeric'
-								onSubmitEditing={() => authorizedJobStore.addEntry(navigate)}
+								//onSubmitEditing={() => authorizedJobStore.addEntry(navigate)}
 							/>
 						</View>
 					</Grid>
@@ -194,6 +194,8 @@ export default class AddEntry extends Component {
 		            </Button>
 				}
 
+
+				{/*Directions*/}
 				{(authorizedJobStore.hours === null || authorizedJobStore.hours === '') &&
 					<View style={{ paddingHorizontal: 35 }}>
 					  <Grid style={{ justifyContent: 'center' }} >

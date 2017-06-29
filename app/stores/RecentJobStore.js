@@ -47,6 +47,7 @@ class RecentJobStore {
    }
 
    @action addRecent(flag, navigate) {
+      // Job_Number.trim() was here
       if (this.isEmpty) {
          Alert.alert('No recent charges available!', ' ');
          return;
@@ -77,7 +78,7 @@ class RecentJobStore {
                //Iterate through all in array
                map(tempRecent, e => {
                   //Only add rows if not found in TodaysJobs (no duplicates)
-                  if (!some(todaysJobStore.todaysJobs, ['Job_Number'.trim(), e.Job_Number.trim()])) {
+                  if (!some(todaysJobStore.todaysJobs, ['Job_Id', e.Job_Id])) {
                      todaysJobStore.todaysJobs.push(e);
                      ++count;
                   } else {
@@ -99,7 +100,7 @@ class RecentJobStore {
       } else {
          map(this.recentJobs, e => {
             //Only add rows if not found in TodaysJobs (no duplicates)
-            if (!some(todaysJobStore.todaysJobs, ['Job_Number'.trim(), e.Job_Number.trim()])) {
+            if (!some(todaysJobStore.todaysJobs, ['Job_Id', e.Job_Id])) {
                todaysJobStore.todaysJobs.push(e);
                ++count;
             } else {
