@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, Keyboard, LayoutAnimation, Dimensions, UIManager } from 'react-native';
+import { Platform, Keyboard, LayoutAnimation, Dimensions, UIManager, KeyboardAvoidingView } from 'react-native';
 import { Text, Container, Content, Button, Grid, Header, Left, Right, Body, Title, View, Input, Icon } from 'native-base';
 import { Octicons } from '@expo/vector-icons';
 import { observer } from 'mobx-react/native';
@@ -65,144 +65,152 @@ export default class AddEntry extends Component {
 			{/*Body*/}
 			<Content>
 
-				{/*Select Client*/}
-				<View style={{ paddingBottom: 25, paddingTop: 15 }}>
-					<Grid style={{ justifyContent: 'center', paddingBottom: 10 }}>
-					  <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Select a Client</Text>
-					</Grid>
+				{/* This moves the keyboard when I type anything into the hours box */}
+				<KeyboardAvoidingView
+					style={{ flex: 1 }}
+					behavior='position'
+				>
 
-					<ModalPicker
-						ref='clientModal'
-						data={clientData}
-						initValue='Clients'
-						onChange={(value) => {
-							authorizedJobStore.clearAll();
-							authorizedJobStore.setClientFilter(value.label);
-						}}
-						style={{ paddingHorizontal: 35 }}
-					/>
-				</View>
-
-				{/*Select Task*/}
-				{(authorizedJobStore.clientFilter) &&
-					<View style={{ paddingBottom: 25 }}>
+					{/*Select Client*/}
+					<View style={{ paddingBottom: 25, paddingTop: 15 }}>
 						<Grid style={{ justifyContent: 'center', paddingBottom: 10 }}>
-						  <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Select a Task</Text>
+						  <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Select a Client</Text>
 						</Grid>
 
 						<ModalPicker
-							ref='taskModal'
-							data={taskData}
-							initValue='Tasks'
+							ref='clientModal'
+							data={clientData}
+							initValue='Clients'
 							onChange={(value) => {
-								authorizedJobStore.taskFilter = null;
-					          	authorizedJobStore.subTaskFilter = null;
-					          	authorizedJobStore.jobNumber = null;
-					          	authorizedJobStore.hours = null;
-								authorizedJobStore.setTaskFilter(value.label);
+								authorizedJobStore.clearAll();
+								authorizedJobStore.setClientFilter(value.label);
 							}}
 							style={{ paddingHorizontal: 35 }}
 						/>
 					</View>
-				}
 
-				{/*Select Sub-Task*/}
-				{(authorizedJobStore.taskFilter) &&
-					<View style={{ paddingBottom: 25 }}>
-						<Grid style={{ justifyContent: 'center', paddingBottom: 10 }}>
-						  <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Select a Sub-Task</Text>
-						</Grid>
+					{/*Select Task*/}
+					{(authorizedJobStore.clientFilter) &&
+						<View style={{ paddingBottom: 25 }}>
+							<Grid style={{ justifyContent: 'center', paddingBottom: 10 }}>
+							  <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Select a Task</Text>
+							</Grid>
 
-						<ModalPicker
-							ref='subTaskModal'
-							data={subTaskData}
-							initValue='Sub-Tasks'
-							onChange={(value) => {
-								authorizedJobStore.subTaskFilter = null;
-					          	authorizedJobStore.jobNumber = null;
-					          	authorizedJobStore.hours = null;
-								authorizedJobStore.setSubTaskFilter(value.label);
-							}}
-							style={{ paddingHorizontal: 35 }}
-						/>
-					</View>
-				}
-
-				{/*Was for when number auto-filled if less than 1*/}
-				{/*}
-				{(authorizedJobStore.jobNumberSize === 1) &&
-					<Grid style={{ flexDirection: 'row', justifyContent: 'center', paddingBottom: 25 }}>
-						<Text style={{ fontSize: 18, fontWeight: 'bold' }}>Job Number: </Text>
-						<Text style={styles.jobNumberBorder}>{authorizedJobStore.jobNumber}</Text>
-					</Grid>
-				} */}
-
-				{/*Select Job Number*/}
-				{(authorizedJobStore.subTaskFilter) &&
-					<View style={{ paddingBottom: 25 }}>
-						<Grid style={{ justifyContent: 'center', paddingBottom: 10 }}>
-						  <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Select a Job Number</Text>
-						</Grid>
-
-						<ModalPicker
-							ref='jobNoModal'
-							data={jobNumberData}
-							initValue='Job Numbers'
-							onChange={(value) => {
-								authorizedJobStore.jobNumber = null;
-								authorizedJobStore.hours = null;
-								authorizedJobStore.setJobNumber(value.label);
-							}}
-							style={{ paddingHorizontal: 35 }}
-						/>
-					</View>
-				}
-
-				{/*Select Hours*/}
-				{(authorizedJobStore.jobNumber) &&
-					<Grid style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingBottom: 25 }}>
-						<Icon
-							active
-							name='timer'
-							style={{ paddingRight: 5 }}
-						/>
-						<Text style={{ fontSize: 18, fontWeight: 'bold' }}>Hours: </Text>
-						<View>
-							<Input
-								style={styles.hoursEntryBorder}
-								value={authorizedJobStore.hours}
-								onChangeText={value => {
-									authorizedJobStore.hours = null;
-									authorizedJobStore.setHours(value);
+							<ModalPicker
+								ref='taskModal'
+								data={taskData}
+								initValue='Tasks'
+								onChange={(value) => {
+									authorizedJobStore.taskFilter = null;
+						          	authorizedJobStore.subTaskFilter = null;
+						          	authorizedJobStore.jobNumber = null;
+						          	authorizedJobStore.hours = null;
+									authorizedJobStore.setTaskFilter(value.label);
 								}}
-								returnKeyType='send'
-								keyboardType='numeric'
-								//onSubmitEditing={() => authorizedJobStore.addEntry(navigate)}
+								style={{ paddingHorizontal: 35 }}
 							/>
 						</View>
-					</Grid>
-				}
+					}
 
-				{/*Add Charge Button*/}
-				{(authorizedJobStore.hours !== null && authorizedJobStore.hours !== '') &&
-					<Button
-		               block
-					   style={styles.addChargeButton}
-		               onPress={() => authorizedJobStore.addEntry(navigate)}
-		            >
-		               <Text>Add Charge</Text>
-		            </Button>
-				}
+					{/*Select Sub-Task*/}
+					{(authorizedJobStore.taskFilter) &&
+						<View style={{ paddingBottom: 25 }}>
+							<Grid style={{ justifyContent: 'center', paddingBottom: 10 }}>
+							  <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Select a Sub-Task</Text>
+							</Grid>
+
+							<ModalPicker
+								ref='subTaskModal'
+								data={subTaskData}
+								initValue='Sub-Tasks'
+								onChange={(value) => {
+									authorizedJobStore.subTaskFilter = null;
+						          	authorizedJobStore.jobNumber = null;
+						          	authorizedJobStore.hours = null;
+									authorizedJobStore.setSubTaskFilter(value.label);
+								}}
+								style={{ paddingHorizontal: 35 }}
+							/>
+						</View>
+					}
+
+					{/*Was for when number auto-filled if less than 1*/}
+					{/*}
+					{(authorizedJobStore.jobNumberSize === 1) &&
+						<Grid style={{ flexDirection: 'row', justifyContent: 'center', paddingBottom: 25 }}>
+							<Text style={{ fontSize: 18, fontWeight: 'bold' }}>Job Number: </Text>
+							<Text style={styles.jobNumberBorder}>{authorizedJobStore.jobNumber}</Text>
+						</Grid>
+					} */}
+
+					{/*Select Job Number*/}
+					{(authorizedJobStore.subTaskFilter) &&
+						<View style={{ paddingBottom: 25 }}>
+							<Grid style={{ justifyContent: 'center', paddingBottom: 10 }}>
+							  <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Select a Job Number</Text>
+							</Grid>
+
+							<ModalPicker
+								ref='jobNoModal'
+								data={jobNumberData}
+								initValue='Job Numbers'
+								onChange={(value) => {
+									authorizedJobStore.jobNumber = null;
+									authorizedJobStore.hours = null;
+									authorizedJobStore.setJobNumber(value.label);
+								}}
+								style={{ paddingHorizontal: 35 }}
+							/>
+						</View>
+					}
+
+					{/*Select Hours*/}
+					{(authorizedJobStore.jobNumber) &&
+						<Grid style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingBottom: 25 }}>
+							<Icon
+								active
+								name='timer'
+								style={{ paddingRight: 5 }}
+							/>
+							<Text style={{ fontSize: 18, fontWeight: 'bold' }}>Hours: </Text>
+							<View>
+								<Input
+									style={styles.hoursEntryBorder}
+									value={authorizedJobStore.hours}
+									onChangeText={value => {
+										authorizedJobStore.hours = null;
+										authorizedJobStore.setHours(value);
+									}}
+									returnKeyType='send'
+									keyboardType='numeric'
+									//onSubmitEditing={() => authorizedJobStore.addEntry(navigate)}
+								/>
+							</View>
+						</Grid>
+					}
+
+					{/*Add Charge Button*/}
+					{(authorizedJobStore.hours !== null && authorizedJobStore.hours !== '') &&
+						<Button
+			               block
+						   style={styles.addChargeButton}
+			               onPress={() => authorizedJobStore.addEntry(navigate)}
+			            >
+			               <Text>Add Charge</Text>
+			            </Button>
+					}
 
 
-				{/*Directions*/}
-				{(authorizedJobStore.hours === null || authorizedJobStore.hours === '') &&
-					<View style={{ paddingHorizontal: 35, marginBottom: 60 }}>
-					  <Grid style={{ justifyContent: 'center' }} >
-						  <Text style={{ color: 'steelblue', fontSize: 16, textAlign: 'center' }}>Click the bottom-most field and make a selection to reveal the next one.</Text>
-					  </Grid>
-					</View>
-				}
+					{/*Directions*/}
+					{(authorizedJobStore.hours === null || authorizedJobStore.hours === '') &&
+						<View style={{ paddingHorizontal: 35, marginBottom: 60 }}>
+						  <Grid style={{ justifyContent: 'center' }} >
+							  <Text style={{ color: 'steelblue', fontSize: 16, textAlign: 'center' }}>Click the bottom-most field and make a selection to reveal the next one.</Text>
+						  </Grid>
+						</View>
+					}
+
+				</KeyboardAvoidingView>
 
 			</Content>
 			{/*End Body*/}
