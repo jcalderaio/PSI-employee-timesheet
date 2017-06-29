@@ -67,35 +67,39 @@ export default class TodaysCharges extends Component {
   					}
   					{/*End of Table*/}
 
-
-            <View style={{ paddingTop: 60 }}>
-              <Grid style={{ justifyContent: 'center' }} >
-                  <Text style={{ color: 'steelblue', fontSize: 16 }}>Tap on the 'Hours' column to make changes.</Text>
-              </Grid>
-              <Grid style={{ justifyContent: 'center' }} >
-                  <Text style={{ color: 'steelblue', fontSize: 16 }}>Hint: Type '0' to delete charge.</Text>
-              </Grid>
-              <Grid style={{ justifyContent: 'center', paddingTop: 10, paddingVertical: 15 }} >
-                  <Text style={{ color: 'red', fontSize: 16, textAlign: 'center' }}>Rows in PINK are uncommitted. Click 'Update Charges' to commit.</Text>
-              </Grid>
-            </View>
+            {/*Directions*/}
+            {(!todaysJobStore.isEmpty) &&
+              <View style={{ paddingTop: 60 }}>
+                <Grid style={{ justifyContent: 'center' }} >
+                    <Text style={{ color: 'steelblue', fontSize: 16 }}>Tap on the 'Hours' column to make changes.</Text>
+                </Grid>
+                <Grid style={{ justifyContent: 'center' }} >
+                    <Text style={{ color: 'steelblue', fontSize: 16 }}>Hint: Type '0' to delete charge.</Text>
+                </Grid>
+              </View>
+  					}
 
             {/*Button: "Update Charges"*/}
-            <Button
-               block
-               onPress={() => {
-                   Alert.alert(
-                     'Charges Updated!',
-                      ' '
-                   );
-                  navigate('TodaysCharges');
-               }}
-               style={styles.updateChargeButton}
-            >
-               <Text>Update Charges</Text>
-             </Button>
+            {(!todaysJobStore.isEmpty) &&
+              <View style={{ marginTop: 60, marginBottom: 60 }}>
+                <Text style={{ color: 'red', fontSize: 16, textAlign: 'center', marginBottom: 10 }}>Rows in PINK are uncommitted. Click 'Update Charges' to commit.</Text>
+                <Button
+                   block
+                   onPress={() => {
+                       Alert.alert(
+                         'Charges Updated!',
+                          ' '
+                       );
+                      navigate('TodaysCharges');
+                   }}
+                   style={styles.updateChargeButton}
+                >
+                   <Text>Update Charges</Text>
+                 </Button>
+              </View>
+  					}
 
-             <Text>Size: {todaysJobStore.size}</Text>
+            {/*<Text>Size: {todaysJobStore.size}</Text> */}
 
           </Content>
       </Container>
@@ -121,9 +125,7 @@ const styles = {
   		shadowColor: '#000',
   		shadowOffset: { width: 0, height: 2 },
   		shadowOpacity: 0.3,
-  		shadowRadius: 2,
-      marginTop: 60,
-      marginBottom: 60
+  		shadowRadius: 2
     },
     centerContainter: {
       flex: 1,

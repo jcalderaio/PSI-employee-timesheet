@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
-import { Container, Content, Button, Grid, Header, Left, Right, Body, Title, Text } from 'native-base';
+import { Container, Content, Button, Grid, Header, Left, Right, Body, Title, Text, View } from 'native-base';
 import { Octicons } from '@expo/vector-icons';
 
 // MobX
@@ -66,19 +66,24 @@ export default class SelectRecent extends Component {
 					}
 					{/*End of Table*/}
 
-					<Button
-                        block
-                        onPress={() => recentJobStore.addRecent('Selected', navigate)}
-                        style={styles.addSelectedButton}>
-						<Text>Add Selected</Text>
-					</Button>
+					{/*Buttons*/}
+					{(!recentJobStore.isEmpty) &&
+						<View>
+							<Button
+		                        block
+		                        onPress={() => recentJobStore.addRecent('Selected', navigate)}
+		                        style={styles.addSelectedButton}>
+								<Text>Add Selected</Text>
+							</Button>
 
-					<Button
-                        block
-                        onPress={() => recentJobStore.addRecent('All', navigate)}
-                        style={styles.addAllButton}>
-						<Text>Add All</Text>
-					</Button>
+							<Button
+		                        block
+		                        onPress={() => recentJobStore.addRecent('All', navigate)}
+		                        style={styles.addAllButton}>
+								<Text>Add All</Text>
+							</Button>
+						</View>
+					}
 
 				</Content>
 			</Container>

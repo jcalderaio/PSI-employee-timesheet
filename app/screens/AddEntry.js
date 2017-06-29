@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert } from 'react-native';
+import { Platform, Keyboard, LayoutAnimation, Dimensions, UIManager } from 'react-native';
 import { Text, Container, Content, Button, Grid, Header, Left, Right, Body, Title, View, Input, Icon } from 'native-base';
 import { Octicons } from '@expo/vector-icons';
 import { observer } from 'mobx-react/native';
@@ -197,7 +197,7 @@ export default class AddEntry extends Component {
 
 				{/*Directions*/}
 				{(authorizedJobStore.hours === null || authorizedJobStore.hours === '') &&
-					<View style={{ paddingHorizontal: 35 }}>
+					<View style={{ paddingHorizontal: 35, marginBottom: 60 }}>
 					  <Grid style={{ justifyContent: 'center' }} >
 						  <Text style={{ color: 'steelblue', fontSize: 16, textAlign: 'center' }}>Click the bottom-most field and make a selection to reveal the next one.</Text>
 					  </Grid>
@@ -229,10 +229,11 @@ const styles = {
 	addChargeButton: {
       backgroundColor: '#007aff',
       marginHorizontal: 20,
-  		shadowColor: '#000',
-  		shadowOffset: { width: 0, height: 2 },
-  		shadowOpacity: 0.3,
-  		shadowRadius: 2
+  	  shadowColor: '#000',
+  	  shadowOffset: { width: 0, height: 2 },
+  	  shadowOpacity: 0.3,
+  	  shadowRadius: 2,
+	  marginBottom: 60
   	},
 	jobNumberBorder: {
 		backgroundColor: '#a0a6ab',
