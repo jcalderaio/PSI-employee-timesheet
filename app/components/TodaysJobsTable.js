@@ -1,93 +1,101 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Text } from 'react-native';
 import { Grid, Col, Row, View, Input } from 'native-base';
 import { map } from 'lodash';
 import todaysJobStore from '../stores/TodaysJobStore';
 
-const TodaysJobsTable = ({ data }) => {
-    return (
-        <Grid style={{ alignItems: 'center' }}>
-          <Row style={{ height: 30 }} >
-          {/*Table Labels*/}
-            <Col size={24} style={styles.tableStyle.titleFirst}>
-              <Text style={{ fontWeight: 'bold' }}>Job #</Text>
-            </Col>
-            <Col size={28} style={styles.tableStyle.title}>
-              <Text style={{ fontWeight: 'bold' }}>Client</Text>
-            </Col>
-            <Col size={31} style={styles.tableStyle.title}>
-              <Text style={{ fontWeight: 'bold' }}>Job Title</Text>
-            </Col>
-            <Col size={17} style={styles.tableStyle.titleLast}>
-              <Text style={{ fontWeight: 'bold' }}>Hours</Text>
-            </Col>
-          </Row>
-          {/*Table Labels*/}
-          {map(data, (item) => {
-              // Items committed. Show as WHITE rows
-              if (item.Status === 0) {
-                  return (
-                      <Row style={{ minHeight: 50 }} key={item.Job_Id}>
-                        <Col size={24} style={styles.tableStyle.bodyFirst}>
-                          <Text style={styles.tableStyle.bodyText}>{item.Job_Number}</Text>
-                        </Col>
-                        <Col size={28} style={styles.tableStyle.body}>
-                          <Text style={styles.tableStyle.bodyText}>{item.Client_Name}</Text>
-                        </Col>
-                        <Col size={31} style={styles.tableStyle.body}>
-                          <Text style={styles.tableStyle.bodyText}>{item.Sub_Task}</Text>
-                        </Col>
-                        <Col size={17} style={styles.tableStyle.bodyLast}>
-                            <View>
-                                <Input
-                                    style={styles.hoursEntryBorder}
-                                    defaultValue={String(item.Hours)}
-                                    //value={String(item.Hours)}
-                                    onChangeText={value => {
-                                        item.Hours = Number(value);
-                                    }}
-                                    returnKeyType='send'
-                                    keyboardType='numeric'
-                                    //onSubmitEditing={() => alert('Update Entry!')}
-                                />
-                            </View>
-                        </Col>
-                      </Row>
-                  );
-              } else {
-                // Items NOT committed. Show as PINK rows
-                  return (
-                      <Row style={{ minHeight: 50 }} key={item.Job_Id}>
-                        <Col size={24} style={styles.pinkTableStyle.bodyFirst}>
-                          <Text style={styles.tableStyle.bodyText}>{item.Job_Number}</Text>
-                        </Col>
-                        <Col size={28} style={styles.pinkTableStyle.body}>
-                          <Text style={styles.tableStyle.bodyText}>{item.Client_Name}</Text>
-                        </Col>
-                        <Col size={31} style={styles.pinkTableStyle.body}>
-                          <Text style={styles.tableStyle.bodyText}>{item.Sub_Task}</Text>
-                        </Col>
-                        <Col size={17} style={styles.pinkTableStyle.bodyLast}>
-                            <View>
-                                <Input
-                                    style={styles.hoursEntryBorder}
-                                    defaultValue={String(item.Hours)}
-                                    //value={String(item.Hours)}
-                                    onChangeText={value => {
-                                        item.Hours = Number(value);
-                                    }}
-                                    returnKeyType='send'
-                                    keyboardType='numeric'
-                                    //onSubmitEditing={() => alert('Update Entry!')}
-                                />
-                            </View>
-                        </Col>
-                      </Row>
-                  );
-              }
-          })}
-        </Grid>
-    );
+class TodaysJobsTable extends Component {
+    render() {
+        return (
+            <Grid style={{ alignItems: 'center' }}>
+              <Row style={{ height: 30 }} >
+              {/*Table Labels*/}
+                <Col size={24} style={styles.tableStyle.titleFirst}>
+                  <Text style={{ fontWeight: 'bold' }}>Job #</Text>
+                </Col>
+                <Col size={28} style={styles.tableStyle.title}>
+                  <Text style={{ fontWeight: 'bold' }}>Client</Text>
+                </Col>
+                <Col size={31} style={styles.tableStyle.title}>
+                  <Text style={{ fontWeight: 'bold' }}>Job Title</Text>
+                </Col>
+                <Col size={17} style={styles.tableStyle.titleLast}>
+                  <Text style={{ fontWeight: 'bold' }}>Hours</Text>
+                </Col>
+              </Row>
+              {/*Table Labels*/}
+              {map(this.props.data, (item) => {
+                  // Items committed. Show as WHITE rows
+                  if (item.Status === 0) {
+                      return (
+                          <Row style={{ minHeight: 50 }} key={item.Job_Id}>
+                            <Col size={24} style={styles.tableStyle.bodyFirst}>
+                              <Text style={styles.tableStyle.bodyText}>{item.Job_Number}</Text>
+                            </Col>
+                            <Col size={28} style={styles.tableStyle.body}>
+                              <Text style={styles.tableStyle.bodyText}>{item.Client_Name}</Text>
+                            </Col>
+                            <Col size={31} style={styles.tableStyle.body}>
+                              <Text style={styles.tableStyle.bodyText}>{item.Sub_Task}</Text>
+                            </Col>
+                            <Col size={17} style={styles.tableStyle.bodyLast}>
+                                <View>
+                                    <Input
+                                        style={styles.hoursEntryBorder}
+                                        defaultValue={String(item.Hours)}
+                                        //value={String(item.Hours)}
+                                        onChangeText={value => {
+                                            if (value !== '' && Number(value) !== item.Hours && value !== '.') {
+                                                item.Hours = Number(value);
+                                                item.Status = 1;
+                                                this.forceUpdate();
+                                            }
+                                        }}
+                                        returnKeyType='send'
+                                        keyboardType='numeric'
+                                        //onSubmitEditing={() => alert('Update Entry!')}
+                                    />
+                                </View>
+                            </Col>
+                          </Row>
+                      );
+                  } else {
+                    // Items NOT committed. Show as PINK rows
+                      return (
+                          <Row style={{ minHeight: 50 }} key={item.Job_Id}>
+                            <Col size={24} style={styles.pinkTableStyle.bodyFirst}>
+                              <Text style={styles.tableStyle.bodyText}>{item.Job_Number}</Text>
+                            </Col>
+                            <Col size={28} style={styles.pinkTableStyle.body}>
+                              <Text style={styles.tableStyle.bodyText}>{item.Client_Name}</Text>
+                            </Col>
+                            <Col size={31} style={styles.pinkTableStyle.body}>
+                              <Text style={styles.tableStyle.bodyText}>{item.Sub_Task}</Text>
+                            </Col>
+                            <Col size={17} style={styles.pinkTableStyle.bodyLast}>
+                                <View>
+                                    <Input
+                                        style={styles.hoursEntryBorder}
+                                        defaultValue={String(item.Hours)}
+                                        //value={String(item.Hours)}
+                                        onChangeText={value => {
+                                            if (value !== '.') {
+                                                item.Hours = Number(value);
+                                            }
+                                        }}
+                                        returnKeyType='send'
+                                        keyboardType='numeric'
+                                        //onSubmitEditing={() => alert('Update Entry!')}
+                                    />
+                                </View>
+                            </Col>
+                          </Row>
+                      );
+                  }
+              })}
+            </Grid>
+        );
+    }
 };
 
 const styles = {

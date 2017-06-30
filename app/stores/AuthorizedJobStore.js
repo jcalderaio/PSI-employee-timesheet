@@ -159,21 +159,23 @@ class AuthorizedJobStore {
                 }
             })
             .then(ApiUtils.checkStatus)
+            .then(response => {
+                // Response successful
+                console.log('\'Add Charge\' response successful: ', response);
+                Alert.alert(
+                   'Charge Added!',
+                   ' '
+                );
+                this.clearAll();
+                // Reload the jobs for today
+                todaysJobStore.fetchTodaysJobs();
+                navigate('TodaysCharges');
+            })
             .catch(e => {
-               console.log(e.response);
-               console.log(e.responseData);
+               console.log('\'Add Charge\' response NOT successful: ', e.response);
                alert(`${e}: Charge NOT added`);
                return;
             });
-
-            Alert.alert(
-               'Charge Added!',
-               ' '
-            );
-            this.clearAll();
-            navigate('TodaysCharges');
-            // Reload the jobs for today
-            todaysJobStore.fetchTodaysJobs();
          } else {
             alert('No JobId was found for this job!');
          }
