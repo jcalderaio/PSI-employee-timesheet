@@ -7,8 +7,15 @@ TODO:
   -new logo. new colors?
   -Fetch data from server when there is an update?
 
- -If change hours and turn pink, get rid of 0
+  -If change hours and turn pink, get rid of 0
   -highlight things that have not been changed (pink lines?) ??? (have uncommitted information)
+  -New hours vs old hours to change back from pink
+  -on top of add entry, "warning make sure to commit changes"
+  -On "Add Entry", go back and reset variables
+
+// BUG:
+-
+
 
 
 What I did:
@@ -28,5 +35,8 @@ What I did:
 
 What He Needs to Fix:
 -Please make the changes I asked in the emails
+    -Timesheet_ID is already being returned for Timesheet. What else does it need to be returned for?
+    -RecentJobs need status field with default of 2
+    -RecentJobs needs hours field with default of 0 (cant do empty)
 -It took hours for the changes to show after adding a job, therefore it couldnt check for duplicates when being added since they weren't in there, so there are duplicates.
 -I can't work with the changes taking so long to update the database.
