@@ -18,10 +18,7 @@ TODO:
   -If change hours and turn pink, get rid of 0
   -highlight things that have not been changed (pink lines?) ??? (have uncommitted information)
   -New hours vs old hours to change back from pink
-  -on top of add entry, "warning make sure to commit changes"
   -On "Add Entry", go back and reset variables
-  -Do not '.' to be typed.
-  -Do not allow any amount of spaces.
 
 // BUG:
 -How to reproduce the problem:
