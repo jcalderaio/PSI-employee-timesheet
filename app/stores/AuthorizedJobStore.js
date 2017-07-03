@@ -132,14 +132,18 @@ class AuthorizedJobStore {
 
       // Run algorithm to retrieve JobId
       this.setJobId();
+
+      // Make sure you are placing in database as a 'Number' object
       this.hours = Number(this.hours);
 
-      if (this.hours == 0) {
+      if (this.hours === 0) {
           alert('You cannot enter \'0\' for hours');
+          return;
+      } else if (isNaN(this.hours)) {
+          alert('You must enter a Number!');
           return;
       } else if (this.hours % 0.5 !== 0) {
           alert('You must enter hours in denominations of 0.5');
-          console.log();
           return;
       } else {
          // If a duplicate is found, then alert the user and return

@@ -8,7 +8,9 @@ import ModalPicker from 'react-native-modal-picker';
 // Import ONLY map from lodash (DELETE)
 import { map } from 'lodash';
 
+// MobX
 import authorizedJobStore from '../stores/AuthorizedJobStore';
+import todaysJobStore from '../stores/TodaysJobStore';
 
 // Add this to show that it will update the observables in the MobX stores
 @observer
@@ -64,6 +66,10 @@ export default class AddEntry extends Component {
 
 			{/*Body*/}
 			<Content>
+
+				{(todaysJobStore.hasUncommitted) &&
+	              <Text style={{ color: 'red', fontSize: 16, textAlign: 'center', padding: 10 }}>WARNING! You have uncommitted changes. Please go to the 'Today's Charges' tab and click the 'Update Charges' button. If you proceed with Adding a new Entry, your changes will be lost.</Text>
+	            }
 
 				{/* This moves the keyboard when I type anything into the hours box */}
 				<KeyboardAvoidingView
@@ -179,18 +185,19 @@ export default class AddEntry extends Component {
 									value={authorizedJobStore.hours}
 									onChangeText={value => {
 										authorizedJobStore.hours = null;
-										authorizedJobStore.setHours(value);
+										authorizedJobStore.setHours(value.trim());
 									}}
 									returnKeyType='send'
 									keyboardType='numeric'
-									//onSubmitEditing={() => authorizedJobStore.addEntry(navigate)}
+									maxLength={4}
+									onSubmitEditing={() => authorizedJobStore.addEntry(navigate)}
 								/>
 							</View>
 						</Grid>
 					}
 
 					{/*Add Charge Button*/}
-					{(authorizedJobStore.hours !== null && authorizedJobStore.hours !== '') &&
+					{(authorizedJobStore.hours !== null && authorizedJobStore.hours !== '' && !isNaN(authorizedJobStore.hours)) &&
 						<Button
 			               block
 						   style={styles.addChargeButton}
@@ -202,7 +209,7 @@ export default class AddEntry extends Component {
 
 
 					{/*Directions*/}
-					{(authorizedJobStore.hours === null || authorizedJobStore.hours === '') &&
+					{(authorizedJobStore.hours === null || authorizedJobStore.hours === '' || isNaN(authorizedJobStore.hours)) &&
 						<View style={{ paddingHorizontal: 35, marginBottom: 60 }}>
 						  <Grid style={{ justifyContent: 'center' }} >
 							  <Text style={{ color: 'steelblue', fontSize: 16, textAlign: 'center' }}>Click the bottom-most field and make a selection to reveal the next one.</Text>

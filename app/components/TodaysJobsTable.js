@@ -26,6 +26,7 @@ class TodaysJobsTable extends Component {
               {/*Table Labels*/}
               {map(this.props.data, (item) => {
                   // Items committed. Show as WHITE rows
+                  // User can only change hours. If zero, will be deleted
                   if (item.Status === 0) {
                       return (
                           <Row style={{ minHeight: 50 }} key={item.Job_Id}>
@@ -45,14 +46,33 @@ class TodaysJobsTable extends Component {
                                         defaultValue={String(item.Hours)}
                                         //value={String(item.Hours)}
                                         onChangeText={value => {
-                                            if (value !== '' && Number(value) !== item.Hours && value !== '.') {
-                                                item.Hours = Number(value);
+
+                                            this.value = Number(value.trim);
+
+                                            if (isNaN(value)) {
+                                                alert('You must enter a Number!');
+                                                item.Hours = 5;
+                                            }
+
+                                            /*
+                                            else if (hours === 0) {
+                                                item.Hours = 0;
+                                                item.Status = 3;
+                                                this.forceUpdate();
+                                            } else if (hours % 0.5 !== 0) {
+                                                alert('You must enter hours in denominations of 0.5');
+                                                item.Hours = (Math.round(hours * 2) / 2).toFixed(1)
+
+                                            } else {
+                                                item.Hours = hours;
                                                 item.Status = 1;
                                                 this.forceUpdate();
                                             }
+                                            */
                                         }}
                                         returnKeyType='send'
                                         keyboardType='numeric'
+                                        maxLength={4}
                                         //onSubmitEditing={() => alert('Update Entry!')}
                                     />
                                 </View>
@@ -79,12 +99,28 @@ class TodaysJobsTable extends Component {
                                         defaultValue={String(item.Hours)}
                                         //value={String(item.Hours)}
                                         onChangeText={value => {
-                                            if (value !== '.') {
-                                                item.Hours = Number(value);
+                                            const hours = Number(value.trim());
+
+                                            if (isNaN(hours)) {
+                                                alert('You must enter a Number!');
+                                                item.Hours = 0;
+
+                                            } else if (hours === 0) {
+                                                item.Hours = 0;
+                                                item.Status = 3;
+                                            } else if (hours % 0.5 !== 0) {
+                                                alert('You must enter hours in denominations of 0.5');
+                                                item.Hours = (Math.round(hours * 2) / 2).toFixed(1)
+
+                                            } else {
+                                                item.Hours = hours;
+                                                item.Status = 1;
                                             }
+
                                         }}
                                         returnKeyType='send'
                                         keyboardType='numeric'
+                                        maxLength={4}
                                         //onSubmitEditing={() => alert('Update Entry!')}
                                     />
                                 </View>
@@ -96,7 +132,7 @@ class TodaysJobsTable extends Component {
             </Grid>
         );
     }
-};
+}
 
 const styles = {
 	container: {

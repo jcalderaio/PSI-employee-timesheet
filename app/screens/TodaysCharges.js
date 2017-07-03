@@ -3,16 +3,16 @@ import { Platform, Alert, Dimensions } from 'react-native';
 import { Container, Content, Button, Text, Grid, Header, Body, Title, View, Spinner } from 'native-base';
 import moment from 'moment';
 
-// Variable that is half the height of the screen
-const halfHeight = Dimensions.get('window').height / 4;
-
 // MobX
 import { observer } from 'mobx-react/native';
 import todaysJobStore from '../stores/TodaysJobStore';
 import recentJobStore from '../stores/RecentJobStore';
 
-// Import components
+// Import table component
 import { TodaysJobsTable } from '../components/TodaysJobsTable';
+
+// Variable that is half the height of the screen
+const halfHeight = Dimensions.get('window').height / 4;
 
 @observer
 export default class TodaysCharges extends Component {
@@ -87,7 +87,9 @@ export default class TodaysCharges extends Component {
             {/*Button: "Update Charges"*/}
             {(!todaysJobStore.isEmpty) &&
               <View style={{ marginTop: 60, marginBottom: 60 }}>
-                <Text style={{ color: 'red', fontSize: 16, textAlign: 'center', marginBottom: 10 }}>Rows in PINK are uncommitted. Click 'Update Charges' to commit.</Text>
+                {(todaysJobStore.hasUncommitted) &&
+                    <Text style={{ color: 'red', fontSize: 16, textAlign: 'center', marginBottom: 10 }}>Rows in PINK are uncommitted. Click 'Update Charges' to commit.</Text>
+                }
                 <Button
                    block
                    onPress={() => {
@@ -104,7 +106,19 @@ export default class TodaysCharges extends Component {
               </View>
   					}
 
-            {/*<Text>Size: {todaysJobStore.size}</Text> */}
+
+            {/* FOR DEBUGGING */}
+            {/* Shows size of table (for DEBUGGING)*/}
+            <Text>Size: {todaysJobStore.size}</Text>
+
+            {(todaysJobStore.hasUncommitted) &&
+              <Text>Has Uncommitted: true</Text>
+            }
+            {(!todaysJobStore.hasUncommitted) &&
+              <Text>Has Uncommitted: false</Text>
+            }
+            {/* FOR DEBUGGING */}
+
 
           </Content>
       </Container>

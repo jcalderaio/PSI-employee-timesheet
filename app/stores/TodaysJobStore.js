@@ -1,6 +1,6 @@
 import { observable, computed, action, autorun } from 'mobx';
 import base64 from 'base-64';
-import { sum, map } from 'lodash';  // Import ONLY used functions from Lodash
+import { sum, map, filter } from 'lodash';  // Import ONLY used functions from Lodash
 import ApiUtils from '../components/ApiUtils'; // checks for errors in Fetches
 import userStore from './UserStore';
 
@@ -29,6 +29,25 @@ class TodaysJobStore {
      } else {
          return this.todaysJobs.length;
      }
+   }
+
+   // Lets us know whether or not there are any uncommited charges
+   @computed get hasUncommitted() {
+       // If todaysJobs null, impossible to have non-Status: 0 jobs
+       if (this.todaysJobs === null) {
+           return false;
+       } else {
+           // If found jobs with Status !== 0, then there are uncommitted
+           const temp = filter(this.todaysJobs, (item) =>
+             item.Status !== 0
+           );
+
+           if (temp.length > 0) {
+             return true;
+          } else {
+             return false;
+          }
+       }
    }
 
    @computed get totalHours() {
