@@ -47,33 +47,32 @@ class TodaysJobsTable extends Component {
                                         //value={String(item.Hours)}
                                         onChangeText={value => {
 
-                                            this.value = Number(value.trim);
+                                            const hours = Number(value.trim());
 
-                                            if (isNaN(value)) {
+                                            // Do not let Non-Numbers entered
+                                            if (isNaN(hours)) {
                                                 alert('You must enter a Number!');
-                                                item.Hours = 5;
-                                            }
-
-                                            /*
-                                            else if (hours === 0) {
+                                                item.Hours = 0;
+                                            // These want to be DELETED
+                                            } else if (hours === 0) {
                                                 item.Hours = 0;
                                                 item.Status = 3;
                                                 this.forceUpdate();
                                             } else if (hours % 0.5 !== 0) {
                                                 alert('You must enter hours in denominations of 0.5');
-                                                item.Hours = (Math.round(hours * 2) / 2).toFixed(1)
-
+                                                item.Hours = (Math.round(hours * 2) / 2).toFixed(1);
+                                                item.Status = 1;
+                                                this.forceUpdate();
                                             } else {
                                                 item.Hours = hours;
                                                 item.Status = 1;
                                                 this.forceUpdate();
                                             }
-                                            */
                                         }}
                                         returnKeyType='send'
                                         keyboardType='numeric'
                                         maxLength={4}
-                                        //onSubmitEditing={() => alert('Update Entry!')}
+                                        selectTextOnFocus
                                     />
                                 </View>
                             </Col>
@@ -104,14 +103,13 @@ class TodaysJobsTable extends Component {
                                             if (isNaN(hours)) {
                                                 alert('You must enter a Number!');
                                                 item.Hours = 0;
-
                                             } else if (hours === 0) {
                                                 item.Hours = 0;
                                                 item.Status = 3;
                                             } else if (hours % 0.5 !== 0) {
                                                 alert('You must enter hours in denominations of 0.5');
-                                                item.Hours = (Math.round(hours * 2) / 2).toFixed(1)
-
+                                                item.Hours = (Math.round(hours * 2) / 2).toFixed(1);
+                                                item.Status = 1;
                                             } else {
                                                 item.Hours = hours;
                                                 item.Status = 1;
@@ -121,7 +119,7 @@ class TodaysJobsTable extends Component {
                                         returnKeyType='send'
                                         keyboardType='numeric'
                                         maxLength={4}
-                                        //onSubmitEditing={() => alert('Update Entry!')}
+                                        selectTextOnFocus
                                     />
                                 </View>
                             </Col>
