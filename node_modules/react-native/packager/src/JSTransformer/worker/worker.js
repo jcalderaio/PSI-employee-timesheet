@@ -11,6 +11,7 @@
 
 'use strict';
 
+const babelRegisterOnly = require('../../../babelRegisterOnly');
 const constantFolding = require('./constant-folding');
 const extractDependencies = require('./extract-dependencies');
 const inline = require('./inline');
@@ -18,37 +19,50 @@ const invariant = require('fbjs/lib/invariant');
 const minify = require('./minify');
 
 import type {LogEntry} from '../../Logger/Types';
-import type {Ast, SourceMap, TransformOptions as BabelTransformOptions} from 'babel-core';
+import type {Ast, Plugins as BabelPlugins, SourceMap as MappingsMap} from 'babel-core';
 
 export type TransformedCode = {
   code: string,
   dependencies: Array<string>,
   dependencyOffsets: Array<number>,
-  map?: ?SourceMap,
+  map?: ?MappingsMap,
 };
 
-type Transformer = {
+export type Transformer<ExtraOptions: {} = {}> = {
   transform: (
     filename: string,
     sourceCode: string,
-    options: ?{},
-  ) => {ast: ?Ast, code: string, map: ?SourceMap}
+    options: ExtraOptions & TransformOptions,
+    plugins?: BabelPlugins,
+  ) => {ast: ?Ast, code: string, map: ?MappingsMap},
+  getCacheKey: TransformOptionsStrict => string,
 };
+
+
+export type TransformOptionsStrict = {|
+  +dev: boolean,
+  +generateSourceMaps: boolean,
+  +hot: boolean,
+  +inlineRequires: {+blacklist: {[string]: true}} | boolean,
+  +platform: string,
+  +projectRoot: string,
+|};
 
 export type TransformOptions = {
-  generateSourceMaps: boolean,
-  platform: string,
-  preloadedModules?: Array<string>,
-  projectRoots: Array<string>,
-  ramGroups?: Array<string>,
-} & BabelTransformOptions;
+  +dev?: boolean,
+  +generateSourceMaps?: boolean,
+  +hot?: boolean,
+  +inlineRequires?: {+blacklist: {[string]: true}} | boolean,
+  +platform: string,
+  +projectRoot: string,
+};
 
-export type Options = {
+export type Options = {|
   +dev: boolean,
   +minify: boolean,
-  platform: string,
-  transform: TransformOptions,
-};
+  +platform: string,
+  +transform: TransformOptionsStrict,
+|};
 
 export type Data = {
   result: TransformedCode,
@@ -62,7 +76,7 @@ type Callback = (
 ) => mixed;
 
 function transformCode(
-  transformer: Transformer,
+  transformer: Transformer<*>,
   filename: string,
   sourceCode: string,
   options: Options,
@@ -115,7 +129,7 @@ function transformCode(
     code = code.replace(/^#!.*/, '');
   }
 
-  const depsResult = isJson || options.extern
+  const depsResult = isJson
     ? {dependencies: [], dependencyOffsets: []}
     : extractDependencies(code);
 
@@ -143,9 +157,10 @@ exports.transformAndExtractDependencies = (
   options: Options,
   callback: Callback,
 ) => {
+  babelRegisterOnly([transform]);
   /* $FlowFixMe: impossible to type a dynamic require */
-  const transformModule = require(transform);
-  transformCode(transformModule, filename, sourceCode, options || {}, callback);
+  const transformModule: Transformer<*> = require(transform);
+  transformCode(transformModule, filename, sourceCode, options, callback);
 };
 
 exports.minify = (

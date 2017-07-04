@@ -23,21 +23,32 @@ const pickScale = meta => {
   const index = meta.scales.findIndex(s => s === scale);
   const hash = meta.fileHashes[index] || meta.fileHashes[0];
 
+  const suffix =
+    '/' +
+    meta.name +
+    (scale === 1 ? '' : '@' + scale + 'x') +
+    '.' +
+    meta.type +
+    '?platform=' +
+    Platform.OS +
+    '&hash=' +
+    meta.hash;
+
+  if (/^https?:/.test(meta.httpServerLocation)) {
+    // This is a full URL, so we avoid prepending bundle URL/cloudfront
+    // This usually means Asset is on a different server, and the URL is present in the bundle
+    return {
+      uri: meta.httpServerLocation + suffix,
+      hash,
+    };
+  }
+
   if (manifest.xde) {
     // Development server URI is pieced together
-    const suffix = scale === 1 ? '' : '@' + scale + 'x';
     return {
       uri: manifest.bundleUrl.match(/^https?:\/\/.*?\//)[0] +
         meta.httpServerLocation.replace(/^\/?/, '') +
-        '/' +
-        meta.name +
-        suffix +
-        '.' +
-        meta.type +
-        '?platform=' +
-        Platform.OS +
-        '&hash=' +
-        meta.hash,
+        suffix,
       hash,
     };
   }

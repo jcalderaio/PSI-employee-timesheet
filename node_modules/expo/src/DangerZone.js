@@ -4,3 +4,5 @@
  */
 
 export Lottie from 'lottie-react-native';
+
+export Branch from 'react-native-branch';

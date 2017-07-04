@@ -131,6 +131,9 @@ export default {
   /* Re-export, we can add flow here if we want as well */
   getExponentPushTokenAsync: ExponentNotifications.getExponentPushTokenAsync,
 
+  /* Re-export, we can add flow here if we want as well */
+  getDevicePushTokenAsync: ExponentNotifications.getDevicePushTokenAsync,
+
   /* Shows a notification instantly */
   presentLocalNotificationAsync(
     notification: LocalNotification

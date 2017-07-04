@@ -3,6 +3,7 @@ CXX_LIBRARY_COMPILER_FLAGS = []
 REACT_LIBRARY_EXTRA_COMPILER_FLAGS = []
 
 if THIS_IS_FBOBJC:
+  include_defs("xplat//configurations/buck/apple/dependency_aggregator_defs")
   inherited_buck_flags = STATIC_LIBRARY_IOS_FLAGS
   CXX_LIBRARY_COMPILER_FLAGS = inherited_buck_flags.get_flag_value('compiler_flags')
   REACT_LIBRARY_EXTRA_COMPILER_FLAGS = ['-Wno-shadow', '-Wno-missing-prototypes', '-Wno-global-constructors']
@@ -27,8 +28,7 @@ if THIS_IS_FBANDROID:
         '-Wno-pessimizing-move',
       ],
       deps = [
-        '//xplat/folly:molly',
-        react_native_xplat_target('inspector:inspector'),
+        '//xplat/folly:molly'
       ])
 
     cxx_library(
@@ -56,7 +56,6 @@ if THIS_IS_FBANDROID:
           # `initOnJSVMThread` to be called before the platform-specific hooks
           # have been properly initialised. Bad Times(TM).
           #     -- @ashokmenon (2017/01/03)
-          '//java/com/facebook/java2js:jni',
           react_native_target('jni/xreact/jni:jni'),
           react_native_xplat_target('cxxreact/...'),
         ],
@@ -64,8 +63,14 @@ if THIS_IS_FBANDROID:
     )
 
 if THIS_IS_FBOBJC:
+
+  if should_use_dependency_aggregation():
+    INSPECTOR_FLAGS = []
+  else:
+    INSPECTOR_FLAGS = [ '-DWITH_INSPECTOR=1', ]
+
   def react_library(**kwargs):
-    ios_library(
+    fb_apple_library(
       name = 'bridge',
       header_path_prefix = "cxxreact",
       inherited_buck_flags = STATIC_LIBRARY_IOS_FLAGS,
@@ -77,7 +82,7 @@ if THIS_IS_FBOBJC:
       ],
       **kwargs_add(
         kwargs,
-        preprocessor_flags = DEBUG_PREPROCESSOR_FLAGS,
+        preprocessor_flags = DEBUG_PREPROCESSOR_FLAGS + INSPECTOR_FLAGS,
         deps = [
           '//xplat/folly:molly',
         ],
@@ -95,6 +100,7 @@ cxx_library(
     ],
     force_static = True,
     header_namespace = "cxxreact",
+    labels = ["accounts_for_platform_and_build_mode_flags"],
     visibility = [
         "PUBLIC",
     ],
@@ -128,17 +134,13 @@ cxx_library(
 )
 
 CXXREACT_PUBLIC_HEADERS = [
-    "CxxMessageQueue.h",
     "CxxNativeModule.h",
     "Executor.h",
-    "ExecutorToken.h",
-    "ExecutorTokenFactory.h",
     "Instance.h",
-    "JSCExecutor.h",
-    "JSCNativeModules.h",
-    "JSCWebWorker.h",
     "JSBigString.h",
     "JSBundleType.h",
+    "JSCExecutor.h",
+    "JSCNativeModules.h",
     "JSIndexedRAMBundle.h",
     "JSModulesUnbundle.h",
     "MessageQueueThread.h",
@@ -148,6 +150,7 @@ CXXREACT_PUBLIC_HEADERS = [
     "NativeToJsBridge.h",
     "Platform.h",
     "RecoverableError.h",
+    "SharedProxyCxxModule.h",
     "SystraceSection.h",
 ]
 

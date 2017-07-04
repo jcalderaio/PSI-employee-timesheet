@@ -210,27 +210,6 @@ RCT_NOT_IMPLEMENTED(- (instancetype)init)
 
 @implementation RCTKeyCommands
 
-+ (void)initialize
-{
-  if (RCTIsIOS8OrEarlier()) {
-
-    // swizzle UIApplication
-    RCTSwapInstanceMethods([UIApplication class],
-                           @selector(keyCommands),
-                           @selector(RCT_keyCommands));
-
-    RCTSwapInstanceMethods([UIApplication class],
-                           @selector(sendAction:to:from:forEvent:),
-                           @selector(RCT_sendAction:to:from:forEvent:));
-  } else {
-
-    // swizzle UIResponder
-    RCTSwapInstanceMethods([UIResponder class],
-                           @selector(keyCommands),
-                           @selector(RCT_keyCommands));
-  }
-}
-
 + (instancetype)sharedInstance
 {
   static RCTKeyCommands *sharedInstance;

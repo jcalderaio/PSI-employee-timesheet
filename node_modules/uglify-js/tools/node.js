@@ -7,8 +7,7 @@
 var path = require("path");
 var fs = require("fs");
 
-var UglifyJS = exports;
-var FILES = UglifyJS.FILES = [
+var FILES = exports.FILES = [
     "../lib/utils.js",
     "../lib/ast.js",
     "../lib/parse.js",
@@ -21,71 +20,54 @@ var FILES = UglifyJS.FILES = [
     "../lib/propmangle.js",
     "./exports.js",
 ].map(function(file){
-    return require.resolve(file);
+    return fs.realpathSync(path.join(path.dirname(__filename), file));
 });
 
-new Function("MOZ_SourceMap", "exports", FILES.map(function(file){
+var UglifyJS = exports;
+
+new Function("MOZ_SourceMap", "exports", "DEBUG", FILES.map(function(file){
     return fs.readFileSync(file, "utf8");
 }).join("\n\n"))(
     require("source-map"),
-    UglifyJS
+    UglifyJS,
+    !!global.UGLIFY_DEBUG
 );
 
 UglifyJS.AST_Node.warn_function = function(txt) {
     console.error("WARN: %s", txt);
 };
 
-function read_source_map(code) {
-    var match = /\n\/\/# sourceMappingURL=data:application\/json(;.*?)?;base64,(.*)/.exec(code);
-    if (!match) {
-        UglifyJS.AST_Node.warn("inline source map not found");
-        return null;
-    }
-    return JSON.parse(new Buffer(match[2], "base64"));
-}
-
-UglifyJS.minify = function(files, options) {
+exports.minify = function(files, options) {
     options = UglifyJS.defaults(options, {
-        compress         : {},
-        fromString       : false,
+        spidermonkey     : false,
+        outSourceMap     : null,
+        outFileName      : null,
+        sourceRoot       : null,
         inSourceMap      : null,
+        sourceMapUrl     : null,
+        sourceMapInline  : false,
+        fromString       : false,
+        warnings         : false,
         mangle           : {},
         mangleProperties : false,
         nameCache        : null,
-        outFileName      : null,
         output           : null,
-        outSourceMap     : null,
-        parse            : {},
-        sourceMapInline  : false,
-        sourceMapUrl     : null,
-        sourceRoot       : null,
-        spidermonkey     : false,
-        warnings         : false,
+        compress         : {},
+        parse            : {}
     });
     UglifyJS.base54.reset();
-
-    var inMap = options.inSourceMap;
-    if (typeof inMap == "string" && inMap != "inline") {
-        inMap = JSON.parse(fs.readFileSync(inMap, "utf8"));
-    }
 
     // 1. parse
     var toplevel = null,
         sourcesContent = {};
 
     if (options.spidermonkey) {
-        if (inMap == "inline") {
-            throw new Error("inline source map only works with built-in parser");
-        }
         toplevel = UglifyJS.AST_Node.from_mozilla_ast(files);
     } else {
         function addFile(file, fileUrl) {
             var code = options.fromString
                 ? file
                 : fs.readFileSync(file, "utf8");
-            if (inMap == "inline") {
-                inMap = read_source_map(code);
-            }
             sourcesContent[fileUrl] = code;
             toplevel = UglifyJS.parse(code, {
                 filename: fileUrl,
@@ -93,12 +75,7 @@ UglifyJS.minify = function(files, options) {
                 bare_returns: options.parse ? options.parse.bare_returns : undefined
             });
         }
-        if (!options.fromString) {
-            files = UglifyJS.simple_glob(files);
-            if (inMap == "inline" && files.length > 1) {
-                throw new Error("inline source map only works with singular input");
-            }
-        }
+        if (!options.fromString) files = UglifyJS.simple_glob(files);
         [].concat(files).forEach(function (files, i) {
             if (typeof files === 'string') {
                 addFile(files, options.fromString ? i : files);
@@ -117,7 +94,7 @@ UglifyJS.minify = function(files, options) {
     if (options.compress) {
         var compress = { warnings: options.warnings };
         UglifyJS.merge(compress, options.compress);
-        toplevel.figure_out_scope(options.mangle);
+        toplevel.figure_out_scope();
         var sq = UglifyJS.Compressor(compress);
         toplevel = sq.compress(toplevel);
     }
@@ -137,7 +114,11 @@ UglifyJS.minify = function(files, options) {
     }
 
     // 5. output
-    var output = { max_line_len: 32000 };
+    var inMap = options.inSourceMap;
+    var output = {};
+    if (typeof options.inSourceMap == "string") {
+        inMap = JSON.parse(fs.readFileSync(options.inSourceMap, "utf8"));
+    }
     if (options.outSourceMap || options.sourceMapInline) {
         output.source_map = UglifyJS.SourceMap({
             // prefer outFileName, otherwise use outSourceMap without .map suffix
@@ -179,7 +160,7 @@ UglifyJS.minify = function(files, options) {
     };
 };
 
-// UglifyJS.describe_ast = function() {
+// exports.describe_ast = function() {
 //     function doitem(ctor) {
 //         var sub = {};
 //         ctor.SUBCLASSES.forEach(function(ctor){
@@ -193,7 +174,7 @@ UglifyJS.minify = function(files, options) {
 //     return doitem(UglifyJS.AST_Node).sub;
 // }
 
-UglifyJS.describe_ast = function() {
+exports.describe_ast = function() {
     var out = UglifyJS.OutputStream({ beautify: true });
     function doitem(ctor) {
         out.print("AST_" + ctor.TYPE);
@@ -247,13 +228,13 @@ function readReservedFile(filename, reserved) {
     return reserved;
 }
 
-UglifyJS.readReservedFile = readReservedFile;
+exports.readReservedFile = readReservedFile;
 
-UglifyJS.readDefaultReservedFile = function(reserved) {
-    return readReservedFile(require.resolve("./domprops.json"), reserved);
+exports.readDefaultReservedFile = function(reserved) {
+    return readReservedFile(path.join(__dirname, "domprops.json"), reserved);
 };
 
-UglifyJS.readNameCache = function(filename, key) {
+exports.readNameCache = function(filename, key) {
     var cache = null;
     if (filename) {
         try {
@@ -271,7 +252,7 @@ UglifyJS.readNameCache = function(filename, key) {
     return cache;
 };
 
-UglifyJS.writeNameCache = function(filename, key, cache) {
+exports.writeNameCache = function(filename, key, cache) {
     if (filename) {
         var data;
         try {
@@ -292,9 +273,13 @@ UglifyJS.writeNameCache = function(filename, key, cache) {
 // Example: "foo/bar/*baz??.*.js"
 // Argument `glob` may be a string or an array of strings.
 // Returns an array of strings. Garbage in, garbage out.
-UglifyJS.simple_glob = function simple_glob(glob) {
+exports.simple_glob = function simple_glob(glob) {
+    var results = [];
     if (Array.isArray(glob)) {
-        return [].concat.apply([], glob.map(simple_glob));
+        glob.forEach(function(elem) {
+            results = results.concat(simple_glob(elem));
+        });
+        return results;
     }
     if (glob.match(/\*|\?/)) {
         var dir = path.dirname(glob);
@@ -302,19 +287,28 @@ UglifyJS.simple_glob = function simple_glob(glob) {
             var entries = fs.readdirSync(dir);
         } catch (ex) {}
         if (entries) {
-            var pattern = "^" + path.basename(glob)
-                .replace(/[.+^$[\]\\(){}]/g, "\\$&")
+            var pattern = "^" + (path.basename(glob)
+                .replace(/\(/g, "\\(")
+                .replace(/\)/g, "\\)")
+                .replace(/\{/g, "\\{")
+                .replace(/\}/g, "\\}")
+                .replace(/\[/g, "\\[")
+                .replace(/\]/g, "\\]")
+                .replace(/\+/g, "\\+")
+                .replace(/\^/g, "\\^")
+                .replace(/\$/g, "\\$")
                 .replace(/\*/g, "[^/\\\\]*")
-                .replace(/\?/g, "[^/\\\\]") + "$";
+                .replace(/\./g, "\\.")
+                .replace(/\?/g, ".")) + "$";
             var mod = process.platform === "win32" ? "i" : "";
             var rx = new RegExp(pattern, mod);
-            var results = entries.filter(function(name) {
-                return rx.test(name);
-            }).map(function(name) {
-                return path.join(dir, name);
-            });
-            if (results.length) return results;
+            for (var i in entries) {
+                if (rx.test(entries[i]))
+                    results.push(dir + "/" + entries[i]);
+            }
         }
     }
-    return [ glob ];
+    if (results.length === 0)
+        results = [ glob ];
+    return results;
 };

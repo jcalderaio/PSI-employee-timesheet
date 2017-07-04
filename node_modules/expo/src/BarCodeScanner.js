@@ -5,6 +5,7 @@ import {
   StyleSheet,
   requireNativeComponent,
   View,
+  ViewPropTypes,
 } from 'react-native';
 
 const BarCodeScannerManager =
@@ -34,7 +35,7 @@ export default class BarCodeScanner extends React.Component {
   };
 
   static propTypes = {
-    ...View.propTypes,
+    ...ViewPropTypes,
     onBarCodeRead: PropTypes.func,
     barCodeTypes: PropTypes.array,
     torchMode: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

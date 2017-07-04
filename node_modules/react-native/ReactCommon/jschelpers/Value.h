@@ -95,7 +95,7 @@ public:
    */
   std::string str() const {
     const JSChar* utf16 = JSC_JSStringGetCharactersPtr(m_context, m_string);
-    int stringLength = JSC_JSStringGetLength(m_context, m_string);
+    size_t stringLength = JSC_JSStringGetLength(m_context, m_string);
     return unicode::utf16toUTF8(utf16, stringLength);
   }
 
@@ -233,9 +233,16 @@ private:
 
 class Value : public noncopyable {
 public:
-  Value(JSContextRef context, JSValueRef value);
-  Value(JSContextRef context, JSStringRef value);
-  Value(Value&&);
+  __attribute__((visibility("default"))) Value(JSContextRef context, JSValueRef value);
+  __attribute__((visibility("default"))) Value(JSContextRef context, JSStringRef value);
+  __attribute__((visibility("default"))) Value(Value&&);
+
+  Value& operator=(Value&& other) {
+    m_context = other.m_context;
+    m_value = other.m_value;
+    other.m_value = NULL;
+    return *this;
+  };
 
   operator JSValueRef() const {
     return m_value;
@@ -305,10 +312,14 @@ public:
     return Value(ctx, JSC_JSValueMakeUndefined(ctx));
   }
 
-  std::string toJSONString(unsigned indent = 0) const;
-  static Value fromJSON(JSContextRef ctx, const String& json);
-  static JSValueRef fromDynamic(JSContextRef ctx, const folly::dynamic& value);
-  JSContextRef context() const;
+  static Value makeNull(JSContextRef ctx) {
+    return Value(ctx, JSC_JSValueMakeNull(ctx));
+  }
+
+  __attribute__((visibility("default"))) std::string toJSONString(unsigned indent = 0) const;
+  __attribute__((visibility("default"))) static Value fromJSON(JSContextRef ctx, const String& json);
+  __attribute__((visibility("default"))) static JSValueRef fromDynamic(JSContextRef ctx, const folly::dynamic& value);
+  __attribute__((visibility("default"))) JSContextRef context() const;
 protected:
   JSContextRef m_context;
   JSValueRef m_value;
