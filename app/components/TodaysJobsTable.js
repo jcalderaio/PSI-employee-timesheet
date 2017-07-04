@@ -47,6 +47,7 @@ class TodaysJobsTable extends Component {
                                         //value={String(item.Hours)}
                                         onChangeText={value => {
                                             const hours = Number(value.trim());
+                                            item.Old_Hours = item.Hours;
 
                                             // Do not let Non-Numbers entered
                                             if (isNaN(hours)) {
@@ -61,7 +62,7 @@ class TodaysJobsTable extends Component {
                                                 this.forceUpdate();
                                             } else if (hours % 0.5 !== 0) {
                                                 alert('You must enter hours in denominations of 0.5');
-                                                item.Hours = (Math.round(hours * 2) / 2).toFixed(1);
+                                                item.Hours = Number((Math.round(hours * 2) / 2).toFixed(1));
                                                 item.Status = 1; // UPDATE (PUT)
                                                 this.forceUpdate();
                                                 return;
@@ -81,7 +82,7 @@ class TodaysJobsTable extends Component {
                             </Col>
                           </Row>
                       );
-                  } else if (item.Status === 2) {
+                  } else if (item.Status === 1) {
                     // Items NOT committed. Show as PINK rows
                       return (
                           <Row style={{ minHeight: 50 }} key={item.Job_Id}>
@@ -115,7 +116,7 @@ class TodaysJobsTable extends Component {
                                                 this.forceUpdate();
                                             } else if (hours % 0.5 !== 0) {
                                                 alert('You must enter hours in denominations of 0.5');
-                                                item.Hours = (Math.round(hours * 2) / 2).toFixed(1);
+                                                item.Hours = Number((Math.round(hours * 2) / 2).toFixed(1));
                                                 item.Status = 1; // UPDATE (PUT)
                                                 this.forceUpdate();
                                                 return;
@@ -135,6 +136,7 @@ class TodaysJobsTable extends Component {
                             </Col>
                           </Row>
                       );
+                    // (Item.Status === 2)
                   } else {
                       return (
                           <Row style={{ minHeight: 50 }} key={item.Job_Id}>
@@ -168,7 +170,7 @@ class TodaysJobsTable extends Component {
                                                 this.forceUpdate();
                                             } else if (hours % 0.5 !== 0) {
                                                 alert('You must enter hours in denominations of 0.5');
-                                                item.Hours = (Math.round(hours * 2) / 2).toFixed(1);
+                                                item.Hours = Number((Math.round(hours * 2) / 2).toFixed(1));
                                                 item.Status = 1; // UPDATE (PUT)
                                                 this.forceUpdate();
                                                 return;

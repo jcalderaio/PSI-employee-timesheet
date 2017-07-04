@@ -4,6 +4,7 @@ What I Did:
     -Add Entry - directions pop up at the top when there are uncommited changes, saying "WARNING! You have uncommitted changes. Please go to the 'Today's Charges' tab and click the 'Update Charges' button. If you proceed with Adding a new Entry, your changes will be lost."
     -Add Entry - Made is so no one can add '.', '-', or any Non numbers to the database.
     -TodaysCharges - selectcts entire field on focus
+    -TodaysCharges - prevent people from adding non-Numbers, non-divisers of 0.5, and automatically rounds number to closest 0.5
 
 
 
