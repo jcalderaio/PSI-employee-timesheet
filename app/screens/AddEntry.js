@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Platform, Keyboard, LayoutAnimation, Dimensions, UIManager, KeyboardAvoidingView } from 'react-native';
-import { Text, Container, Content, Button, Grid, Header, Left, Right, Body, Title, View, Input, Icon } from 'native-base';
+import { KeyboardAvoidingView } from 'react-native';
+import { Text, Container, Content, Button, Grid, Header, Left, Right, Body, Title, View, Input, Icon, Spinner } from 'native-base';
 import { Octicons } from '@expo/vector-icons';
 import { observer } from 'mobx-react/native';
 import ModalPicker from 'react-native-modal-picker';
@@ -38,6 +38,15 @@ export default class AddEntry extends Component {
 		{ key: i, label: item }
 	));
 	jobNumberData.unshift({ key: -4, section: true, label: 'Job Numbers' });
+
+	if ((authorizedJobStore.loading)) {
+	  return (
+		<View style={styles.centerContainter}>
+		  <Spinner size='large' />
+		  <Text style={{ marginTop: -7, color: '#0BD318' }}>LOADING</Text>
+		</View>
+	  );
+	}
 
     return (
         <Container>
@@ -264,6 +273,10 @@ const styles = {
 		fontSize: 18,
 		height: 20,
 		width: 50
-	}
-
+	},
+	centerContainter: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
+  	}
 };

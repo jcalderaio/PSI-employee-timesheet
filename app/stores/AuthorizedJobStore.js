@@ -22,6 +22,8 @@ class AuthorizedJobStore {
    // Used to Add new Entry
    @observable jobId = null;
 
+   @observable loading = false;
+
    @computed get isEmpty() {
        if (this.authorizedJobs !== null) {
            return !this.authorizedJobs.length;
@@ -129,6 +131,7 @@ class AuthorizedJobStore {
       //console.log('empNo type: ', typeof userStore.employeeInfo.Employee_No, ' ', userStore.employeeInfo.Employee_No, ' ', userStore.employeeInfo.Employee_No.length);
       //console.log('jobid type: ', typeof this.jobId, ' ', this.jobId, ' ', this.jobId.length);
       //console.log('hours type: ', typeof this.hours, ' ', this.hours, ' ', this.hours.length);
+      this.loading = true;
 
       // Run algorithm to retrieve JobId
       this.setJobId();
@@ -138,12 +141,15 @@ class AuthorizedJobStore {
 
       if (this.hours === 0) {
           alert('You cannot enter \'0\' for hours');
+          this.loading = false;
           return;
       } else if (isNaN(this.hours)) {
           alert('You must enter a Number!');
+          this.loading = false;
           return;
       } else if (this.hours % 0.5 !== 0) {
           alert('You must enter hours in denominations of 0.5');
+          this.loading = false;
           return;
       } else {
          // If a duplicate is found, then alert the user and return
@@ -152,6 +158,7 @@ class AuthorizedJobStore {
                'You cannot add a duplicate! Please edit hours in Today\'s Charges',
                ' '
             );
+            this.loading = false;
             return;
          }
          if (this.jobId !== null) {
@@ -174,14 +181,20 @@ class AuthorizedJobStore {
                 // Reload the jobs for today
                 todaysJobStore.fetchTodaysJobs();
                 navigate('TodaysCharges');
+                this.loading = false;
             })
             .catch(e => {
                console.log('\'Add Charge\' response NOT successful: ', e.response);
                alert(`${e}: Charge NOT added`);
+               this.clearAll();
+               this.loading = false;
                return;
             });
          } else {
             alert('No JobId was found for this job!');
+            this.clearAll();
+            this.loading = false;
+            return;
          }
       }
    }

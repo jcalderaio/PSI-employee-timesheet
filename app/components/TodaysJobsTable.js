@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Text } from 'react-native';
 import { Grid, Col, Row, View, Input } from 'native-base';
 import { map } from 'lodash';
-import todaysJobStore from '../stores/TodaysJobStore';
 
 class TodaysJobsTable extends Component {
     render() {
@@ -27,7 +26,7 @@ class TodaysJobsTable extends Component {
               {map(this.props.data, (item) => {
                   // Items committed. Show as WHITE rows
                   // User can only change hours. If zero, will be deleted
-                  if (item.Status === 0) {
+                  if (item.Status === 0) { // 0 - do nothing
                       return (
                           <Row style={{ minHeight: 50 }} key={item.Job_Id}>
                             <Col size={24} style={styles.tableStyle.bodyFirst}>
@@ -42,6 +41,7 @@ class TodaysJobsTable extends Component {
                             <Col size={17} style={styles.tableStyle.bodyLast}>
                                 <View>
                                     <Input
+                                        ref='Status0'
                                         style={styles.hoursEntryBorder}
                                         defaultValue={String(item.Hours)}
                                         //value={String(item.Hours)}
@@ -49,24 +49,23 @@ class TodaysJobsTable extends Component {
                                             const hours = Number(value.trim());
                                             item.Old_Hours = item.Hours;
 
-                                            // Do not let Non-Numbers entered
+                                            // Not a number
                                             if (isNaN(hours)) {
                                                 alert('You must enter a Number!');
-                                                item.Hours = 0;
-                                                item.Status = 3; // DELETE
-                                                this.forceUpdate();
-                                            // These want to be DELETED
+                                                return;
+                                            }
+
+                                            // A number
+                                            if (item.Hours === hours) {
+                                                return;
                                             } else if (hours === 0) {
                                                 item.Hours = 0;
                                                 item.Status = 3; // DELETE
                                                 this.forceUpdate();
                                             } else if (hours % 0.5 !== 0) {
-                                                alert('You must enter hours in denominations of 0.5');
-                                                item.Hours = Number((Math.round(hours * 2) / 2).toFixed(1));
-                                                item.Status = 1; // UPDATE (PUT)
+                                                item.Hours = Math.round(hours * 2) / 2;
+                                                item.Status = 1;
                                                 this.forceUpdate();
-                                                return;
-                                            // These want to be UPDATED
                                             } else {
                                                 item.Hours = hours;
                                                 item.Status = 1;  // UPDATE (PUT)
@@ -82,7 +81,7 @@ class TodaysJobsTable extends Component {
                             </Col>
                           </Row>
                       );
-                  } else if (item.Status === 1) {
+                  } else if (item.Status === 2) {
                     // Items NOT committed. Show as PINK rows
                       return (
                           <Row style={{ minHeight: 50 }} key={item.Job_Id}>
@@ -103,28 +102,21 @@ class TodaysJobsTable extends Component {
                                         onChangeText={value => {
                                             const hours = Number(value.trim());
 
-                                            // Do not let Non-Numbers entered
+                                            // Not a number
                                             if (isNaN(hours)) {
                                                 alert('You must enter a Number!');
-                                                item.Hours = 0;
-                                                item.Status = 3; // DELETE
-                                                this.forceUpdate();
-                                            // These want to be DELETED
-                                            } else if (hours === 0) {
-                                                item.Hours = 0;
-                                                item.Status = 3; // DELETE
-                                                this.forceUpdate();
-                                            } else if (hours % 0.5 !== 0) {
-                                                alert('You must enter hours in denominations of 0.5');
-                                                item.Hours = Number((Math.round(hours * 2) / 2).toFixed(1));
-                                                item.Status = 1; // UPDATE (PUT)
-                                                this.forceUpdate();
                                                 return;
-                                            // These want to be UPDATED
+                                            }
+
+                                            // A number
+                                            // Do nothing. POSTS with 0 hrs will just not be added
+                                            if (hours === 0) {
+                                                item.Hours = 0;
+                                            } else if (hours % 0.5 !== 0) {
+                                                item.Hours = Math.round(hours * 2) / 2;
+                                                this.forceUpdate();
                                             } else {
                                                 item.Hours = hours;
-                                                item.Status = 1;  // UPDATE (PUT)
-                                                this.forceUpdate();
                                             }
                                         }}
                                         returnKeyType='send'
@@ -136,7 +128,7 @@ class TodaysJobsTable extends Component {
                             </Col>
                           </Row>
                       );
-                    // (Item.Status === 2)
+                    // (Item.Status === 1 || 3)
                   } else {
                       return (
                           <Row style={{ minHeight: 50 }} key={item.Job_Id}>
@@ -157,28 +149,29 @@ class TodaysJobsTable extends Component {
                                         onChangeText={value => {
                                             const hours = Number(value.trim());
 
-                                            // Do not let Non-Numbers entered
+                                            // Not a number
                                             if (isNaN(hours)) {
                                                 alert('You must enter a Number!');
-                                                item.Hours = 0;
-                                                item.Status = 3; // DELETE
+                                                item.Status = 0;
+                                                return;
+                                            }
+
+                                            // A number
+                                            // Went back to old number
+                                            if (item.Old_Hours === hours) {
+                                                item.Hours = hours;
+                                                item.Status = 0;
                                                 this.forceUpdate();
-                                            // These want to be DELETED
                                             } else if (hours === 0) {
                                                 item.Hours = 0;
                                                 item.Status = 3; // DELETE
-                                                this.forceUpdate();
                                             } else if (hours % 0.5 !== 0) {
-                                                alert('You must enter hours in denominations of 0.5');
-                                                item.Hours = Number((Math.round(hours * 2) / 2).toFixed(1));
-                                                item.Status = 1; // UPDATE (PUT)
+                                                item.Hours = Math.round(hours * 2) / 2;
+                                                item.Status = 1;  //PUT
                                                 this.forceUpdate();
-                                                return;
-                                            // These want to be UPDATED
                                             } else {
                                                 item.Hours = hours;
-                                                item.Status = 1;  // UPDATE (PUT)
-                                                this.forceUpdate();
+                                                item.Status = 1;  //PUT
                                             }
                                         }}
                                         returnKeyType='send'

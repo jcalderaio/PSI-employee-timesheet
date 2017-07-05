@@ -17,9 +17,8 @@ const halfHeight = Dimensions.get('window').height / 4;
 @observer
 export default class TodaysCharges extends Component {
   render() {
-      const { navigate } = this.props.navigation;
 
-      if ((recentJobStore.recentJobs === null) || (todaysJobStore.todaysJobs == null)) {
+      if ((recentJobStore.recentJobs === null) || (todaysJobStore.todaysJobs == null) || (todaysJobStore.loading)) {
         return (
           <View style={styles.centerContainter}>
             <Spinner size='large' />
@@ -85,20 +84,14 @@ export default class TodaysCharges extends Component {
   					}
 
             {/*Button: "Update Charges"*/}
-            {(!todaysJobStore.isEmpty) &&
+            {(!todaysJobStore.isEmpty && todaysJobStore.hasUncommitted) &&
               <View style={{ marginTop: 60, marginBottom: 60 }}>
                 {(todaysJobStore.hasUncommitted) &&
                     <Text style={{ color: 'red', fontSize: 16, textAlign: 'center', marginBottom: 10 }}>Rows in PINK are uncommitted. Click 'Update Charges' to commit.</Text>
                 }
                 <Button
                    block
-                   onPress={() => {
-                       Alert.alert(
-                         'Charges Updated!',
-                          ' '
-                       );
-                      navigate('TodaysCharges');
-                   }}
+                   onPress={() => todaysJobStore.updateEntry()}
                    style={styles.updateChargeButton}
                 >
                    <Text>Update Charges</Text>
@@ -108,7 +101,7 @@ export default class TodaysCharges extends Component {
 
 
             {/* FOR DEBUGGING */}
-            {/* Shows size of table (for DEBUGGING)*/}
+            {/* Shows size of table (for DEBUGGING)
             <Text>Size: {todaysJobStore.size}</Text>
 
             {(todaysJobStore.hasUncommitted) &&
@@ -117,7 +110,7 @@ export default class TodaysCharges extends Component {
             {(!todaysJobStore.hasUncommitted) &&
               <Text>Has Uncommitted: false</Text>
             }
-            {/* FOR DEBUGGING */}
+            { FOR DEBUGGING */}
 
 
           </Content>
