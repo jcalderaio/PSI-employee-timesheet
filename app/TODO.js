@@ -9,29 +9,7 @@ What I Did:
     -TodaysCharges - prevent people from adding non-Numbers, non-divisers of 0.5, and automatically rounds number to closest 0.5
     -TodaysCharges - Update Charges button is hidden until there are charges needed to commit
     -Bug- AddEntry - when go back to previous option, it resets the option below to 'Tasks', etc.
-
+    -Bug - SelectRecent - Add first 2 then first 3. Now says correct thing.
 
 
 TODO:
-  -On "Add Entry", go back and reset variables
-
-// BUG:
-*paste Russian characters into username/password in login, throws error
-*Bosses Problem
-How to reproduce the problem:
-1.       Start fresh
-2.       Select recent
-3.       Check the first two jobs
-4.       Add Selected
-5.       Enter some hours for the first pink job but don’t update charges
-6.       Select recent
-7.       Check the first three jobs
-8.       Add Selected
-9.       Message box says they’re all duplicates.  In reality, 2 are duplicates and 1 is new.  The underlying logic behaves correctly, just the msgbox math has an error.
-
-*If change to float first time, it doesnt snap
-*TodaysCharges - can update to floats
-*TodaysCharges - 1.2 does NOT snap to 0.5
-
-What He Needs to Fix:
-  -RecentJobs needs hours field with default of 0 (cant do empty)

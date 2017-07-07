@@ -88,8 +88,7 @@ class RecentJobStore {
                   }
                });
             }
-            const balance = count - dupeCount;
-            if (balance < 0) {
+            if (count === 0) {
                Alert.alert('No Charges Added! All duplicates!', ' ');
             } else if (dupeFlag) {
                Alert.alert(`${count} Charges Added!`, `${dupeCount} duplicates NOT added.`);
@@ -109,8 +108,7 @@ class RecentJobStore {
                dupeFlag = true;
             }
          });
-         const balance = count - dupeCount;
-         if (balance < 0) {
+         if (count === 0) {
             Alert.alert('No Charges Added! All duplicates!', ' ');
          } else if (dupeFlag) {
             Alert.alert(`All Charges (Except for ${dupeCount} duplicates) Added!`, ' ');
