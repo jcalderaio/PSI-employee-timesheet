@@ -61,7 +61,7 @@ class TodaysJobStore {
      }
    }
 
-   @action updateEntry() {
+   @action updateEntry(navigate) {
       this.loading = true;
 
       const tempPUT = filter(this.todaysJobs, { 'Status': 1 });
@@ -116,7 +116,7 @@ class TodaysJobStore {
 
       // DELETE
       map(tempDELETE, (item) => {
-         if ((item.Hours === 0)) {
+         if (item.Hours === 0) {
             fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Timesheet_Id=${item.Timesheet_Id}&Status=3`, {
                    method: 'PUT',
                    headers: {
@@ -136,8 +136,9 @@ class TodaysJobStore {
                });
          }
       });
-      todaysJobStore.fetchTodaysJobs();
+      this.fetchTodaysJobs();
       this.loading = false;
+      navigate('TodaysCharges');
       Alert.alert(
          'Charges Updated!',
           ' '

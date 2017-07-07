@@ -17,6 +17,8 @@ const halfHeight = Dimensions.get('window').height / 4;
 @observer
 export default class TodaysCharges extends Component {
   render() {
+    const { navigate } = this.props.navigation;
+
       if ((recentJobStore.recentJobs === null) || (todaysJobStore.todaysJobs == null) || (todaysJobStore.loading)) {
         return (
           <View style={styles.centerContainter}>
@@ -90,7 +92,7 @@ export default class TodaysCharges extends Component {
                 }
                 <Button
                    block
-                   onPress={() => todaysJobStore.updateEntry()}
+                   onPress={() => todaysJobStore.updateEntry(navigate)}
                    style={styles.updateChargeButton}
                 >
                    <Text>Update Charges</Text>

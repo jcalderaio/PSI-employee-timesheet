@@ -53,10 +53,7 @@ class TodaysJobsTable extends Component {
                                             if (isNaN(hours)) {
                                                 alert('You must enter a Number!');
                                                 return;
-                                            }
-
-                                            // A number
-                                            if (item.Hours === hours) {
+                                            } else if (item.Hours === hours) {
                                                 return;
                                             } else if (hours === 0) {
                                                 item.Hours = 0;
@@ -64,7 +61,13 @@ class TodaysJobsTable extends Component {
                                                 this.forceUpdate();
                                             } else if (hours % 0.5 !== 0) {
                                                 item.Hours = Math.round(hours * 2) / 2;
-                                                item.Status = 1;
+                                                if (item.Hours === item.Old_Hours) {
+                                                    item.Status = 0;
+                                                } else if (item.Hours === 0) {
+                                                    item.Status = 3;
+                                                } else {
+                                                    item.Status = 1;
+                                                }
                                                 this.forceUpdate();
                                             } else {
                                                 item.Hours = hours;
@@ -106,11 +109,9 @@ class TodaysJobsTable extends Component {
                                             if (isNaN(hours)) {
                                                 alert('You must enter a Number!');
                                                 return;
-                                            }
-
-                                            // A number
-                                            // Do nothing. POSTS with 0 hrs will just not be added
-                                            if (hours === 0) {
+                                                // A number
+                                                // Do nothing. POSTS with 0 hrs will just not be added
+                                            } else if (hours === 0) {
                                                 item.Hours = 0;
                                             } else if (hours % 0.5 !== 0) {
                                                 item.Hours = Math.round(hours * 2) / 2;
@@ -154,11 +155,9 @@ class TodaysJobsTable extends Component {
                                                 alert('You must enter a Number!');
                                                 item.Status = 0;
                                                 return;
-                                            }
-
-                                            // A number
-                                            // Went back to old number
-                                            if (item.Old_Hours === hours) {
+                                                // A number
+                                                // Went back to old number
+                                            } else if (item.Old_Hours === hours) {
                                                 item.Hours = hours;
                                                 item.Status = 0;
                                                 this.forceUpdate();
@@ -167,7 +166,13 @@ class TodaysJobsTable extends Component {
                                                 item.Status = 3; // DELETE
                                             } else if (hours % 0.5 !== 0) {
                                                 item.Hours = Math.round(hours * 2) / 2;
-                                                item.Status = 1;  //PUT
+                                                if (item.Hours === item.Old_Hours) {
+                                                    item.Status = 0;
+                                                } else if (item.Hours === 0) {
+                                                    item.Status = 3;
+                                                } else {
+                                                    item.Status = 1;
+                                                }
                                                 this.forceUpdate();
                                             } else {
                                                 item.Hours = hours;
