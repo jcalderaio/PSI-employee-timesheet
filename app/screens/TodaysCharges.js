@@ -72,7 +72,7 @@ export default class TodaysCharges extends Component {
 
             {/*Directions*/}
             {(!todaysJobStore.isEmpty) &&
-              <View style={{ paddingTop: 60 }}>
+              <View style={{ paddingTop: 60, marginBottom: (!todaysJobStore.hasUncommitted) ? 30 : 0 }}>
                 <Grid style={{ justifyContent: 'center' }} >
                     <Text style={{ color: 'steelblue', fontSize: 16 }}>Tap on the 'Hours' column to make changes.</Text>
                 </Grid>
@@ -119,11 +119,6 @@ export default class TodaysCharges extends Component {
 }
 
 const styles = {
-    tableStyle: {
-      height: (Platform.OS === 'ios') ? 165 : 170,
-      flex: 1, 		//this will stretch it across the screen
-      width: null,
-    },
     headerStyle: {
   		backgroundColor: 'red'
   	},

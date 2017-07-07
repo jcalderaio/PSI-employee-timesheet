@@ -8,7 +8,7 @@ What I Did:
     -TodaysCharges - selects entire field on focus
     -TodaysCharges - prevent people from adding non-Numbers, non-divisers of 0.5, and automatically rounds number to closest 0.5
     -TodaysCharges - Update Charges button is hidden until there are charges needed to commit
-    -Basically done todays charges
+    -Bug- AddEntry - when go back to previous option, it resets the option below to 'Tasks', etc.
 
 
 
