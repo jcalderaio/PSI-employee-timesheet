@@ -15,6 +15,15 @@ import todaysJobStore from '../stores/TodaysJobStore';
 // Add this to show that it will update the observables in the MobX stores
 @observer
 export default class AddEntry extends Component {
+	constructor() {
+		super();
+		this.state = {
+			selectedTask: '',
+			selectedSubTask: '',
+			selectedJobNumber: ''
+		};
+	}
+
 	render() {
 		// These are from React Navigation
     const { goBack, navigate } = this.props.navigation;
@@ -99,6 +108,7 @@ export default class AddEntry extends Component {
 							onChange={(value) => {
 								authorizedJobStore.clearAll();
 								authorizedJobStore.setClientFilter(value.label);
+								this.setState({ selectedTask: '' });
 							}}
 							style={{ paddingHorizontal: 35 }}
 						/>
@@ -114,16 +124,22 @@ export default class AddEntry extends Component {
 							<ModalPicker
 								ref='taskModal'
 								data={taskData}
-								initValue='Tasks'
 								onChange={(value) => {
 									authorizedJobStore.taskFilter = null;
 						          	authorizedJobStore.subTaskFilter = null;
 						          	authorizedJobStore.jobNumber = null;
 						          	authorizedJobStore.hours = null;
 									authorizedJobStore.setTaskFilter(value.label);
+									this.setState({ selectedTask: value.label });
+									this.setState({ selectedSubTask: '' });
 								}}
 								style={{ paddingHorizontal: 35 }}
-							/>
+							>
+								{/*If selection above you just picked, then selection below you gets cleared*/}
+								<View style={styles.selectionStyle}>
+									<Text>{this.state.selectedTask === '' ? 'Tasks' : this.state.selectedTask}</Text>
+								</View>
+							</ModalPicker>
 						</View>
 					}
 
@@ -137,15 +153,21 @@ export default class AddEntry extends Component {
 							<ModalPicker
 								ref='subTaskModal'
 								data={subTaskData}
-								initValue='Sub-Tasks'
 								onChange={(value) => {
 									authorizedJobStore.subTaskFilter = null;
 						          	authorizedJobStore.jobNumber = null;
 						          	authorizedJobStore.hours = null;
 									authorizedJobStore.setSubTaskFilter(value.label);
+									this.setState({ selectedSubTask: value.label });
+									this.setState({ selectedJobNumber: '' });
 								}}
 								style={{ paddingHorizontal: 35 }}
-							/>
+							>
+								{/*If selection above you just picked, then selection below you gets cleared*/}
+								<View style={styles.selectionStyle}>
+									<Text>{this.state.selectedSubTask === '' ? 'Sub-Tasks' : this.state.selectedSubTask}</Text>
+								</View>
+							</ModalPicker>
 						</View>
 					}
 
@@ -168,14 +190,19 @@ export default class AddEntry extends Component {
 							<ModalPicker
 								ref='jobNoModal'
 								data={jobNumberData}
-								initValue='Job Numbers'
 								onChange={(value) => {
 									authorizedJobStore.jobNumber = null;
 									authorizedJobStore.hours = null;
 									authorizedJobStore.setJobNumber(value.label);
+									this.setState({ selectedJobNumber: value.label });
 								}}
 								style={{ paddingHorizontal: 35 }}
-							/>
+							>
+								{/*If selection above you just picked, then selection below you gets cleared*/}
+								<View style={styles.selectionStyle}>
+									<Text>{this.state.selectedJobNumber === '' ? 'Job Numbers' : this.state.selectedJobNumber}</Text>
+								</View>
+							</ModalPicker>
 						</View>
 					}
 
@@ -278,5 +305,14 @@ const styles = {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center'
-  	}
+  	},
+  	selectionStyle: {
+		flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+		borderColor: '#ccc',
+        borderWidth: 1,
+        padding: 8,
+        borderRadius: 5
+	}
 };

@@ -17,7 +17,6 @@ const halfHeight = Dimensions.get('window').height / 4;
 @observer
 export default class TodaysCharges extends Component {
   render() {
-
       if ((recentJobStore.recentJobs === null) || (todaysJobStore.todaysJobs == null) || (todaysJobStore.loading)) {
         return (
           <View style={styles.centerContainter}>
