@@ -62,7 +62,7 @@ export default class SelectRecent extends Component {
 
 					{/*Start Table*/}
 					{(!recentJobStore.isEmpty) &&
-						<RecentJobsTable data={recentJobStore.recentJobs} />
+						<RecentJobsTable />
 					}
 					{/*End of Table*/}
 

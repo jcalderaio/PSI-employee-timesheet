@@ -3,7 +3,12 @@ import { Text } from 'react-native';
 import { Grid, Col, Row } from 'native-base';
 import { map } from 'lodash';
 import CheckBox from 'react-native-check-box';
+import { observer } from 'mobx-react/native';
 
+//MobX
+import recentJobStore from '../stores/RecentJobStore';
+
+@observer
 class RecentJobsTable extends Component {
     onClick = (item) => {
       item.Is_Checked = !item.Is_Checked;
@@ -44,7 +49,7 @@ class RecentJobsTable extends Component {
             </Col>
           </Row>
           {/*Table Labels*/}
-          {map(this.props.data, (item) =>
+          {map(recentJobStore.recentJobs, (item) =>
             <Row style={{ minHeight: 50 }} key={item.Job_Id}>
                {/*Job # Data*/}
               <Col size={24} style={styles.tableStyle.body}>
