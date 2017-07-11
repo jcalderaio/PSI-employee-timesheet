@@ -3,7 +3,9 @@ import { observable, computed, action, autorun } from 'mobx';
 import base64 from 'base-64';
 import { sum, map, filter } from 'lodash';  // Import ONLY used functions from Lodash
 import ApiUtils from '../components/ApiUtils'; // checks for errors in Fetches
-import userStore from './UserStore';
+
+//MobX
+import userStore from './UserStore';  // Need user/pass
 
 class TodaysJobStore {
    @observable todaysJobs = null;
@@ -44,11 +46,7 @@ class TodaysJobStore {
              item.Status !== 0
            );
 
-           if (temp.length > 0) {
-             return true;
-          } else {
-             return false;
-          }
+           return (temp.length > 0);
        }
    }
 

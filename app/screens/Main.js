@@ -6,10 +6,13 @@ import { observer } from 'mobx-react/native';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { CardSection } from '../components/CardSection';
 import { Card } from '../components/Card';
+
+//MobX
 import userStore from '../stores/UserStore';
 import todaysJobStore from '../stores/TodaysJobStore';
 import recentJobStore from '../stores/RecentJobStore';
 import authorizedJobStore from '../stores/AuthorizedJobStore';
+import timeTrackerStore from '../stores/TimeTrackerStore';
 
 let flag = true;
 
@@ -21,12 +24,23 @@ export default class Main extends Component {
             todaysJobStore.fetchTodaysJobs();
             recentJobStore.fetchRecentJobs();
             authorizedJobStore.fetchAuthorizedJobs();
+            timeTrackerStore.fetchTimeTracker();
             flag = false;
         }
     }
 
  render() {
     const { navigate, goBack } = this.props.navigation;
+
+    console.log('Date: ', moment().format('hh:mm a'));
+    console.log('Date Type: ', typeof moment().format('hh:mm a')); //string
+    const date1 = moment(moment().format('hh:mm a'), 'hh:mm a');
+    const date2 = moment('10:00 pm', 'hh:mm a');
+
+    // How to get the difference
+    const result = date2.diff(date1, 'minutes');
+
+    console.log('Difference: ', result / 60, ' hours');
 
     // For testing purposes
     //console.log('Todays Jobs:', todaysJobStore.todaysJobs);
@@ -58,7 +72,11 @@ export default class Main extends Component {
                        ' ',
                        [
                          { text: 'Cancel', onPress: () => console.log('Cancel Pressed!') },
-                         { text: 'OK', onPress: () => goBack(null) },
+                         { text: 'OK',
+                         onPress: () => {
+                             flag = true;
+                             goBack(null);
+                         } },
                        ]
                     );
                 }}
@@ -124,20 +142,28 @@ export default class Main extends Component {
               </Card>
 
               <Button
-      					block
-      					onPress={() => navigate('AddEntry')}
-      					style={styles.addEntryButton}
-			        >
-					       <Text>Add Entry</Text>
-			        </Button>
+      			block
+      			onPress={() => navigate('AddEntry')}
+      			style={styles.addEntryButton}
+		      >
+					<Text>Add Entry</Text>
+			  </Button>
 
               <Button
-        				block
-        				onPress={() => navigate('SelectRecent')}
-        				style={styles.selectRecentButton}
-				      >
-					        <Text>Select Recent</Text>
-			        </Button>
+        		block
+        		onPress={() => navigate('SelectRecent')}
+        		style={styles.selectRecentButton}
+			  >
+					<Text>Select Recent</Text>
+			  </Button>
+
+              <Button
+        		block
+        		onPress={() => navigate('TimeTracker')}
+        		style={styles.timeTrackerButton}
+			  >
+					<Text>Time Tracker</Text>
+			  </Button>
 
           </Content>
       </Container>
@@ -174,6 +200,16 @@ const styles = {
       backgroundColor: '#007aff',
       marginHorizontal: 20,
   		marginTop: 25,
+  		shadowColor: '#000',
+  		shadowOffset: { width: 0, height: 2 },
+  		shadowOpacity: 0.3,
+  		shadowRadius: 2
+    },
+    timeTrackerButton: {
+      backgroundColor: '#007aff',
+      marginHorizontal: 20,
+  		marginTop: 25,
+        marginBottom: 30,
   		shadowColor: '#000',
   		shadowOffset: { width: 0, height: 2 },
   		shadowOpacity: 0.3,

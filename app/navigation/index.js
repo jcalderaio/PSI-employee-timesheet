@@ -9,6 +9,7 @@ import Main from '../screens/Main';
 import AddEntry from '../screens/AddEntry';
 import SelectRecent from '../screens/SelectRecent';
 import TodaysCharges from '../screens/TodaysCharges';
+import TimeTracker from '../screens/TimeTracker';
 
 export const Tabs = TabNavigator({
   Main: {
@@ -62,7 +63,10 @@ export const ModalStack = StackNavigator({
 	},
   SelectRecent: {
     screen: SelectRecent
-  }
+  },
+  TimeTracker: {
+		screen: TimeTracker
+	}
 }, {
     mode: 'modal',
 	  headerMode: 'none'

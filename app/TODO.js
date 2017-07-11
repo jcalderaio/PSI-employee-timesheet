@@ -1,15 +1,17 @@
 What I Did:
-    -TodaysJobStore - added function to let us know if there are uncommitted changes
-    -Todays Charges tab - directions pop up near button when there are uncommited changes, saying "Rows in PINK are uncommitted. Click 'Update Charges' to commit."
-    -Add Entry - directions pop up at the top when there are uncommited changes, saying "WARNING! You have uncommitted changes. Please go to the 'Today's Charges' tab and click the 'Update Charges' button. If you proceed with Adding a new Entry, your changes will be lost."
-    -Add Entry - Made it so no one can add '.', '-', or any Non numbers to the database.
-    -Upgraded to new React Native and New Expo
-    -It loads now when adding new charge
-    -TodaysCharges - selects entire field on focus
-    -TodaysCharges - prevent people from adding non-Numbers, non-divisers of 0.5, and automatically rounds number to closest 0.5
-    -TodaysCharges - Update Charges button is hidden until there are charges needed to commit
-    -Bug- AddEntry - when go back to previous option, it resets the option below to 'Tasks', etc.
-    -Bug - SelectRecent - Add first 2 then first 3. Now says correct thing.
+    -Made TimeTracker screen to hold all the views and info
+    -Made TimeTrackerStore to house all the functions used on TimeTracker
+    -Made TimeTrackerTable to show the TimeTracker with In/Out times
+    -On Main screen (componentWillMount), TimeTracker calls fetch to retrieve TimeTracker array
+    
+
+Timesheet:
+  -all times after first time must be later in day
+  -moment().format('hh:mm a')); is non military timeout
+  -moment().format('HH:mm')); is military time
 
 
 TODO:
+
+Bugs:
+    -TodaysCharges does not update after first try

@@ -98,7 +98,7 @@ export default class TodaysCharges extends Component {
                    <Text>Update Charges</Text>
                  </Button>
               </View>
-  					}
+  			    }
 
 
             {/* FOR DEBUGGING */}

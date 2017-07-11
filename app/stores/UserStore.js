@@ -5,7 +5,6 @@ class UserStore {
    @observable password = null;
    @observable employeeInfo = null;
    @observable loggedIn = false;
-
 }
 
 const userStore = new UserStore();

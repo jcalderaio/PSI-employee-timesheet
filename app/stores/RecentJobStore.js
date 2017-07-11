@@ -3,10 +3,10 @@ import { Alert } from 'react-native';
 import base64 from 'base-64';
 import { map, filter, some } from 'lodash';
 import ApiUtils from '../components/ApiUtils'; // checks for errors in Fetches
-import userStore from './UserStore';
 
 //MobX
-import todaysJobStore from '../stores/TodaysJobStore';
+import userStore from './UserStore';  // Need user/pass
+import todaysJobStore from './TodaysJobStore';
 
 class RecentJobStore {
    @observable recentJobs = null;
