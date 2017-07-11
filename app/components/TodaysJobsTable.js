@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import { Text } from 'react-native';
 import { Grid, Col, Row, View, Input } from 'native-base';
 import { map } from 'lodash';
+import { observer } from 'mobx-react/native';
 
+//MobX
+import todaysJobStore from '../stores/TodaysJobStore';
+
+@observer
 class TodaysJobsTable extends Component {
     render() {
         return (
@@ -23,7 +28,7 @@ class TodaysJobsTable extends Component {
                 </Col>
               </Row>
               {/*Table Labels*/}
-              {map(this.props.data, (item) => {
+              {map(todaysJobStore.todaysJobs, (item) => {
                   // Items committed. Show as WHITE rows
                   // User can only change hours. If zero, will be deleted
                   if (item.Status === 0) { // 0 - do nothing
@@ -58,7 +63,6 @@ class TodaysJobsTable extends Component {
                                             } else if (hours === 0) {
                                                 item.Hours = 0;
                                                 item.Status = 3; // DELETE
-                                                this.forceUpdate();
                                             } else if (hours % 0.5 !== 0) {
                                                 item.Hours = Math.round(hours * 2) / 2;
                                                 if (item.Hours === item.Old_Hours) {
@@ -68,11 +72,9 @@ class TodaysJobsTable extends Component {
                                                 } else {
                                                     item.Status = 1;
                                                 }
-                                                this.forceUpdate();
                                             } else {
                                                 item.Hours = hours;
                                                 item.Status = 1;  // UPDATE (PUT)
-                                                this.forceUpdate();
                                             }
                                         }}
                                         returnKeyType='send'
@@ -115,7 +117,6 @@ class TodaysJobsTable extends Component {
                                                 item.Hours = 0;
                                             } else if (hours % 0.5 !== 0) {
                                                 item.Hours = Math.round(hours * 2) / 2;
-                                                this.forceUpdate();
                                             } else {
                                                 item.Hours = hours;
                                             }
@@ -160,7 +161,6 @@ class TodaysJobsTable extends Component {
                                             } else if (item.Old_Hours === hours) {
                                                 item.Hours = hours;
                                                 item.Status = 0;
-                                                this.forceUpdate();
                                             } else if (hours === 0) {
                                                 item.Hours = 0;
                                                 item.Status = 3; // DELETE
@@ -173,7 +173,6 @@ class TodaysJobsTable extends Component {
                                                 } else {
                                                     item.Status = 1;
                                                 }
-                                                this.forceUpdate();
                                             } else {
                                                 item.Hours = hours;
                                                 item.Status = 1;  //PUT

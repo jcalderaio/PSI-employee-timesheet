@@ -68,7 +68,7 @@ export default class TodaysCharges extends Component {
 
   					{/*Start TodaysJobs Table*/}
   					{(!todaysJobStore.isEmpty) &&
-  						<TodaysJobsTable data={todaysJobStore.todaysJobs} />
+  						<TodaysJobsTable />
   					}
   					{/*End of Table*/}
 

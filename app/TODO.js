@@ -3,7 +3,9 @@ What I Did:
     -Made TimeTrackerStore to house all the functions used on TimeTracker
     -Made TimeTrackerTable to show the TimeTracker with In/Out times
     -On Main screen (componentWillMount), TimeTracker calls fetch to retrieve TimeTracker array
-    
+
+    -Took away forceUpdate() and made it a MobX @observable instead
+
 
 Timesheet:
   -all times after first time must be later in day

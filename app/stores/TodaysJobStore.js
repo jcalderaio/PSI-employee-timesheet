@@ -136,7 +136,7 @@ class TodaysJobStore {
       });
       this.fetchTodaysJobs();
       this.loading = false;
-      navigate('TodaysCharges');
+      //navigate('TodaysCharges');
       Alert.alert(
          'Charges Updated!',
           ' '
