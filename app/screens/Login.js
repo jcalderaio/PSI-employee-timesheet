@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AsyncStorage, Image, StatusBar, Platform, Keyboard, LayoutAnimation, Dimensions, UIManager } from 'react-native';
+import { AsyncStorage, Image, Platform, Keyboard, LayoutAnimation, Dimensions, UIManager } from 'react-native';
 import { Container, Content, Form, Item, Input, Label, Button, Text, Icon, Spinner, View, Header, Body, Title } from 'native-base';
 import base64 from 'base-64';  // converts Authorization password to base-64
 import { Ionicons } from '@expo/vector-icons';

@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
-import { Container, Content, Button, Grid, Header, Left, Right, Body, Title, Text } from 'native-base';
+import { Container, Content, Button, Grid, Header, Left, Right, Body, Title, Text, View } from 'native-base';
 import { Octicons } from '@expo/vector-icons';
 
 // MobX
 import { observer } from 'mobx-react/native';
-//import timeTrackerStore from '../stores/TimeTrackerStore';
+import timeTrackerStore from '../stores/TimeTrackerStore';
 
 // Import components
-//import { TimeTrackerTable } from '../components/TimeTrackerTable';
+import { TimeTrackerTable } from '../components/TimeTrackerTable';
 
 @observer
 export default class TimeTracker extends Component {
@@ -45,46 +45,32 @@ export default class TimeTracker extends Component {
 		              </Text>
 		            </Grid>
 
-					{/*
+					{/*Table*/}
+					<TimeTrackerTable />
 
-					{/*If error*
-					{(recentJobStore.errorMessage) &&
-						<Grid style={{ justifyContent: 'center', padding: 10, marginTop: 20 }}>
-			              <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'red' }}>{recentJobStore.errorMessage}</Text>
-			            </Grid>
-					}
-
-					{/*If No Recent Jobs*
-					{(recentJobStore.isEmpty) &&
-						<Grid style={{ justifyContent: 'center', padding: 10, marginTop: 20 }}>
-			              <Text style={{ fontWeight: 'bold', fontSize: 18 }}> You have no recent jobs!</Text>
-			            </Grid>
-					}
-
-					{/*Start Table*
-					{(!recentJobStore.isEmpty) &&
-						<RecentJobsTable data={recentJobStore.recentJobs} />
-					}
-
-
-					{/*Buttons*
-					{(!recentJobStore.isEmpty) &&
-						<View>
-							<Button
-		                        block
-		                        onPress={() => recentJobStore.addRecent('Selected', navigate)}
-		                        style={styles.addSelectedButton}>
-								<Text>Add Selected</Text>
-							</Button>
-
-							<Button
-		                        block
-		                        onPress={() => recentJobStore.addRecent('All', navigate)}
-		                        style={styles.addAllButton}>
-								<Text>Add All</Text>
-							</Button>
-						</View>
-					} */}
+					{/*Buttons*/}
+					<View style={{ marginTop: 60, marginBottom: 60 }}>
+						{/*Button: "Update Charges"*/}
+			            {(!timeTrackerStore.isEmpty && timeTrackerStore.hasUncommitted) &&
+			              <View>
+			                <Text style={{ color: 'red', fontSize: 16, textAlign: 'center', marginBottom: 10 }}>Rows in PINK are uncommitted. Click 'Update Charges' to commit.</Text>
+			                <Button
+			                   block
+			                   onPress={() => timeTrackerStore.updateTimeTracker()}
+			                   style={styles.updateTimeTrackerButton}
+			                >
+			                   <Text>Update Time Tracker</Text>
+			                 </Button>
+			              </View>
+			  			}
+						<Button
+							block
+							onPress={() => timeTrackerStore.resetAll()}
+							style={styles.resetAllButton}>
+							<Text>Reset All</Text>
+						</Button>
+					</View>
+					{/*End Buttons*/}
 
 				</Content>
 			</Container>
@@ -99,10 +85,9 @@ const styles = {
 	headerTextStyle: {
 		color: '#FFF'
 	},
-	enterCurrentTimeButton: {
+	updateTimeTrackerButton: {
 		backgroundColor: '#007aff',
 		marginHorizontal: 20,
-		marginTop: 50,
 		shadowColor: '#000',
 		shadowOffset: {
 			width: 0,
@@ -121,8 +106,7 @@ const styles = {
 			height: 2
 		},
 		shadowOpacity: 0.3,
-		shadowRadius: 2,
-		marginBottom: 60
+		shadowRadius: 2
 	},
 	centerContainter: {
       flex: 1,

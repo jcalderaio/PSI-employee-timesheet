@@ -9,14 +9,28 @@ import userStore from './UserStore';  // Need user/pass
 //import todaysJobStore from './TodaysJobStore';
 
 class TimeTrackerStore {
-   @observable timerTracker = null;
+   @observable timeTrackerList = null;
    @observable loading = false;
 
    @computed get isEmpty() {
-       if (this.timerTracker !== null) {
-           return !this.timerTracker.length;
+       if (this.timeTrackerList !== null) {
+           return !this.timeTrackerList.length;
        } else {
            return true;
+       }
+   }
+
+   @computed get hasUncommitted() {
+       // If todaysJobs null, impossible to have non-Status: 0 jobs
+       if (this.timeTrackerList === null) {
+           return false;
+       } else {
+           // If found jobs with Status !== 0, then there are uncommitted
+           const temp = filter(this.timeTrackerList, (item) =>
+             item.Status !== 0
+           );
+
+           return (temp.length > 0);
        }
    }
 
@@ -30,23 +44,19 @@ class TimeTrackerStore {
        .then(ApiUtils.checkStatus)
        .then(response => response.json())
        .then(responseData => {
-         this.timerTracker = responseData;
+         this.timeTrackerList = responseData;
        })
        .catch(e => {
-         this.timerTracker = [];
+         this.timeTrackerList = [];
          this.errorMessage = `Error Retreiving Recent Jobs: ${e}`;
        });
-   }
-
-   @action updateTimeTracker() {
-
    }
 
    @action resetAll() {
 
    }
 
-   @action getCurrentTime() {
+   @action updateTimeTracker() {
 
    }
 }

@@ -3,37 +3,43 @@ import { Text } from 'react-native';
 import { Grid, Col, Row, View, Input } from 'native-base';
 import { map } from 'lodash';
 import { observer } from 'mobx-react/native';
+import DatePicker from 'react-native-datepicker';
 
 //MobX
-import todaysJobStore from '../stores/TodaysJobStore';
+import timeTrackerStore from '../stores/TimeTrackerStore';
 
 @observer
-class TodaysJobsTable extends Component {
+class TimeTrackerTable extends Component {
+    constructor() {
+		super();
+		this.state = {
+			in_time: '',
+            out_time: ''
+		};
+	}
+
     render() {
         return (
             <Grid style={{ alignItems: 'center' }}>
               <Row style={{ height: 30 }} >
               {/*Table Labels*/}
-                <Col size={24} style={styles.tableStyle.titleFirst}>
-                  <Text style={{ fontWeight: 'bold' }}>Job #</Text>
+                <Col size={33} style={styles.tableStyle.titleFirst}>
+                  <Text style={{ fontWeight: 'bold' }}>In Time</Text>
                 </Col>
-                <Col size={28} style={styles.tableStyle.title}>
-                  <Text style={{ fontWeight: 'bold' }}>Client</Text>
+                <Col size={33} style={styles.tableStyle.title}>
+                  <Text style={{ fontWeight: 'bold' }}>Out Time</Text>
                 </Col>
-                <Col size={31} style={styles.tableStyle.title}>
-                  <Text style={{ fontWeight: 'bold' }}>Job Title</Text>
-                </Col>
-                <Col size={17} style={styles.tableStyle.titleLast}>
-                  <Text style={{ fontWeight: 'bold' }}>Hours</Text>
+                <Col size={33} style={styles.tableStyle.titleLast}>
+                  <Text style={{ fontWeight: 'bold' }}>Difference</Text>
                 </Col>
               </Row>
               {/*Table Labels*/}
-              {map(todaysJobStore.todaysJobs, (item) => {
+              {map(timeTrackerStore.timeTrackerList, (item) => {
                   // Items committed. Show as WHITE rows
                   // User can only change hours. If zero, will be deleted
                   if (item.Status === 0) { // 0 - do nothing
                       return (
-                          <Row style={{ minHeight: 50 }} key={item.Job_Id}>
+                          <Row style={{ height: 40 }} key={item.Job_Id}>
                             <Col size={24} style={styles.tableStyle.bodyFirst}>
                               <Text style={styles.tableStyle.bodyText}>{item.Job_Number}</Text>
                             </Col>
@@ -89,7 +95,7 @@ class TodaysJobsTable extends Component {
                   } else if (item.Status === 2) {
                     // Items NOT committed. Show as PINK rows
                       return (
-                          <Row style={{ minHeight: 50 }} key={item.Job_Id}>
+                          <Row style={{ height: 40 }} key={item.Job_Id}>
                             <Col size={24} style={styles.pinkTableStyle.bodyFirst}>
                               <Text style={styles.tableStyle.bodyText}>{item.Job_Number}</Text>
                             </Col>
@@ -132,7 +138,7 @@ class TodaysJobsTable extends Component {
                       );
                   } else {  // (Item.Status === 1 || 3)
                       return (
-                          <Row style={{ minHeight: 50 }} key={item.Job_Id}>
+                          <Row style={{ height: 40 }} key={item.Job_Id}>
                             <Col size={24} style={styles.pinkTableStyle.bodyFirst}>
                               <Text style={styles.tableStyle.bodyText}>{item.Job_Number}</Text>
                             </Col>
@@ -188,7 +194,62 @@ class TodaysJobsTable extends Component {
                       );
                   }
               })}
-            </Grid>
+                      {/* New Blank Row */}
+                      <Row style={{ height: 40 }} >
+                      {/*Table Labels*/}
+                        <Col size={33} style={styles.tableStyle.bodyFirst}>
+                            <DatePicker
+                              //style={{ flex: 1 }}
+                              customStyles={{
+                                  dateInput: {
+                                      borderWidth: 0
+                                  }
+                              }}
+                              androidMode={'spinner'}
+                              date={this.state.in_time}
+                    		  placeholder={' '}
+                              mode="time"
+                              format="hh:mm a"
+                              confirmBtnText="Confirm"
+                              cancelBtnText="Cancel"
+                              minuteInterval={15}
+                    		  showIcon={false}
+                    		  is24Hour={false}
+                              onDateChange={(in_time) => {
+                    			  this.setState({ in_time });
+                    			  //console.log('Time: ', time);
+                    			  //console.log('Time Type: ', typeof time);
+                    		  }}
+                            />
+                        </Col>
+                        <Col size={33} style={styles.tableStyle.body}>
+                            <DatePicker
+                              //style={{ flex: 1 }}
+                              customStyles={{
+                                  dateInput: {
+                                      borderWidth: 0
+                                  }
+                              }}
+                              androidMode={'spinner'}
+                              date={this.state.out_time}
+                    		  placeholder={' '}
+                              mode="time"
+                              format="hh:mm a"
+                              confirmBtnText="Confirm"
+                              cancelBtnText="Cancel"
+                              minuteInterval={15}
+                    		  showIcon={false}
+                    		  is24Hour={false}
+                              onDateChange={(out_time) => {
+                    			  this.setState({ out_time });
+                    			  //console.log('Time: ', time);
+                    			  //console.log('Time Type: ', typeof time);
+                    		  }}
+                            />
+                        </Col>
+                        <Col size={33} style={styles.tableStyle.bodyLast} />
+                      </Row>
+             </Grid>
         );
     }
 }
@@ -277,4 +338,4 @@ const styles = {
 	}
 };
 
-export { TodaysJobsTable };
+export { TimeTrackerTable };
