@@ -22,6 +22,20 @@ Timesheet:
 
   console.log('Difference: ', result / 60, ' hours');
 
+  // How to get military to regular time
+
+  function getHours(hours) {
+      if(hours === 0) {
+        return '12 am';
+      } else if (hours <= 11) {
+        return hours % 12 + ' am';
+      } else if (hours === 12) {
+        return '12 pm';
+      } else {
+        return hours % 12 + ' pm';
+      }
+  }
+
 
 TODO:
 

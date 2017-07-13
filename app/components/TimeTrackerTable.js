@@ -10,14 +10,6 @@ import timeTrackerStore from '../stores/TimeTrackerStore';
 
 @observer
 class TimeTrackerTable extends Component {
-    constructor() {
-		super();
-		this.state = {
-			in_time: '',
-            out_time: ''
-		};
-	}
-
     render() {
         return (
             <Grid style={{ alignItems: 'center' }}>
@@ -206,7 +198,7 @@ class TimeTrackerTable extends Component {
                                   }
                               }}
                               androidMode={'spinner'}
-                              date={this.state.in_time}
+                              date={timeTrackerStore.inTime}
                     		  placeholder={' '}
                               mode="time"
                               format="hh:mm a"
@@ -215,8 +207,10 @@ class TimeTrackerTable extends Component {
                               minuteInterval={15}
                     		  showIcon={false}
                     		  is24Hour={false}
-                              onDateChange={(in_time) => {
-                    			  this.setState({ in_time });
+                              onDateChange={(time) => {
+                    			  timeTrackerStore.inTime = time;
+                                  const a = time.getHours();
+                                  console.log('Hours: ', a);
                     			  //console.log('Time: ', time);
                     			  //console.log('Time Type: ', typeof time);
                     		  }}
@@ -231,7 +225,7 @@ class TimeTrackerTable extends Component {
                                   }
                               }}
                               androidMode={'spinner'}
-                              date={this.state.out_time}
+                              date={timeTrackerStore.outTime}
                     		  placeholder={' '}
                               mode="time"
                               format="hh:mm a"
@@ -240,8 +234,8 @@ class TimeTrackerTable extends Component {
                               minuteInterval={15}
                     		  showIcon={false}
                     		  is24Hour={false}
-                              onDateChange={(out_time) => {
-                    			  this.setState({ out_time });
+                              onDateChange={(time) => {
+                    			  timeTrackerStore.outTime = time;
                     			  //console.log('Time: ', time);
                     			  //console.log('Time Type: ', typeof time);
                     		  }}

@@ -10,6 +10,9 @@ import userStore from './UserStore';  // Need user/pass
 
 class TimeTrackerStore {
    @observable timeTrackerList = null;
+   @observable tempTimeTrackerList = null;
+   @observable inTime = null;
+   @observable outTime = null;
    @observable loading = false;
 
    @computed get isEmpty() {
@@ -17,6 +20,14 @@ class TimeTrackerStore {
            return !this.timeTrackerList.length;
        } else {
            return true;
+       }
+   }
+
+   @computed get timeTrackerSize() {
+       if (this.timeTrackerList !== null) {
+           return this.timeTrackerList.length;
+       } else {
+          return 0;
        }
    }
 
