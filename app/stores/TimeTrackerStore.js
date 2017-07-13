@@ -13,6 +13,8 @@ class TimeTrackerStore {
    @observable tempTimeTrackerList = null;
    @observable inTime = null;
    @observable outTime = null;
+   @observable inTimeDisplay = null;
+   @observable outTimeDisplay = null;
    @observable loading = false;
 
    @computed get isEmpty() {
@@ -44,6 +46,18 @@ class TimeTrackerStore {
            return (temp.length > 0);
        }
    }
+
+   @action getTime(hours, minutes) {
+      if (hours === 0) {
+        return `12:${minutes} am`;
+      } else if (hours <= 11) {
+        return `${hours % 12}:${minutes} am`;
+      } else if (hours === 12) {
+        return `12:${minutes} pm`;
+      } else {
+        return `${hours % 12}:${minutes} pm`;
+      }
+	}
 
    @action fetchTimeTracker() {
        fetch(`http://psitime.psnet.com/Api/TimeTracker?Employee_Id=${userStore.employeeInfo.Employee_No}`, {

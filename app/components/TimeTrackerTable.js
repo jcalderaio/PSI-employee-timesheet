@@ -3,7 +3,7 @@ import { Text } from 'react-native';
 import { Grid, Col, Row, View, Input } from 'native-base';
 import { map } from 'lodash';
 import { observer } from 'mobx-react/native';
-import DatePicker from 'react-native-datepicker';
+import { InsertingRow } from './InsertingRow';
 
 //MobX
 import timeTrackerStore from '../stores/TimeTrackerStore';
@@ -186,63 +186,9 @@ class TimeTrackerTable extends Component {
                       );
                   }
               })}
-                      {/* New Blank Row */}
-                      <Row style={{ height: 40 }} >
-                      {/*Table Labels*/}
-                        <Col size={33} style={styles.tableStyle.bodyFirst}>
-                            <DatePicker
-                              //style={{ flex: 1 }}
-                              customStyles={{
-                                  dateInput: {
-                                      borderWidth: 0
-                                  }
-                              }}
-                              androidMode={'spinner'}
-                              date={timeTrackerStore.inTime}
-                    		  placeholder={' '}
-                              mode="time"
-                              format="hh:mm a"
-                              confirmBtnText="Confirm"
-                              cancelBtnText="Cancel"
-                              minuteInterval={15}
-                    		  showIcon={false}
-                    		  is24Hour={false}
-                              onDateChange={(time) => {
-                    			  timeTrackerStore.inTime = time;
-                                  const a = time.getHours();
-                                  console.log('Hours: ', a);
-                    			  //console.log('Time: ', time);
-                    			  //console.log('Time Type: ', typeof time);
-                    		  }}
-                            />
-                        </Col>
-                        <Col size={33} style={styles.tableStyle.body}>
-                            <DatePicker
-                              //style={{ flex: 1 }}
-                              customStyles={{
-                                  dateInput: {
-                                      borderWidth: 0
-                                  }
-                              }}
-                              androidMode={'spinner'}
-                              date={timeTrackerStore.outTime}
-                    		  placeholder={' '}
-                              mode="time"
-                              format="hh:mm a"
-                              confirmBtnText="Confirm"
-                              cancelBtnText="Cancel"
-                              minuteInterval={15}
-                    		  showIcon={false}
-                    		  is24Hour={false}
-                              onDateChange={(time) => {
-                    			  timeTrackerStore.outTime = time;
-                    			  //console.log('Time: ', time);
-                    			  //console.log('Time Type: ', typeof time);
-                    		  }}
-                            />
-                        </Col>
-                        <Col size={33} style={styles.tableStyle.bodyLast} />
-                      </Row>
+              
+                    <InsertingRow />
+
              </Grid>
         );
     }

@@ -32,22 +32,6 @@ export default class Main extends Component {
  render() {
     const { navigate, goBack } = this.props.navigation;
 
-    console.log('Date: ', moment('YYYY-MM-DD hh:mm a'));
-    console.log('Date Type: ', typeof moment('YYYY-MM-DD hh:mm a')); //string
-
-    /*
-    console.log('Date: ', moment().format('hh:mm a'));
-    console.log('Date Type: ', typeof moment().format('hh:mm a')); //string
-    const date1 = moment('08:30 am', 'hh:mm a');
-    const date2 = moment('03:00 pm', 'hh:mm a');
-
-    console.log(new Date(date1));
-    console.log('Date Type: ', typeof new Date(date1));
-
-    const result = (date2.diff(date1, 'minutes') / 60);
-
-    console.log('Difference: ', result, ' hours'); */
-
     // For testing purposes
     //console.log('Todays Jobs:', todaysJobStore.todaysJobs);
     //console.log('Recent Jobs:', recentJobStore.recentJobs);

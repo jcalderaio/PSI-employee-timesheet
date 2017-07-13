@@ -7,34 +7,60 @@ What I Did:
     -Took away forceUpdate() and made it a MobX @observable instead
 
 
-Timesheet:
-  -all times after first time must be later in day
-  -moment().format('hh:mm a')); is non military timeout
-  -moment().format('HH:mm')); is military time
+TimeTracker:
+-so on the client side, when a user types in the time it will be in 12 hour format (so it looks nice on the screen). I will then convert it to 24 hour format, and set the moment.hours and moment.minutes. Will do diff math with the moment dates.
 
-  console.log('Date: ', moment().format('hh:mm a'));
-  console.log('Date Type: ', typeof moment().format('hh:mm a')); //string
-  const date1 = moment(moment().format('hh:mm a'), 'hh:mm a');
-  const date2 = moment('10:00 pm', 'hh:mm a');
+When I retrieve it back from the database, I will getHours and getMinutes and plug them into my 24 hr to 12 hour converter.
 
-  // How to get the difference
-  const result = date2.diff(date1, 'minutes');
+const moment = require('moment');
+let time = moment();
+const c = console.log;
 
-  console.log('Difference: ', result / 60, ' hours');
+-all times after first time must be later in day
 
-  // How to get military to regular time
 
-  function getHours(hours) {
-      if(hours === 0) {
-        return '12 am';
-      } else if (hours <= 11) {
-        return hours % 12 + ' am';
-      } else if (hours === 12) {
-        return '12 pm';
-      } else {
-        return hours % 12 + ' pm';
-      }
-  }
+// Set the hours/ minutes of the moment to store in database
+time.hours(23); time.minutes(42);
+
+// When pull out of database
+const a = `${time.hours()}:${time.minutes()}`;
+var b = a.split(':');
+
+c(`${b[0]}:${b[1]}`);
+
+
+// Put 24 hour based in here
+function getHours(hours) {
+    if(hours === 0) {
+      return '12 am';
+    } else if (hours <= 11) {
+      return hours % 12 + ' am';
+    } else if (hours === 12) {
+      return '12 pm';
+    } else {
+      return hours % 12 + ' pm';
+    }
+}
+
+// How to get the difference
+const result = date2.diff(date1, 'minutes');
+console.log('Difference: ', result / 60, ' hours');
+
+// Random shit
+-moment().format('hh:mm a')); is non military timeout
+-moment().format('HH:mm')); is military time
+
+console.log('Date: ', moment().format('hh:mm a'));
+console.log('Date Type: ', typeof moment().format('hh:mm a')); //string
+const date1 = moment(moment().format('hh:mm a'), 'hh:mm a');
+const date2 = moment('10:00 pm', 'hh:mm a');
+
+
+
+
+
+
+
 
 
 TODO:
