@@ -9,15 +9,13 @@ import moment from 'moment';
 //MobX
 import timeTrackerStore from '../stores/TimeTrackerStore';
 
-const print = console.log;
-
 @observer
 class InsertingRow extends Component {
 	render() {
 		return (
 			<Row style={{ height: 40 }} >
 			{/* In_Time */}
-			  <Col size={33} style={styles.tableStyle.bodyFirst}>
+			  <Col size={33} style={styles.pinkTableStyle.bodyFirst}>
 				  <DatePicker
 					style={{ flex: 1 }}
 					customStyles={{
@@ -38,12 +36,16 @@ class InsertingRow extends Component {
 					onDateChange={(time) => {
 						timeTrackerStore.inTimeDisplay = time;  // Sets view to see 12 hr
 						const moment_24hr = moment(time, 'hh:mm a'); // Converts to 24 hr
-						timeTrackerStore.inTime = moment_24hr;
+						const dateTime = new Date();
+						dateTime.setHours(moment_24hr.hours());
+						dateTime.setMinutes(moment_24hr.minutes());
+						timeTrackerStore.inTime = dateTime.toString();
+						timeTrackerStore.insertRow();
 					}}
 				  />
 			  </Col>
 			  {/* Out_Time */}
-			  <Col size={33} style={styles.tableStyle.body}>
+			  <Col size={33} style={styles.pinkTableStyle.body}>
 				  <DatePicker
 					//style={{ flex: 1 }}
 					customStyles={{
@@ -64,12 +66,16 @@ class InsertingRow extends Component {
 					onDateChange={(time) => {
 						timeTrackerStore.outTimeDisplay = time; // Sets view to see 12 hr
 						const moment_24hr = moment(time, 'hh:mm a'); // Converts to 24 hr
-						timeTrackerStore.outTime = moment_24hr;
+						const dateTime = new Date();
+						dateTime.setHours(moment_24hr.hours());
+						dateTime.setMinutes(moment_24hr.minutes());
+						timeTrackerStore.outTime = dateTime;
+						timeTrackerStore.insertRow();
 					}}
 				  />
 			  </Col>
 			  {/* In_Time */}
-			  <Col size={33} style={styles.tableStyle.bodyLast} />
+			  <Col size={33} style={styles.pinkTableStyle.bodyLast} />
 			</Row>
 		);
 	}

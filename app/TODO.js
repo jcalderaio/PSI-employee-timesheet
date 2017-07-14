@@ -8,6 +8,7 @@ What I Did:
 
 
 TimeTracker:
+//print(moment_24hr.format('hh:mm a')); // Converts from 24 to 12 hour!!!!
 -so on the client side, when a user types in the time it will be in 12 hour format (so it looks nice on the screen). I will then convert it to 24 hour format, and set the moment.hours and moment.minutes. Will do diff math with the moment dates.
 
 When I retrieve it back from the database, I will getHours and getMinutes and plug them into my 24 hr to 12 hour converter.

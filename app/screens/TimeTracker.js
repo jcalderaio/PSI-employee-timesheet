@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
-import { Container, Content, Button, Grid, Header, Left, Right, Body, Title, Text, View } from 'native-base';
+import { Container, Content, Button, Grid, Header, Left, Right, Body, Title, Text, View, Spinner } from 'native-base';
 import { Octicons } from '@expo/vector-icons';
 
 // MobX
@@ -14,6 +14,15 @@ import { TimeTrackerTable } from '../components/TimeTrackerTable';
 export default class TimeTracker extends Component {
 	render() {
 		const { goBack } = this.props.navigation;
+
+		if (timeTrackerStore.loading) {
+          return (
+            <View style={styles.centerContainter}>
+              <Spinner size='large' />
+              <Text style={{ marginTop: -7, color: '#0BD318' }}>LOADING</Text>
+            </View>
+          );
+        }
 
 		return (
 			<Container>

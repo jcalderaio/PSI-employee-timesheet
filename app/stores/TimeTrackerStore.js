@@ -6,7 +6,6 @@ import ApiUtils from '../components/ApiUtils'; // checks for errors in Fetches
 
 //MobX
 import userStore from './UserStore';  // Need user/pass
-//import todaysJobStore from './TodaysJobStore';
 
 class TimeTrackerStore {
    @observable timeTrackerList = null;
@@ -47,6 +46,14 @@ class TimeTrackerStore {
        }
    }
 
+   @action clear() {
+      this.timeTrackerList = null;
+      this.inTime = null;
+      this.outTime = null;
+      this.inTimeDisplay = null;
+      this.outTimeDisplay = null;
+   }
+
    @action getTime(hours, minutes) {
       if (hours === 0) {
         return `12:${minutes} am`;
@@ -78,11 +85,53 @@ class TimeTrackerStore {
    }
 
    @action resetAll() {
-
+      // delete all
    }
 
-   @action updateTimeTracker() {
+   @action insertRow() {
+      this.loading = true;
 
+      if (this.inTime !== null && this.outTime === null) {
+         fetch(`http://psitime.psnet.com/Api/TimeTracker?Employee_Id=${userStore.employeeInfo.Employee_No}&Status=2&In_Time=${this.inTime}`, {
+                   method: 'PUT',
+                   headers: {
+                     'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
+                   }
+               })
+               .then(ApiUtils.checkStatus)
+               .then(response => {
+                   // Response successful
+                   console.log('\'Insert TimeTracker Row\' response successful: ', response);
+               })
+               .catch(e => {
+                  console.log('\'Insert TimeTracker Row\' response NOT successful: ', e.response);
+                  this.loading = false;
+                  return;
+               });
+      } else if (this.inTime !== null && this.outTime !== null) {
+         fetch(`http://psitime.psnet.com/Api/TimeTracker?Employee_Id=${userStore.employeeInfo.Employee_No}&Status=2&In_Time=${this.inTime}&Out_Time=${this.outTime}`, {
+                   method: 'PUT',
+                   headers: {
+                     'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
+                   }
+               })
+               .then(ApiUtils.checkStatus)
+               .then(response => {
+                   // Response successful
+                   console.log('\'Insert TimeTracker Row\' response successful: ', response);
+               })
+               .catch(e => {
+                  console.log('\'Insert TimeTracker Row\' response NOT successful: ', e.response);
+                  this.loading = false;
+                  return;
+               });
+      } else {
+         this.loading = false;
+         return;
+      }
+
+      this.fetchTimeTracker();
+      this.loading = false;
    }
 }
 
