@@ -45,7 +45,7 @@ class InsertingRow extends Component {
 						//console.log(newTime);
 
 						timeTrackerStore.inTime = newTime;
-						timeTrackerStore.insertRow();
+						timeTrackerStore.updateRow('POST');
 					}}
 				  />
 			  </Col>
@@ -69,13 +69,19 @@ class InsertingRow extends Component {
 					showIcon={false}
 					is24Hour={false}
 					onDateChange={(time) => {
-						timeTrackerStore.outTimeDisplay = time; // Sets view to see 12 hr
+						//2017-07-06T08:01:55.51
+						timeTrackerStore.outTimeDisplay = time;  // Sets view to see 12 hr
+						//print(moment_24hr.hours() + ':' + moment_24hr.minutes());
 						const moment_24hr = moment(time, 'hh:mm a'); // Converts to 24 hr
-						const dateTime = moment();
-						dateTime.hours(moment_24hr.hours());
-						dateTime.minutes(moment_24hr.minutes());
-						timeTrackerStore.outTime = dateTime;
-						timeTrackerStore.insertRow();
+						let hours = moment_24hr.hours();
+						let minutes = moment_24hr.minutes();
+						if (hours < 10) hours = `0${hours}`;
+						if (minutes < 10) minutes = `0${minutes}`;
+						const newTime = moment().format(`YYYY[-]MM[-]DD[T]${hours}[:]${minutes}[:]ss[.]SS`);
+						//console.log(newTime);
+
+						timeTrackerStore.outTime = newTime;
+						timeTrackerStore.updateRow('POST');
 					}}
 				  />
 			  </Col>
