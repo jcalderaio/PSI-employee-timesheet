@@ -3,8 +3,11 @@ What I Did:
     -Made TimeTrackerStore to house all the functions used on TimeTracker
     -Made TimeTrackerTable to show the TimeTracker with In/Out times
     -On Main screen (componentWillMount), TimeTracker calls fetch to retrieve TimeTracker array
-
     -Took away forceUpdate() and made it a MobX @observable instead
+    -Everythings running smoother than before, other than yesterdays update
+    -I have all the code written for the time entry sheet, just need to update the GUI
+    -Did you start working on the dummy account?
+    after this im taking a year of to go into treatment for my Lyme disease, and when I get get back I need something to show my potentials
 
 
 TimeTracker:
@@ -61,6 +64,9 @@ TODO:
 
 Bugs:
     -TodaysCharges does not update ON SCREEN after first try (it really is updates. Just log out and log back in to see that).
+
+    -Put a 2000 ml timer after every function.
+    -look into ssl certificates
 
 
 

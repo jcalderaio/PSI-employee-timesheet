@@ -1,3 +1,4 @@
+import React from 'react';
 import { observable, computed, action } from 'mobx';
 import { Alert } from 'react-native';
 import base64 from 'base-64';
@@ -86,6 +87,15 @@ class TimeTrackerStore {
 
    @action resetAll() {
       // delete all
+   }
+
+   @action clearAll() {
+      this.timeTrackerList = null;
+      this.tempTimeTrackerList = null;
+      this.inTime = null;
+      this.outTime = null;
+      this.inTimeDisplay = null;
+      this.outTimeDisplay = null;
    }
 
    @action updateRow(flag) {
