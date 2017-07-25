@@ -15,20 +15,170 @@ class TimeTrackerTable extends Component {
             <Grid style={{ alignItems: 'center' }}>
               <Row style={{ height: 30 }} >
               {/*Table Labels*/}
-                <Col size={33} style={styles.tableStyle.titleFirst}>
+                <Col size={50} style={styles.tableStyle.titleFirst}>
                   <Text style={{ fontWeight: 'bold' }}>In Time</Text>
                 </Col>
-                <Col size={33} style={styles.tableStyle.title}>
+                <Col size={50} style={styles.tableStyle.title}>
                   <Text style={{ fontWeight: 'bold' }}>Out Time</Text>
                 </Col>
-                <Col size={33} style={styles.tableStyle.titleLast}>
-                  <Text style={{ fontWeight: 'bold' }}>Difference</Text>
-                </Col>
               </Row>
+              {/*Table Content*/}
+			  {map(timeTrackerStore.timeTrackerList, (item) => {
+                  // Items committed. Show as WHITE rows
+                  // User can only change hours. If zero, will be deleted
+                  if (item.Status === 0) { // 0 - do nothing
+                      return (
+                          <Row style={{ height: 40 }} key={item.Tracker_Id}>
+                            <Col size={50} style={styles.tableStyle.body}>
+                              <Text style={styles.tableStyle.bodyText}>{item.Sub_Task}</Text>
+                            </Col>
+                            <Col size={50} style={styles.tableStyle.bodyLast}>
+                                <View>
+                                    <Input
+                                        ref='Status0'
+                                        defaultValue={String(item.Hours)}
+                                        //value={String(item.Hours)}
+                                        onChangeText={value => {
+                                            const hours = Number(value.trim());
+                                            item.Old_Hours = item.Hours;
 
-              <InsertingRow />
+                                            // Not a number
+                                            if (isNaN(hours)) {
+                                                alert('You must enter a Number!');
+                                                return;
+                                            } else if (item.Hours === hours) {
+                                                return;
+                                            } else if (hours === 0) {
+                                                item.Hours = 0;
+                                                item.Status = 3; // DELETE
+                                            } else if (hours % 0.5 !== 0) {
+                                                item.Hours = Math.round(hours * 2) / 2;
+                                                if (item.Hours === item.Old_Hours) {
+                                                    item.Status = 0;
+                                                } else if (item.Hours === 0) {
+                                                    item.Status = 3;
+                                                } else {
+                                                    item.Status = 1;
+                                                }
+                                            } else {
+                                                item.Hours = hours;
+                                                item.Status = 1;  // UPDATE (PUT)
+                                            }
+                                        }}
+                                        returnKeyType='send'
+                                        keyboardType='numeric'
+                                        maxLength={4}
+                                        selectTextOnFocus
+                                    />
+                                </View>
+                            </Col>
+                          </Row>
+                      );
+                  } else if (item.Status === 2) {
+                    // Items NOT committed. Show as PINK rows
+                      return (
+                          <Row style={{ minHeight: 50 }} key={item.Job_Id}>
+                            <Col size={24} style={styles.pinkTableStyle.bodyFirst}>
+                              <Text style={styles.tableStyle.bodyText}>{item.Job_Number}</Text>
+                            </Col>
+                            <Col size={28} style={styles.pinkTableStyle.body}>
+                              <Text style={styles.tableStyle.bodyText}>{item.Client_Name}</Text>
+                            </Col>
+                            <Col size={31} style={styles.pinkTableStyle.body}>
+                              <Text style={styles.tableStyle.bodyText}>{item.Sub_Task}</Text>
+                            </Col>
+                            <Col size={17} style={styles.pinkTableStyle.bodyLast}>
+                                <View>
+                                    <Input
+                                        style={styles.hoursEntryBorder}
+                                        defaultValue={String(item.Hours)}
+                                        onChangeText={value => {
+                                            const hours = Number(value.trim());
 
-             </Grid>
+                                            // Not a number
+                                            if (isNaN(hours)) {
+                                                alert('You must enter a Number!');
+                                                return;
+                                                // A number
+                                                // Do nothing. POSTS with 0 hrs will just not be added
+                                            } else if (hours === 0) {
+                                                item.Hours = 0;
+                                            } else if (hours % 0.5 !== 0) {
+                                                item.Hours = Math.round(hours * 2) / 2;
+                                            } else {
+                                                item.Hours = hours;
+                                            }
+                                        }}
+                                        returnKeyType='send'
+                                        keyboardType='numeric'
+                                        maxLength={4}
+                                        selectTextOnFocus
+                                    />
+                                </View>
+                            </Col>
+                          </Row>
+                      );
+                  } else {  // (Item.Status === 1 || 3)
+                      return (
+                          <Row style={{ minHeight: 50 }} key={item.Job_Id}>
+                            <Col size={24} style={styles.pinkTableStyle.bodyFirst}>
+                              <Text style={styles.tableStyle.bodyText}>{item.Job_Number}</Text>
+                            </Col>
+                            <Col size={28} style={styles.pinkTableStyle.body}>
+                              <Text style={styles.tableStyle.bodyText}>{item.Client_Name}</Text>
+                            </Col>
+                            <Col size={31} style={styles.pinkTableStyle.body}>
+                              <Text style={styles.tableStyle.bodyText}>{item.Sub_Task}</Text>
+                            </Col>
+                            <Col size={17} style={styles.pinkTableStyle.bodyLast}>
+                                <View>
+                                    <Input
+                                        style={styles.hoursEntryBorder}
+                                        defaultValue={String(item.Hours)}
+                                        onChangeText={value => {
+                                            const hours = Number(value.trim());
+
+                                            // Not a number
+                                            if (isNaN(hours)) {
+                                                alert('You must enter a Number!');
+                                                item.Status = 0;
+                                                return;
+                                                // A number
+                                                // Went back to old number
+                                            } else if (item.Old_Hours === hours) {
+                                                item.Hours = hours;
+                                                item.Status = 0;
+                                            } else if (hours === 0) {
+                                                item.Hours = 0;
+                                                item.Status = 3; // DELETE
+                                            } else if (hours % 0.5 !== 0) {
+                                                item.Hours = Math.round(hours * 2) / 2;
+                                                if (item.Hours === item.Old_Hours) {
+                                                    item.Status = 0;
+                                                } else if (item.Hours === 0) {
+                                                    item.Status = 3;
+                                                } else {
+                                                    item.Status = 1;
+                                                }
+                                            } else {
+                                                item.Hours = hours;
+                                                item.Status = 1;  //PUT
+                                            }
+                                        }}
+                                        returnKeyType='send'
+                                        keyboardType='numeric'
+                                        maxLength={4}
+                                        selectTextOnFocus
+                                    />
+                                </View>
+                            </Col>
+                          </Row>
+                      );
+                  }
+              })}
+			  <InsertingRow />
+            </Grid>
+
         );
     }
 }

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
-import { Grid, Col, Row, View, Input } from 'native-base';
+import { Grid, Col, Row, View, Input, Text } from 'native-base';
 import { map } from 'lodash';
 import { observer } from 'mobx-react/native';
 import DatePicker from 'react-native-datepicker';
@@ -15,7 +14,7 @@ class InsertingRow extends Component {
 		return (
 			<Row style={{ height: 40 }} >
 			{/* In_Time */}
-			  <Col size={33} style={styles.pinkTableStyle.bodyFirst}>
+			  <Col size={50} style={styles.pinkTableStyle.bodyFirst}>
 				  <DatePicker
 					style={{ flex: 1 }}
 					customStyles={{
@@ -34,18 +33,24 @@ class InsertingRow extends Component {
 					showIcon={false}
 					is24Hour={false}
 					onDateChange={(time) => {
+						//2017-07-06T08:01:55.51
 						timeTrackerStore.inTimeDisplay = time;  // Sets view to see 12 hr
+						//print(moment_24hr.hours() + ':' + moment_24hr.minutes());
 						const moment_24hr = moment(time, 'hh:mm a'); // Converts to 24 hr
-						const dateTime = new Date();
-						dateTime.setHours(moment_24hr.hours());
-						dateTime.setMinutes(moment_24hr.minutes());
-						timeTrackerStore.inTime = dateTime.toString();
+						let hours = moment_24hr.hours();
+						let minutes = moment_24hr.minutes();
+						if (hours < 10) hours = `0${hours}`;
+						if (minutes < 10) minutes = `0${minutes}`;
+						const newTime = moment().format(`YYYY[-]MM[-]DD[T]${hours}[:]${minutes}[:]ss[.]SS`);
+						//console.log(newTime);
+
+						timeTrackerStore.inTime = newTime;
 						timeTrackerStore.insertRow();
 					}}
 				  />
 			  </Col>
 			  {/* Out_Time */}
-			  <Col size={33} style={styles.pinkTableStyle.body}>
+			  <Col size={50} style={styles.pinkTableStyle.bodyLast}>
 				  <DatePicker
 					//style={{ flex: 1 }}
 					customStyles={{
@@ -66,17 +71,15 @@ class InsertingRow extends Component {
 					onDateChange={(time) => {
 						timeTrackerStore.outTimeDisplay = time; // Sets view to see 12 hr
 						const moment_24hr = moment(time, 'hh:mm a'); // Converts to 24 hr
-						const dateTime = new Date();
-						dateTime.setHours(moment_24hr.hours());
-						dateTime.setMinutes(moment_24hr.minutes());
+						const dateTime = moment();
+						dateTime.hours(moment_24hr.hours());
+						dateTime.minutes(moment_24hr.minutes());
 						timeTrackerStore.outTime = dateTime;
 						timeTrackerStore.insertRow();
 					}}
 				  />
 			  </Col>
-			  {/* In_Time */}
-			  <Col size={33} style={styles.pinkTableStyle.bodyLast} />
-			</Row>
+		  </Row>
 		);
 	}
 }

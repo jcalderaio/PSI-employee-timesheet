@@ -57,14 +57,27 @@ const date1 = moment(moment().format('hh:mm a'), 'hh:mm a');
 const date2 = moment('10:00 pm', 'hh:mm a');
 
 
-
-
-
-
-
-
-
 TODO:
 
 Bugs:
     -TodaysCharges does not update ON SCREEN after first try (it really is updates. Just log out and log back in to see that).
+
+
+
+    timeTrackerStore.inTimeDisplay = time;  // Sets view to see 12 hr
+    const moment_24hr = moment(time, 'hh:mm a'); // Converts to 24 hr
+    const dateTime = new Date();
+    dateTime.setHours(moment_24hr.hours());
+    dateTime.setMinutes(moment_24hr.minutes());
+    timeTrackerStore.inTime = dateTime.toString();
+    timeTrackerStore.insertRow();
+
+
+
+    timeTrackerStore.outTimeDisplay = time; // Sets view to see 12 hr
+    const moment_24hr = moment(time, 'hh:mm a'); // Converts to 24 hr
+    const dateTime = new Date();
+    dateTime.setHours(moment_24hr.hours());
+    dateTime.setMinutes(moment_24hr.minutes());
+    timeTrackerStore.outTime = dateTime;
+    timeTrackerStore.insertRow();

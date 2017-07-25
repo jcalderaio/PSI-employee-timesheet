@@ -35,6 +35,8 @@ export default class TimeTracker extends Component {
 						<Button
                             transparent
                             onPress={() => {
+								timeTrackerStore.inTime = null;
+								timeTrackerStore.outTime = null;
 								goBack(null);
 							}}
 						>
@@ -59,7 +61,8 @@ export default class TimeTracker extends Component {
 
 					{/*Buttons*/}
 					<View style={{ marginTop: 60, marginBottom: 60 }}>
-						{/*Button: "Update Charges"*/}
+						{/*
+						{/*Button: "Update Charges"*
 			            {(!timeTrackerStore.isEmpty && timeTrackerStore.hasUncommitted) &&
 			              <View>
 			                <Text style={{ color: 'red', fontSize: 16, textAlign: 'center', marginBottom: 10 }}>Rows in PINK are uncommitted. Click 'Update Charges' to commit.</Text>
@@ -71,7 +74,7 @@ export default class TimeTracker extends Component {
 			                   <Text>Update Time Tracker</Text>
 			                 </Button>
 			              </View>
-			  			}
+					  */}
 						<Button
 							block
 							onPress={() => timeTrackerStore.resetAll()}
