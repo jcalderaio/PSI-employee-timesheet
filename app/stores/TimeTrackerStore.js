@@ -47,7 +47,7 @@ class TimeTrackerStore {
        }
    }
 
-   @action clear() {
+   @action clearInfo() {
       this.timeTrackerList = null;
       this.inTime = null;
       this.outTime = null;
@@ -98,9 +98,34 @@ class TimeTrackerStore {
       this.outTimeDisplay = null;
    }
 
-   @action updateRow(flag) {
+   @action deleteRow(Tracker_Id) {
       this.loading = true;
 
+      fetch(`http://psitime.psnet.com/Api/TimeTracker?Employee_Id=${userStore.employeeInfo.Employee_No}&Status=3&Tracker_Id=${Tracker_Id}`, {
+                method: 'PUT',
+                headers: {
+                  'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
+                }
+            })
+            .then(ApiUtils.checkStatus)
+            .then(response => {
+                // Response successful
+                console.log('\'TimeTracker Row\' successfully deleted: ', response);
+            })
+            .catch(e => {
+               console.log('\'Insert TimeTracker Row\' response NOT successful: ', e.response);
+               this.loading = false;
+               return;
+            });
+
+      this.fetchTimeTracker();
+      this.loading = false;
+   }
+
+   @action updateRow() {
+      this.loading = true;
+
+      // If only inTime then post new thing
       if (flag === 'POST') {
          if (this.inTime !== null && this.outTime === null) {
             fetch(`http://psitime.psnet.com/Api/TimeTracker?Employee_Id=${userStore.employeeInfo.Employee_No}&Status=2&In_Time=${this.inTime}`, {
@@ -129,6 +154,7 @@ class TimeTrackerStore {
                   .then(ApiUtils.checkStatus)
                   .then(response => {
                       // Response successful
+                      this.clearAll();
                       console.log('\'Insert TimeTracker Row\' response successful: ', response);
                   })
                   .catch(e => {
@@ -222,6 +248,8 @@ class TimeTrackerStore {
           ' '
       ); */
    }
+
+
 }
 
 const timeTrackerStore = new TimeTrackerStore();

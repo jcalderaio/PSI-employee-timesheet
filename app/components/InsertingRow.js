@@ -14,7 +14,7 @@ class InsertingRow extends Component {
 		return (
 			<Row style={{ height: 40 }} >
 			{/* In_Time */}
-			  <Col size={50} style={styles.pinkTableStyle.bodyFirst}>
+			  <Col size={40} style={styles.pinkTableStyle.bodyFirst}>
 				  <DatePicker
 					style={{ flex: 1 }}
 					customStyles={{
@@ -50,7 +50,7 @@ class InsertingRow extends Component {
 				  />
 			  </Col>
 			  {/* Out_Time */}
-			  <Col size={50} style={styles.pinkTableStyle.bodyLast}>
+			  <Col size={40} style={styles.pinkTableStyle.body}>
 				  <DatePicker
 					//style={{ flex: 1 }}
 					customStyles={{
@@ -85,6 +85,7 @@ class InsertingRow extends Component {
 					}}
 				  />
 			  </Col>
+			  <Col size={20} style={styles.pinkTableStyle.body} />
 		  </Row>
 		);
 	}
