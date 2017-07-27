@@ -33,14 +33,14 @@ class TimeTrackerTable extends Component {
 				  // User can only change hours. If zero, will be deleted
 				  if (item.Status === 0) { // 0 - do nothing
 					  return (
-						  <Row style={{ height: 40 }} >
+						  <Row style={{ height: 40 }} key={item.Tracker_Id}>
 							{/* In_Time */}
   							<Col size={40} style={styles.tableStyle.bodyFirst}>
-  								<Text>{item.In_Time}</Text>
+  								<Text style={styles.tableStyle.bodyText}>{item.In_Time}</Text>
   							</Col>
   							{/* Out_Time */}
-  							<Col size={40} style={styles.tableStyle.bodyFirst}>
-  								<Text>{item.Out_Time}</Text>
+  							<Col size={40} style={styles.tableStyle.body}>
+  								<Text style={styles.tableStyle.bodyText}>{item.Out_Time}</Text>
   							</Col>
 							<Col size={20} style={styles.tableStyle.bodyLast}>
 			                  <View style={{ flex: 1 }}>
@@ -48,6 +48,7 @@ class TimeTrackerTable extends Component {
 									  transparent
 									  onPress={() => {
 										  timeTrackerStore.deleteRow(item.Tracker_Id);
+                                          this.forceUpdate();
 									  }}
 								  >
 									  <MaterialCommunityIcons name='delete-forever' size={26} style={{ justifyContent: 'center', alignItems: 'center', color: 'red', borderWidth: 0.2 }} />
@@ -106,6 +107,7 @@ class TimeTrackerTable extends Component {
 				  }
 			  })}
 
+{/*---------------------------------------------------------------------------------------*/}
 			  	{/*New Rows*/}
 				<Row style={{ height: 40 }} >
 				{/* In_Time */}
@@ -180,7 +182,7 @@ class TimeTrackerTable extends Component {
 						}}
 					  />
 				  </Col>
-				  <Col size={20} style={styles.pinkTableStyle.body} />
+				  <Col size={20} style={styles.pinkTableStyle.bodyLast} />
 			  	</Row>
 				{/*End New Rows*/}
 

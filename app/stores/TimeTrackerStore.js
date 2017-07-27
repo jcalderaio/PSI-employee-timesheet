@@ -10,24 +10,11 @@ import userStore from './UserStore';  // Need user/pass
 
 class TimeTrackerStore {
    @observable timeTrackerList = null;
-   @observable tempTimeTrackerList = null;
    @observable inTime = null;
    @observable outTime = null;
    @observable inTimeDisplay = null;
    @observable outTimeDisplay = null;
    @observable loading = false;
-
-   @action getHours(hours) {
-       if (hours === 0) {
-         return '12 am';
-       } else if (hours <= 11) {
-         return hours % 12 + ' am';
-       } else if (hours === 12) {
-         return '12 pm';
-       } else {
-         return hours % 12 + ' pm';
-       }
-   }
 
    @computed get size() {
       if (this.timeTrackerList === null) {

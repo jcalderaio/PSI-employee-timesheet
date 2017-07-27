@@ -36,7 +36,7 @@ export default class Main extends Component {
     //console.log('Todays Jobs:', todaysJobStore.todaysJobs);
     //console.log('Recent Jobs:', recentJobStore.recentJobs);
 
-    if ((recentJobStore.recentJobs === null) || (todaysJobStore.todaysJobs === null)) {
+    if ((recentJobStore.recentJobs === null) || (todaysJobStore.todaysJobs === null) || (timeTrackerStore.timeTrackerList === null)) {
       return (
         <View style={styles.centerContainter}>
           <Spinner size='large' />
