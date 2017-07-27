@@ -1,6 +1,6 @@
 import React from 'react';
 import { TabNavigator, StackNavigator } from 'react-navigation';
-import { MaterialIcons, Ionicons } from '@expo/vector-icons';
+import { MaterialIcons, Octicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Platform } from 'react-native';
 
 // Import the screens
@@ -23,7 +23,14 @@ export const Tabs = TabNavigator({
     screen: TodaysCharges,
     navigationOptions: {
       tabBarLabel: 'Today\'s Charges',
-      tabBarIcon: ({ tintColor }) => <Ionicons name='ios-time' size={26} style={{ color: tintColor }} />
+      tabBarIcon: ({ tintColor }) => <MaterialCommunityIcons name='calendar-clock' size={26} style={{ color: tintColor }} />
+    },
+  },
+  TimeTracker: {
+    screen: TimeTracker,
+    navigationOptions: {
+      tabBarLabel: 'Time Tracker',
+      tabBarIcon: ({ tintColor }) => <Octicons name='watch' size={26} style={{ color: tintColor }} />
     },
   },
 }, {
@@ -63,10 +70,7 @@ export const ModalStack = StackNavigator({
 	},
   SelectRecent: {
     screen: SelectRecent
-  },
-  TimeTracker: {
-		screen: TimeTracker
-	}
+  }
 }, {
     mode: 'modal',
 	  headerMode: 'none'

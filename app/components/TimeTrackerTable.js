@@ -31,24 +31,89 @@ class TimeTrackerTable extends Component {
 			  {map(timeTrackerStore.timeTrackerList, (item) => {
 				  // Items committed. Show as WHITE rows
 				  // User can only change hours. If zero, will be deleted
-				  if (item.Status === 0) { // 0 - do nothing
+				  if (item.Status === 0) { 
 					  return (
 						  <Row style={{ height: 40 }} key={item.Tracker_Id}>
 							{/* In_Time */}
-  							<Col size={40} style={styles.tableStyle.bodyFirst}>
-  								<Text style={styles.tableStyle.bodyText}>{item.In_Time}</Text>
-  							</Col>
+							<Col size={40} style={styles.tableStyle.bodyFirst}>
+								<Text>{item.In_Time}</Text>
+							  <DatePicker
+		  						style={{ flex: 1 }}
+		  						customStyles={{
+		  							dateInput: {
+		  								borderWidth: 0
+		  							}
+		  						}}
+		  						androidMode={'spinner'}
+		  						date={timeTrackerStore.parseTime(item.In_Time.toString())}
+		  						placeholder={' '}
+		  						mode="time"
+		  						format="hh:mm a"
+		  						confirmBtnText="Confirm"
+		  						cancelBtnText="Cancel"
+		  						minuteInterval={15}
+		  						showIcon={false}
+		  						is24Hour={false}
+		  						onDateChange={(time) => {
+		  							//2017-07-06T08:01:55.51
+		  							timeTrackerStore.inTimeDisplay = time;  // Sets view to see 12 hr
+		  							//print(moment_24hr.hours() + ':' + moment_24hr.minutes());
+		  							const moment_24hr = moment(time, 'hh:mm a'); // Converts to 24 hr
+		  							let hours = moment_24hr.hours();
+		  							let minutes = moment_24hr.minutes();
+		  							if (hours < 10) hours = `0${hours}`;
+		  							if (minutes < 10) minutes = `0${minutes}`;
+		  							const newTime = moment().format(`YYYY[-]MM[-]DD[T]${hours}[:]${minutes}[:]ss[.]SS`);
+		  							//console.log(newTime);
+
+		  							timeTrackerStore.inTime = newTime;
+		  							timeTrackerStore.updateRow('POST', null);
+		  						}}
+		  					  />
+		  				  	</Col>
   							{/* Out_Time */}
-  							<Col size={40} style={styles.tableStyle.body}>
-  								<Text style={styles.tableStyle.bodyText}>{item.Out_Time}</Text>
-  							</Col>
+							<Col size={40} style={styles.tableStyle.body}>
+		  					  <DatePicker
+		  						//style={{ flex: 1 }}
+		  						customStyles={{
+		  							dateInput: {
+		  								borderWidth: 0
+		  							}
+		  						}}
+		  						androidMode={'spinner'}
+		  						date={timeTrackerStore.outTimeDisplay}
+		  						placeholder={' '}
+		  						mode="time"
+		  						format="hh:mm a"
+		  						confirmBtnText="Confirm"
+		  						cancelBtnText="Cancel"
+		  						minuteInterval={15}
+		  						showIcon={false}
+		  						is24Hour={false}
+		  						onDateChange={(time) => {
+		  							//2017-07-06T08:01:55.51
+		  							timeTrackerStore.outTimeDisplay = time;  // Sets view to see 12 hr
+		  							//print(moment_24hr.hours() + ':' + moment_24hr.minutes());
+		  							const moment_24hr = moment(time, 'hh:mm a'); // Converts to 24 hr
+		  							let hours = moment_24hr.hours();
+		  							let minutes = moment_24hr.minutes();
+		  							if (hours < 10) hours = `0${hours}`;
+		  							if (minutes < 10) minutes = `0${minutes}`;
+		  							const newTime = moment().format(`YYYY[-]MM[-]DD[T]${hours}[:]${minutes}[:]ss[.]SS`);
+		  							//console.log(newTime);
+
+		  							timeTrackerStore.outTime = newTime;
+		  							timeTrackerStore.updateRow('PUT', null);
+		  						}}
+		  					  />
+		  				  	</Col>
+						  	{/* Delete_Row */}
 							<Col size={20} style={styles.tableStyle.bodyLast}>
 			                  <View style={{ flex: 1 }}>
 								  <Button
 									  transparent
 									  onPress={() => {
 										  timeTrackerStore.deleteRow(item.Tracker_Id);
-                                          this.forceUpdate();
 									  }}
 								  >
 									  <MaterialCommunityIcons name='delete-forever' size={26} style={{ justifyContent: 'center', alignItems: 'center', color: 'red', borderWidth: 0.2 }} />
@@ -61,12 +126,76 @@ class TimeTrackerTable extends Component {
 					// Items NOT committed. Show as PINK rows
 					  return (
 						  <Row style={{ height: 40 }} >
-			                <Col size={40} style={styles.tableStyle.bodyFirst}>
-			                  <Text style={styles.tableStyle.bodyText}>{item.In_Time}</Text>
-			                </Col>
-			                <Col size={40} style={styles.tableStyle.body}>
-			                  <Text style={styles.tableStyle.bodyText}>item.Out_Time</Text>
-			              	</Col>
+							 <Col size={40} style={styles.pinkTableStyle.body}>
+  		  					  <DatePicker
+  		  						//style={{ flex: 1 }}
+  		  						customStyles={{
+  		  							dateInput: {
+  		  								borderWidth: 0
+  		  							}
+  		  						}}
+  		  						androidMode={'spinner'}
+  		  						date={timeTrackerStore.outTimeDisplay}
+  		  						placeholder={' '}
+  		  						mode="time"
+  		  						format="hh:mm a"
+  		  						confirmBtnText="Confirm"
+  		  						cancelBtnText="Cancel"
+  		  						minuteInterval={15}
+  		  						showIcon={false}
+  		  						is24Hour={false}
+  		  						onDateChange={(time) => {
+  		  							//2017-07-06T08:01:55.51
+  		  							timeTrackerStore.outTimeDisplay = time;  // Sets view to see 12 hr
+  		  							//print(moment_24hr.hours() + ':' + moment_24hr.minutes());
+  		  							const moment_24hr = moment(time, 'hh:mm a'); // Converts to 24 hr
+  		  							let hours = moment_24hr.hours();
+  		  							let minutes = moment_24hr.minutes();
+  		  							if (hours < 10) hours = `0${hours}`;
+  		  							if (minutes < 10) minutes = `0${minutes}`;
+  		  							const newTime = moment().format(`YYYY[-]MM[-]DD[T]${hours}[:]${minutes}[:]ss[.]SS`);
+  		  							//console.log(newTime);
+
+  		  							timeTrackerStore.outTime = newTime;
+  		  							timeTrackerStore.updateRow('PUT', null);
+  		  						}}
+  		  					  />
+  		  				  </Col>
+						   <Col size={40} style={styles.pinkTableStyle.body}>
+							<DatePicker
+							  //style={{ flex: 1 }}
+							  customStyles={{
+								  dateInput: {
+									  borderWidth: 0
+								  }
+							  }}
+							  androidMode={'spinner'}
+							  date={timeTrackerStore.outTimeDisplay}
+							  placeholder={' '}
+							  mode="time"
+							  format="hh:mm a"
+							  confirmBtnText="Confirm"
+							  cancelBtnText="Cancel"
+							  minuteInterval={15}
+							  showIcon={false}
+							  is24Hour={false}
+							  onDateChange={(time) => {
+								  //2017-07-06T08:01:55.51
+								  timeTrackerStore.outTimeDisplay = time;  // Sets view to see 12 hr
+								  //print(moment_24hr.hours() + ':' + moment_24hr.minutes());
+								  const moment_24hr = moment(time, 'hh:mm a'); // Converts to 24 hr
+								  let hours = moment_24hr.hours();
+								  let minutes = moment_24hr.minutes();
+								  if (hours < 10) hours = `0${hours}`;
+								  if (minutes < 10) minutes = `0${minutes}`;
+								  const newTime = moment().format(`YYYY[-]MM[-]DD[T]${hours}[:]${minutes}[:]ss[.]SS`);
+								  //console.log(newTime);
+
+								  timeTrackerStore.outTime = newTime;
+								  timeTrackerStore.updateRow('PUT', null);
+							  }}
+							/>
+						  </Col>
 							<Col size={20} style={styles.tableStyle.bodyLast}>
 			                  <View style={{ flex: 1 }}>
 								  <Button
@@ -84,12 +213,76 @@ class TimeTrackerTable extends Component {
 				  } else {  // (Item.Status === 1 || 3)
 					  return (
 						  <Row style={{ height: 40 }} >
-			                <Col size={40} style={styles.tableStyle.bodyFirst}>
-			                  <Text style={styles.tableStyle.bodyText}>{item.In_Time}</Text>
-			                </Col>
-			                <Col size={40} style={styles.tableStyle.body}>
-			                  <Text style={styles.tableStyle.bodyText}>item.Out_Time</Text>
-			              	</Col>
+							 <Col size={40} style={styles.pinkTableStyle.body}>
+  		  					  <DatePicker
+  		  						//style={{ flex: 1 }}
+  		  						customStyles={{
+  		  							dateInput: {
+  		  								borderWidth: 0
+  		  							}
+  		  						}}
+  		  						androidMode={'spinner'}
+  		  						date={timeTrackerStore.outTimeDisplay}
+  		  						placeholder={' '}
+  		  						mode="time"
+  		  						format="hh:mm a"
+  		  						confirmBtnText="Confirm"
+  		  						cancelBtnText="Cancel"
+  		  						minuteInterval={15}
+  		  						showIcon={false}
+  		  						is24Hour={false}
+  		  						onDateChange={(time) => {
+  		  							//2017-07-06T08:01:55.51
+  		  							timeTrackerStore.outTimeDisplay = time;  // Sets view to see 12 hr
+  		  							//print(moment_24hr.hours() + ':' + moment_24hr.minutes());
+  		  							const moment_24hr = moment(time, 'hh:mm a'); // Converts to 24 hr
+  		  							let hours = moment_24hr.hours();
+  		  							let minutes = moment_24hr.minutes();
+  		  							if (hours < 10) hours = `0${hours}`;
+  		  							if (minutes < 10) minutes = `0${minutes}`;
+  		  							const newTime = moment().format(`YYYY[-]MM[-]DD[T]${hours}[:]${minutes}[:]ss[.]SS`);
+  		  							//console.log(newTime);
+
+  		  							timeTrackerStore.outTime = newTime;
+  		  							timeTrackerStore.updateRow('PUT', null);
+  		  						}}
+  		  					  />
+  		  				  </Col>
+						   <Col size={40} style={styles.pinkTableStyle.body}>
+							<DatePicker
+							  //style={{ flex: 1 }}
+							  customStyles={{
+								  dateInput: {
+									  borderWidth: 0
+								  }
+							  }}
+							  androidMode={'spinner'}
+							  date={timeTrackerStore.outTimeDisplay}
+							  placeholder={' '}
+							  mode="time"
+							  format="hh:mm a"
+							  confirmBtnText="Confirm"
+							  cancelBtnText="Cancel"
+							  minuteInterval={15}
+							  showIcon={false}
+							  is24Hour={false}
+							  onDateChange={(time) => {
+								  //2017-07-06T08:01:55.51
+								  timeTrackerStore.outTimeDisplay = time;  // Sets view to see 12 hr
+								  //print(moment_24hr.hours() + ':' + moment_24hr.minutes());
+								  const moment_24hr = moment(time, 'hh:mm a'); // Converts to 24 hr
+								  let hours = moment_24hr.hours();
+								  let minutes = moment_24hr.minutes();
+								  if (hours < 10) hours = `0${hours}`;
+								  if (minutes < 10) minutes = `0${minutes}`;
+								  const newTime = moment().format(`YYYY[-]MM[-]DD[T]${hours}[:]${minutes}[:]ss[.]SS`);
+								  //console.log(newTime);
+
+								  timeTrackerStore.outTime = newTime;
+								  timeTrackerStore.updateRow('PUT', null);
+							  }}
+							/>
+						  </Col>
 							<Col size={20} style={styles.tableStyle.bodyLast}>
 			                  <View style={{ flex: 1 }}>
 								  <Button
@@ -178,7 +371,7 @@ class TimeTrackerTable extends Component {
 							//console.log(newTime);
 
 							timeTrackerStore.outTime = newTime;
-							timeTrackerStore.updateRow('POST', null);
+							timeTrackerStore.updateRow('PUT', null);
 						}}
 					  />
 				  </Col>

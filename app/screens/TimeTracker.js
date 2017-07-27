@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
 import { Container, Content, Button, Grid, Header, Left, Right, Body, Title, Text, View, Spinner } from 'native-base';
-import { Octicons } from '@expo/vector-icons';
 
 // MobX
 import { observer } from 'mobx-react/native';
+//MobX
+import todaysJobStore from '../stores/TodaysJobStore';
+import recentJobStore from '../stores/RecentJobStore';
 import timeTrackerStore from '../stores/TimeTrackerStore';
 
 // Import components
@@ -13,9 +15,9 @@ import { TimeTrackerTable } from '../components/TimeTrackerTable';
 @observer
 export default class TimeTracker extends Component {
 	render() {
-		const { goBack } = this.props.navigation;
+		const { navigate } = this.props.navigation;
 
-		if (timeTrackerStore.loading) {
+		if ((timeTrackerStore.loading) || (recentJobStore.recentJobs === null) || (todaysJobStore.todaysJobs === null) || (timeTrackerStore.timeTrackerList === null)) {
           return (
             <View style={styles.centerContainter}>
               <Spinner size='large' />
@@ -31,21 +33,7 @@ export default class TimeTracker extends Component {
 					<Body>
 						<Title style={styles.headerTextStyle}>Time Tracker</Title>
 					</Body>
-					<Right>
-						<Button
-                            transparent
-                            onPress={() => {
-								timeTrackerStore.clearAll();
-								goBack(null);
-							}}
-						>
-							<Octicons
-                                name='x'
-                                size={26}
-                                style={{ color: '#FFF' }}
-                            />
-						</Button>
-					</Right>
+					<Right />
 				</Header>
 				<Content>
 					{/*Heading*/}
@@ -81,7 +69,7 @@ export default class TimeTracker extends Component {
 
 					  	<Button
 							block
-							onPress={() => timeTrackerStore.resetAll()}
+							onPress={() => navigate('TimeTracker')}
 							style={styles.resetAllButton}>
 							<Text>Reset All</Text>
 						</Button>
