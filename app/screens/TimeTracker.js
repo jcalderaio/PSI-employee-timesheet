@@ -35,8 +35,7 @@ export default class TimeTracker extends Component {
 						<Button
                             transparent
                             onPress={() => {
-								timeTrackerStore.inTime = null;
-								timeTrackerStore.outTime = null;
+								timeTrackerStore.clearAll();
 								goBack(null);
 							}}
 						>
@@ -61,21 +60,26 @@ export default class TimeTracker extends Component {
 
 					{/*Buttons*/}
 					<View style={{ marginTop: 60, marginBottom: 60 }}>
-						{/*
-						{/*Button: "Update Charges"*
-			            {(!timeTrackerStore.isEmpty && timeTrackerStore.hasUncommitted) &&
-			              <View>
-			                <Text style={{ color: 'red', fontSize: 16, textAlign: 'center', marginBottom: 10 }}>Rows in PINK are uncommitted. Click 'Update Charges' to commit.</Text>
-			                <Button
-			                   block
-			                   onPress={() => timeTrackerStore.updateTimeTracker()}
-			                   style={styles.updateTimeTrackerButton}
-			                >
-			                   <Text>Update Time Tracker</Text>
-			                 </Button>
-			              </View>
-					  */}
-						<Button
+
+
+					  {/* FOR DEBUGGING */}
+
+					  {(!timeTrackerStore.isEmpty && timeTrackerStore.hasUncommitted) &&
+						  <Text style={{ color: 'red', fontSize: 16, textAlign: 'center', marginBottom: 10 }}>Rows in PINK are uncommitted. Click 'Update Charges' to commit.</Text>
+					  }
+
+					  <Text>Size: {timeTrackerStore.size}</Text>
+
+					  {(timeTrackerStore.hasUncommitted) &&
+						<Text style={{ textAlign: 'center' }}> Has Uncommitted: true </Text>
+					  }
+					  {(!timeTrackerStore.hasUncommitted) &&
+						<Text style={{ textAlign: 'center' }}> Has Uncommitted: false </Text>
+					  }
+
+					  <Text style={{ textAlign: 'center' }}>Size: {timeTrackerStore.size}</Text>
+
+					  	<Button
 							block
 							onPress={() => timeTrackerStore.resetAll()}
 							style={styles.resetAllButton}>
