@@ -73,7 +73,7 @@ class TimeTrackerStore {
       const afterT = str.split('T').pop();
       const hours = afterT.substr(0, 2);
       const minutes = afterT.substr(3, 2);
-      this.getTime(hours, minutes);
+      return this.getTime(hours, minutes);
    }
 
    @action fetchTimeTracker = () => {
@@ -111,6 +111,7 @@ class TimeTrackerStore {
             .then(response => {
                 // Response successful
                 console.log('\'TimeTracker Row\' successfully deleted: ', response);
+                this.fetchTimeTracker();
             })
             .catch(e => {
                console.log('\'Insert TimeTracker Row\' response NOT successful: ', e.response);
@@ -137,7 +138,7 @@ class TimeTrackerStore {
                   .then(response => {
                       // Response successful
                       console.log('\'Insert 1 TimeTracker Row\' response successful: ', response);
-                      return;
+                      this.fetchTimeTracker();
                   })
                   .catch(e => {
                      console.log('\'Insert TimeTracker Row\' response NOT successful: ', e.response);
@@ -156,6 +157,7 @@ class TimeTrackerStore {
                     .then(response => {
                         // Response successful
                         console.log('\'Insert TimeTracker Row\' response successful: ', response);
+                        this.fetchTimeTracker();
                     })
                     .catch(e => {
                        console.log('\'Insert TimeTracker Row\' response NOT successful: ', e.response);
@@ -176,6 +178,7 @@ class TimeTrackerStore {
                   .then(response => {
                       // Response successful
                       console.log('\'PUT inTime Tracker Row\' response successful: ', response);
+                      this.fetchTimeTracker();
                   })
                   .catch(e => {
                      console.log('\'PUT inTime Tracker Row\' response NOT successful: ', e.response);
@@ -194,6 +197,7 @@ class TimeTrackerStore {
                .then(response => {
                    // Response successful
                    console.log('\'PUT TimeTracker Row\' response successful: ', response);
+                   this.fetchTimeTracker();
                })
                .catch(e => {
                   console.log('\'PUT TimeTracker Row\' response NOT successful: ', e.response);
@@ -212,6 +216,7 @@ class TimeTrackerStore {
                .then(response => {
                    // Response successful
                    console.log('\'Insert TimeTracker Row\' response successful: ', response);
+                   this.fetchTimeTracker();
                })
                .catch(e => {
                   console.log('\'Insert TimeTracker Row\' response NOT successful: ', e.response);
@@ -222,8 +227,8 @@ class TimeTrackerStore {
          }
       }
 
+      this.clearAll();
       this.fetchTimeTracker();
-      //this.clearAll();
       this.loading = false;
       }
 }

@@ -51,7 +51,7 @@ export default class TimeTracker extends Component {
 
 
 					  {/* FOR DEBUGGING */}
-
+					  {/*}
 					  {(!timeTrackerStore.isEmpty && timeTrackerStore.hasUncommitted) &&
 						  <Text style={{ color: 'red', fontSize: 16, textAlign: 'center', marginBottom: 10 }}>Rows in PINK are uncommitted. Click 'Update Charges' to commit.</Text>
 					  }
@@ -65,14 +65,9 @@ export default class TimeTracker extends Component {
 						<Text style={{ textAlign: 'center' }}> Has Uncommitted: false </Text>
 					  }
 
-					  <Text style={{ textAlign: 'center' }}>Size: {timeTrackerStore.size}</Text>
+					  <Text style={{ textAlign: 'center' }}>Size: {timeTrackerStore.size}</Text>*/}
 
-					  	<Button
-							block
-							onPress={() => navigate('TimeTracker')}
-							style={styles.resetAllButton}>
-							<Text>Reset All</Text>
-						</Button>
+
 					</View>
 					{/*End Buttons*/}
 
