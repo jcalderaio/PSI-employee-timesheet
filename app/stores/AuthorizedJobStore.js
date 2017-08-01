@@ -161,7 +161,45 @@ class AuthorizedJobStore {
             this.loading = false;
             return;
          }
-         if (this.jobId !== null) {
+         // PTO - Works!!!
+         if ((this.jobId !== null) && (this.jobId === 13)) {
+            const maxHours = userStore.ptoFlexInfo.PTO_Balance + 40;
+            if (this.hours > maxHours) {
+               Alert.alert('PTO balance is insufficient for this charge. Setting value to max available PTO');
+               this.hours = userStore.ptoFlexInfo.PTO_Balance + 40;
+               if (this.hours % 0.5 !== 0) {
+                  this.hours = Math.floor(this.hours * 2) / 2;
+               }
+            }
+            fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Job_Id=${this.jobId}&Hours=${this.hours}&Status=2`, {
+                method: 'PUT',
+                headers: {
+                  'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
+                }
+            })
+            .then(ApiUtils.checkStatus)
+            .then(response => {
+                // Response successful
+                console.log('\'Add Charge\' response successful: ', response);
+                Alert.alert(
+                   'Charge Added!',
+                   ' '
+                );
+                this.clearAll();
+                // Reload the jobs for today
+                todaysJobStore.fetchTodaysJobs();
+                userStore.fetchPtoFlexInfo();
+                navigate('TodaysCharges');
+                this.loading = false;
+            })
+            .catch(e => {
+               console.log('\'Add Charge\' response NOT successful: ', e.response);
+               alert(`${e}: Charge NOT added`);
+               this.clearAll();
+               this.loading = false;
+               return;
+            });
+         } else if (this.jobId !== null) {
             // Add new entry to the database!
             fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Job_Id=${this.jobId}&Hours=${this.hours}&Status=2`, {
                 method: 'PUT',

@@ -225,7 +225,7 @@ export default class AddEntry extends Component {
 									}}
 									returnKeyType='send'
 									keyboardType='numeric'
-									maxLength={4}
+									maxLength={6}
 									onSubmitEditing={() => authorizedJobStore.addEntry(navigate)}
 								/>
 							</View>
