@@ -135,6 +135,7 @@ class TodaysJobStore {
          }
       });
       this.fetchTodaysJobs();
+      userStore.fetchPtoFlexInfo(); // Fetch main screen info again
       this.loading = false;
       //navigate('TodaysCharges');
       Alert.alert(

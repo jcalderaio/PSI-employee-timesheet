@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Image, Platform, Alert } from 'react-native';
-import { Container, Content, Button, Text, Grid, Header, Left, Right, Body, Title, View, Spinner } from 'native-base';
+import { Container, Content, Button, Text, Grid, Header, Left, Right, Body, Title, View, Spinner, Row, Col } from 'native-base';
 import moment from 'moment';
 import { observer } from 'mobx-react/native';
 import { SimpleLineIcons } from '@expo/vector-icons';
@@ -25,6 +25,7 @@ export default class Main extends Component {
             recentJobStore.fetchRecentJobs();
             authorizedJobStore.fetchAuthorizedJobs();
             timeTrackerStore.fetchTimeTracker();
+            userStore.fetchPtoFlexInfo();
             flag = false;
         }
     }
@@ -32,11 +33,13 @@ export default class Main extends Component {
  render() {
     const { navigate, goBack } = this.props.navigation;
 
+    //Needs to refresh every time screen is shown
+
     // For testing purposes
     //console.log('Todays Jobs:', todaysJobStore.todaysJobs);
     //console.log('Recent Jobs:', recentJobStore.recentJobs);
 
-    if ((recentJobStore.recentJobs === null) || (todaysJobStore.todaysJobs === null) || (recentJobStore.timeTrackerList === null)) {
+    if ((recentJobStore.recentJobs === null) || (todaysJobStore.todaysJobs === null) || (recentJobStore.timeTrackerList === null) || (userStore.ptoFlexInfo === null)) {
       return (
         <View style={styles.centerContainter}>
           <Spinner size='large' />
@@ -97,12 +100,17 @@ export default class Main extends Component {
               </View>
 
               <Card>
+                {/*Display Fname + Lname*/}
                 <CardSection>
                   <Grid style={{ justifyContent: 'center', padding: 10 }}>
-                    <Text style={{ fontSize: 20 }}>Timesheet for {userStore.employeeInfo.First_Name} {userStore.employeeInfo.Last_Name}</Text>
+                    <Text>
+                      <Text style={{ fontWeight: 'bold' }}>Name: </Text>
+                      {userStore.employeeInfo.First_Name} {userStore.employeeInfo.Last_Name}
+                    </Text>
                   </Grid>
                 </CardSection>
 
+                {/*Display Date*/}
                 <CardSection>
                   <Grid style={{ justifyContent: 'center', padding: 10 }}>
                     <Text>
@@ -111,11 +119,48 @@ export default class Main extends Component {
                   </Grid>
                 </CardSection>
 
+                {/*Display Hours Charged Today*/}
                 <CardSection>
                   <Grid style={{ justifyContent: 'center', padding: 10 }}>
                     <Text>
                       Hours charged today: <Text style={{ fontWeight: 'bold' }}>{todaysJobStore.totalHours}</Text>
                     </Text>
+                  </Grid>
+                </CardSection>
+
+                {/*Display QTD Worked + QTD Required*/}
+                <CardSection>
+                  <Grid style={{ justifyContent: 'center', padding: 10 }}>
+                    <Row>
+                        <Col>
+                            <Text>
+                              QTD Worked: <Text style={{ fontWeight: 'bold' }}>{userStore.ptoFlexInfo.QTD_Sum}</Text>
+                            </Text>
+                        </Col>
+                        <Col>
+                            <Text>
+                              QTD Required: <Text style={{ fontWeight: 'bold' }}>{userStore.ptoFlexInfo.QTD_Required}</Text>
+                            </Text>
+                        </Col>
+                    </Row>
+                  </Grid>
+                </CardSection>
+
+                {/*Display QTD Worked + QTD Required*/}
+                <CardSection>
+                  <Grid style={{ justifyContent: 'center', padding: 10 }}>
+                    <Row>
+                        <Col>
+                            <Text>
+                              PTO Balance: <Text style={{ fontWeight: 'bold' }}>{userStore.ptoFlexInfo.PTO_Balance}</Text>
+                            </Text>
+                        </Col>
+                        <Col>
+                            <Text>
+                              Flex Time Balance: <Text style={{ fontWeight: 'bold' }}>{userStore.ptoFlexInfo.Flex_Balance}</Text>
+                            </Text>
+                        </Col>
+                    </Row>
                   </Grid>
                 </CardSection>
 
@@ -131,21 +176,23 @@ export default class Main extends Component {
 
               </Card>
 
-              <Button
-      			block
-      			onPress={() => navigate('AddEntry')}
-      			style={styles.addEntryButton}
-		      >
-					<Text>Add Entry</Text>
-			  </Button>
+              <View style={{ marginBottom: 60 }}>
+                  <Button
+          			block
+          			onPress={() => navigate('AddEntry')}
+          			style={styles.addEntryButton}
+    		      >
+    					<Text>Add Entry</Text>
+    			  </Button>
 
-              <Button
-        		block
-        		onPress={() => navigate('SelectRecent')}
-        		style={styles.selectRecentButton}
-			  >
-					<Text>Select Recent</Text>
-			  </Button>
+                  <Button
+            		block
+            		onPress={() => navigate('SelectRecent')}
+            		style={styles.selectRecentButton}
+    			  >
+    					<Text>Select Recent</Text>
+    			  </Button>
+              </View>
 
           </Content>
       </Container>

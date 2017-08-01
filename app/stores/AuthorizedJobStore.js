@@ -180,6 +180,7 @@ class AuthorizedJobStore {
                 this.clearAll();
                 // Reload the jobs for today
                 todaysJobStore.fetchTodaysJobs();
+                userStore.fetchPtoFlexInfo();
                 navigate('TodaysCharges');
                 this.loading = false;
             })
