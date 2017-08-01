@@ -39,6 +39,9 @@ class TimeTrackerTable extends Component {
 					  <DatePicker
 						style={{ flex: 1 }}
 						customStyles={{
+							dateText: {
+								fontWeight: 'bold'
+							},
 							dateInput: {
 								borderWidth: 0
 							}
@@ -75,6 +78,9 @@ class TimeTrackerTable extends Component {
 					  <DatePicker
 						//style={{ flex: 1 }}
 						customStyles={{
+							dateText: {
+								fontWeight: 'bold'
+							},
 							dateInput: {
 								borderWidth: 0
 							}
@@ -131,6 +137,7 @@ class TimeTrackerTable extends Component {
 						style={{ flex: 1 }}
 						customStyles={{
 							placeholderText: {
+								fontWeight: 'bold',
 								color: 'black'
 							},
 							dateInput: {
@@ -139,7 +146,7 @@ class TimeTrackerTable extends Component {
 						}}
 						androidMode={'spinner'}
 						date={timeTrackerStore.inTimeDisplay}
-						placeholder={'SELECT IN_TIME'}
+						placeholder={'Select In_Time'}
 						mode="time"
 						format="hh:mm a"
 						confirmBtnText="Confirm"

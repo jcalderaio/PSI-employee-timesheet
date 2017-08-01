@@ -2,14 +2,14 @@ import React from 'react';
 import { observable, computed, action, autorun } from 'mobx';
 import { Alert, AsyncStorage } from 'react-native';
 import base64 from 'base-64';
-import { map, filter, some } from 'lodash';
+import { map, filter, sum } from 'lodash';
 import ApiUtils from '../components/ApiUtils'; // checks for errors in Fetches
 
 //MobX
 import userStore from './UserStore';  // Need user/pass
 
 class TimeTrackerStore {
-   @observable timeTrackerList = {};
+   @observable timeTrackerList = null;
    @observable inTime = null;
    @observable outTime = null;
    @observable inTimeDisplay = null;
@@ -25,6 +25,15 @@ class TimeTrackerStore {
          return 0;
      } else {
          return this.timeTrackerList.length;
+     }
+   }
+
+   @computed get totalHours() {
+      if (this.timeTrackerList === null) {
+         return 0;
+     } else {
+        const arr = map(this.timeTrackerList, 'Duration');
+        return sum(arr) / 60;
      }
    }
 

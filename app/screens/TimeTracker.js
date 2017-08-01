@@ -67,6 +67,12 @@ export default class TimeTracker extends Component {
 
 					  <Text style={{ textAlign: 'center' }}>Size: {timeTrackerStore.size}</Text>*/}
 
+					  <Grid style={{ justifyContent: 'center', padding: 10 }}>
+	                    <Text>
+	                      Total Hours: <Text style={{ fontWeight: 'bold' }}>{timeTrackerStore.totalHours}</Text>
+	                    </Text>
+	                  </Grid>
+
 
 					</View>
 					{/*End Buttons*/}
@@ -106,6 +112,14 @@ const styles = {
 		},
 		shadowOpacity: 0.3,
 		shadowRadius: 2
+	},
+	jobNumberBorder: {
+		backgroundColor: '#a0a6ab',
+		borderWidth: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		fontSize: 18,
+		fontWeight: 'bold'
 	},
 	centerContainter: {
       flex: 1,
