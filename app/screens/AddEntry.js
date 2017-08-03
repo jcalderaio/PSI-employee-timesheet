@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { KeyboardAvoidingView } from 'react-native';
+import { KeyboardAvoidingView, Platform } from 'react-native';
 import { Text, Container, Content, Button, Grid, Header, Left, Right, Body, Title, View, Input, Icon, Spinner } from 'native-base';
 import { Octicons } from '@expo/vector-icons';
 import { observer } from 'mobx-react/native';
+import CheckBox from 'react-native-check-box';
 import ModalPicker from 'react-native-modal-picker';
 
 // Import ONLY map from lodash (DELETE)
@@ -11,6 +12,7 @@ import { map } from 'lodash';
 // MobX
 import authorizedJobStore from '../stores/AuthorizedJobStore';
 import todaysJobStore from '../stores/TodaysJobStore';
+import userStore from '../stores/UserStore';
 
 // Add this to show that it will update the observables in the MobX stores
 @observer
@@ -23,6 +25,11 @@ export default class AddEntry extends Component {
 			selectedJobNumber: ''
 		};
 	}
+
+	onClick = () => {
+      userStore.flexBool = !userStore.flexBool;
+	  authorizedJobStore.setHoursNegative();
+    }
 
 	render() {
 		// These are from React Navigation
@@ -195,6 +202,7 @@ export default class AddEntry extends Component {
 									authorizedJobStore.hours = null;
 									authorizedJobStore.setJobNumber(value.label);
 									this.setState({ selectedJobNumber: value.label });
+									authorizedJobStore.setJobId();
 								}}
 								style={{ paddingHorizontal: 35 }}
 							>
@@ -203,6 +211,21 @@ export default class AddEntry extends Component {
 									<Text>{this.state.selectedJobNumber === '' ? 'Job Numbers' : this.state.selectedJobNumber}</Text>
 								</View>
 							</ModalPicker>
+						</View>
+					}
+
+					{(((Platform.OS !== 'android')) && (authorizedJobStore.jobId === 11344)) &&
+						<View
+							style={{ flex: 1,
+				        	justifyContent: 'center',
+				        	alignItems: 'center',
+							paddingBottom: 25 }}>
+							<Text style={{ fontSize: 16 }}>Negative Flex: {(userStore.flexBool) ? 'True' : 'False'}</Text>
+							<CheckBox
+					          style={{ flex: 1, justifyContent: 'center' }}
+					          onClick={() => this.onClick()}
+					          isChecked={userStore.flexBool}
+					        />
 						</View>
 					}
 
@@ -222,6 +245,7 @@ export default class AddEntry extends Component {
 									onChangeText={value => {
 										authorizedJobStore.hours = null;
 										authorizedJobStore.setHours(value.trim());
+										authorizedJobStore.setJobId();
 									}}
 									returnKeyType='send'
 									keyboardType='numeric'

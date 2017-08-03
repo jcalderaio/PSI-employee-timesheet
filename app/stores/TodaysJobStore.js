@@ -62,13 +62,128 @@ class TodaysJobStore {
    @action updateEntry(navigate) {
       this.loading = true;
 
-      const tempPUT = filter(this.todaysJobs, { 'Status': 1 });
-      const tempPOST = filter(this.todaysJobs, { 'Status': 2 });
-      const tempDELETE = filter(this.todaysJobs, { 'Status': 3 });
+      const tempPUT = filter(this.todaysJobs, { 'Status': 1, 'Job_Id': !13 && !11344 });
+      const tempPOST = filter(this.todaysJobs, { 'Status': 2, 'Job_Id': !13 && !11344 });
+      const tempDELETE = filter(this.todaysJobs, { 'Status': 3, 'Job_Id': !13 && !11344 });
+      const tempPTO = filter(this.todaysJobs, { 'Job_Id': 13 });
+      const tempFlex = filter(this.todaysJobs, { 'Job_Id': 11344 });
+
+      // PTO
+      map(tempPTO, (item) => {
+         if (!isNaN(item.Hours) && (item.Hours !== 0) && (item.Hours % 0.5 === 0) && (item.Hours !== '') && !(item.Hours < 0)) {
+            const maxHours = userStore.ptoFlexInfo.PTO_Balance + 40;
+            if (item.Hours > maxHours) {
+              Alert.alert('PTO balance is insufficient for this charge. Setting value to max available PTO');
+              item.Hours = userStore.ptoFlexInfo.PTO_Balance + 40;
+              if (item.Hours % 0.5 !== 0) {
+                  item.hours = Math.floor(item.Hours * 2) / 2;
+                  if (item.Hours === 0) {
+                      alert('PTO balance is insufficient for this charge.');
+                      this.loading = false;
+                      return;
+                  }
+              }
+            }
+            fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Timesheet_Id=${item.Timesheet_Id}&Hours=${item.Hours}&Status=1`, {
+                   method: 'PUT',
+                   headers: {
+                     'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
+                   }
+               })
+               .then(ApiUtils.checkStatus)
+               .then(response => {
+                   // Response successful
+                   console.log('\'PUT PTO Charge\' response successful: ', response);
+               })
+               .catch(e => {
+                  console.log('\'PUT PTO Charge\' response NOT successful: ', e.response);
+                  alert('PUT ERROR');
+                  this.loading = false;
+                  return;
+               });
+         }
+      });
+
+      // Flex
+      map(tempFlex, (item) => {
+         if (!isNaN(item.Hours) && (item.Hours !== 0) && (item.Hours % 0.5 === 0) && (item.Hours !== '')) {
+            if (item.Hours < 0) {
+               if (userStore.negFlex > 0) {  // Checks to see if I have ANY negative flex time
+                  const typedPosHours = Math.abs(item.Hours);
+                  // Max hours is QTD_Sum - QTD_Required (negFlex)
+                  // Check if max hours is 80 OR negFlex
+                  let max = typedPosHours;
+                  if (typedPosHours > userStore.negFlex) {
+                     max = Math.floor(userStore.negFlex * 2) / 2;
+                     Alert.alert(
+                        'This entry would exceed the flex time limit. Setting value to max possible flex time.',
+                        ' '
+                     );
+                  } else if (typedPosHours > userStore.ptoFlexInfo.Flex_Limit) {
+                     max = Math.floor(userStore.ptoFlexInfo.Flex_Limit * 2) / 2;
+                     Alert.alert(
+                        'This entry would exceed the flex time limit. Setting value to max possible flex time.',
+                        ' '
+                     );
+                  }
+                  item.Hours = -1 * max;
+                  fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Timesheet_Id=${item.Timesheet_Id}&Hours=${item.Hours}&Status=1`, {
+                         method: 'PUT',
+                         headers: {
+                           'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
+                         }
+                     })
+                     .then(ApiUtils.checkStatus)
+                     .then(response => {
+                         // Response successful
+                         console.log('\'PUT Flex Charge\' response successful: ', response);
+                     })
+                     .catch(e => {
+                        console.log('\'PUT Flex Charge\' response NOT successful: ', e.response);
+                        alert('PUT ERROR');
+                        this.loading = false;
+                        return;
+                     });
+               } else {
+                  Alert.alert(
+                     'This entry would cause the flex time balance to go negative. Hours are being set to their previously submitted value',
+                     ' '
+                  );
+                  return;
+               }
+            } else if (item.Hours > 0) {
+               const flexBalance = userStore.ptoFlexInfo.Flex_Balance;
+               if (item.Hours > flexBalance) {
+                  item.Hours = Math.floor(flexBalance * 2) / 2;
+                  Alert.alert(
+                     'Not enough flex hours in balance. Set to greatest value!',
+                     ' '
+                  );
+               }
+               fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Timesheet_Id=${item.Timesheet_Id}&Hours=${item.Hours}&Status=1`, {
+                      method: 'PUT',
+                      headers: {
+                        'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
+                      }
+                  })
+                  .then(ApiUtils.checkStatus)
+                  .then(response => {
+                      // Response successful
+                      console.log('\'PUT Flex + Charge\' response successful: ', response);
+                  })
+                  .catch(e => {
+                     console.log('\'PUT Flex + Charge\' response NOT successful: ', e.response);
+                     alert('PUT ERROR');
+                     this.loading = false;
+                     return;
+                  });
+            }
+         }
+      });
 
       // PUT
       map(tempPUT, (item) => {
-         if (!isNaN(item.Hours) && (item.Hours !== 0) && (item.Hours % 0.5 === 0) && (item.Hours !== '')) {
+         if (!isNaN(item.Hours) && (item.Hours !== 0) && (item.Hours % 0.5 === 0) && (item.Hours !== '') && !(item.Hours < 0)) {
             fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Timesheet_Id=${item.Timesheet_Id}&Hours=${item.Hours}&Status=1`, {
                    method: 'PUT',
                    headers: {
@@ -91,7 +206,7 @@ class TodaysJobStore {
 
       // POST
       map(tempPOST, (item) => {
-         if (!isNaN(item.Hours) && (item.Hours !== 0) && (item.Hours % 0.5 === 0) && (item.Hours !== '')) {
+         if (!isNaN(item.Hours) && (item.Hours !== 0) && (item.Hours % 0.5 === 0) && (item.Hours !== '') && !(item.Hours < 0)) {
             fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Job_Id=${item.Job_Id}&Hours=${item.Hours}&Status=2`, {
                    method: 'PUT',
                    headers: {

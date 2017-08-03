@@ -10,8 +10,16 @@ class UserStore {
    @observable employeeInfo = null;
    @observable loggedIn = false;
 
+
    @observable ptoFlexInfo = null;
+   @observable flexBool = false;
    @observable loading = false;
+
+   @computed get negFlex() {
+      if (this.ptoFlexInfo !== null) {
+         return this.ptoFlexInfo.QTD_Sum - this.ptoFlexInfo.QTD_Required;
+      }
+   }
 
    @action fetchPtoFlexInfo() {
 		fetch(`http://psitime.psnet.com/Api/Summary?Employee_Id=${this.employeeInfo.Employee_No}`, {

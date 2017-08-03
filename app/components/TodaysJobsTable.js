@@ -79,7 +79,7 @@ class TodaysJobsTable extends Component {
                                         }}
                                         returnKeyType='send'
                                         keyboardType='numeric'
-                                        maxLength={4}
+                                        maxLength={6}
                                         selectTextOnFocus
                                     />
                                 </View>
@@ -123,7 +123,7 @@ class TodaysJobsTable extends Component {
                                         }}
                                         returnKeyType='send'
                                         keyboardType='numeric'
-                                        maxLength={4}
+                                        maxLength={6}
                                         selectTextOnFocus
                                     />
                                 </View>
@@ -179,7 +179,7 @@ class TodaysJobsTable extends Component {
                                         }}
                                         returnKeyType='send'
                                         keyboardType='numeric'
-                                        maxLength={4}
+                                        maxLength={6}
                                         selectTextOnFocus
                                     />
                                 </View>

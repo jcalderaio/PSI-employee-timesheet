@@ -1,5 +1,5 @@
 import React from 'react';
-import { observable, computed, action, autorun } from 'mobx';
+import { observable, computed, action } from 'mobx';
 import { Alert, AsyncStorage } from 'react-native';
 import base64 from 'base-64';
 import { map, filter, sum } from 'lodash';
@@ -16,10 +16,6 @@ class TimeTrackerStore {
    @observable outTimeDisplay = null;
    @observable loading = false;
 
-   autorun() {
-      console.log('List: ', this.timeTrackerList);
-   }
-
    @computed get size() {
       if (this.timeTrackerList === null) {
          return 0;
@@ -28,12 +24,17 @@ class TimeTrackerStore {
      }
    }
 
+   // Rounds the hours to the closest 30 minutes
    @computed get totalHours() {
       if (this.timeTrackerList === null) {
          return 0;
      } else {
         const arr = map(this.timeTrackerList, 'Duration');
-        return sum(arr) / 60;
+        let hours = sum(arr) / 60;
+        if (hours % 0.5 !== 0) {
+            hours = Math.round(hours * 2) / 2;
+        }
+        return hours;
      }
    }
 

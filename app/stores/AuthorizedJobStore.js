@@ -99,12 +99,18 @@ class AuthorizedJobStore {
       this.hours = value;
    }
 
+   @action setHoursNegative() {
+      this.hours = this.hours * -1;
+   }
+
    @action clearAll() {
        this.clientFilter = null;
        this.taskFilter = null;
        this.subTaskFilter = null;
        this.jobNumber = null;
        this.hours = null;
+       this.jobId = null;
+       userStore.flexBool = false;
    }
 
    @action fetchAuthorizedJobs() {
@@ -134,7 +140,7 @@ class AuthorizedJobStore {
       this.loading = true;
 
       // Run algorithm to retrieve JobId
-      this.setJobId();
+      //this.setJobId();
 
       // Make sure you are placing in database as a 'Number' object
       this.hours = Number(this.hours);
@@ -164,11 +170,20 @@ class AuthorizedJobStore {
          // PTO - Works!!!
          if ((this.jobId !== null) && (this.jobId === 13)) {
             const maxHours = userStore.ptoFlexInfo.PTO_Balance + 40;
-            if (this.hours > maxHours) {
+            if (this.hours < 0) {
+               alert('You must enter hours greater than 0');
+               this.loading = false;
+               return;
+            } else if (this.hours > maxHours) {
                Alert.alert('PTO balance is insufficient for this charge. Setting value to max available PTO');
                this.hours = userStore.ptoFlexInfo.PTO_Balance + 40;
                if (this.hours % 0.5 !== 0) {
                   this.hours = Math.floor(this.hours * 2) / 2;
+                  if (this.hours === 0) {
+                      alert('PTO balance is insufficient for this charge.');
+                      this.loading = false;
+                      return;
+                  }
                }
             }
             fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Job_Id=${this.jobId}&Hours=${this.hours}&Status=2`, {
@@ -199,7 +214,109 @@ class AuthorizedJobStore {
                this.loading = false;
                return;
             });
+         // Flex Time
+      } if ((this.jobId !== null) && (this.jobId === 11344) && (userStore.ptoFlexInfo.Flex_Allowed === true)) { // Checks if you can even change flex
+            // The user clicked on the 'negative' box (for iPhone)
+            if ((userStore.flexBool === true) || (this.hours < 0)) {
+               if (userStore.negFlex > 0) {  // Checks to see if I have ANY negative flex time
+                  const typedPosHours = Math.abs(this.hours);
+                  // Max hours is QTD_Sum - QTD_Required (negFlex)
+                  // Check if max hours is 80 OR negFlex
+                  let max = typedPosHours;
+                  if (typedPosHours > userStore.negFlex) {
+                     max = Math.floor(userStore.negFlex * 2) / 2;
+                     Alert.alert(
+                        'This entry would exceed the flex time limit. Setting value to max possible flex time.',
+                        ' '
+                     );
+                  } else if (typedPosHours > userStore.ptoFlexInfo.Flex_Limit) {
+                     max = Math.floor(userStore.ptoFlexInfo.Flex_Limit * 2) / 2;
+                     Alert.alert(
+                        'This entry would exceed the flex time limit. Setting value to max possible flex time.',
+                        ' '
+                     );
+                  }
+                  this.hours = -1 * max;
+                  fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Job_Id=${this.jobId}&Hours=${this.hours}&Status=2`, {
+                      method: 'PUT',
+                      headers: {
+                        'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
+                      }
+                  })
+                  .then(ApiUtils.checkStatus)
+                  .then(response => {
+                      // Response successful
+                      console.log('\'Add Charge negative flex\' response successful: ', response);
+                      Alert.alert(
+                         'Charge Added!',
+                         ' '
+                      );
+                      this.clearAll();
+                      // Reload the jobs for today
+                      todaysJobStore.fetchTodaysJobs();
+                      userStore.fetchPtoFlexInfo();
+                      navigate('TodaysCharges');
+                      this.loading = false;
+                  })
+                  .catch(e => {
+                     console.log('\'Add Charge negative flex\' response NOT successful: ', e.response);
+                     alert(`${e}: Charge NOT added`);
+                     this.clearAll();
+                     this.loading = false;
+                     return;
+                  });
+               } else {
+                  Alert.alert(
+                     'This entry would cause the flex time balance to go negative. Hours are being set to their previously submitted value',
+                     ' '
+                  );
+                  return;
+               }
+            } else if ((userStore.flexBool === false) || (this.hours > 0)) {
+               const flexBalance = userStore.ptoFlexInfo.Flex_Balance;
+               if (this.hours > flexBalance) {
+                  this.hours = Math.floor(flexBalance * 2) / 2;
+                  Alert.alert(
+                     'Not enough flex hours in balance. Set to greatest value!',
+                     ' '
+                  );
+               }
+               fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Job_Id=${this.jobId}&Hours=${this.hours}&Status=2`, {
+                   method: 'PUT',
+                   headers: {
+                     'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
+                   }
+               })
+               .then(ApiUtils.checkStatus)
+               .then(response => {
+                   // Response successful
+                   console.log('\'Add Charge Flex Positive\' response successful: ', response);
+                   Alert.alert(
+                      'Charge Added!',
+                      ' '
+                   );
+                   this.clearAll();
+                   // Reload the jobs for today
+                   todaysJobStore.fetchTodaysJobs();
+                   userStore.fetchPtoFlexInfo();
+                   navigate('TodaysCharges');
+                   this.loading = false;
+               })
+               .catch(e => {
+                  console.log('\'Add Charge Flex Positive\' response NOT successful: ', e.response);
+                  alert(`${e}: Charge NOT added`);
+                  this.clearAll();
+                  this.loading = false;
+                  return;
+               });
+            }
+         // Something other than PTO
          } else if (this.jobId !== null) {
+            if (this.hours < 0) {
+               alert('You must enter hours greater than 0');
+               this.loading = false;
+               return;
+            }
             // Add new entry to the database!
             fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Job_Id=${this.jobId}&Hours=${this.hours}&Status=2`, {
                 method: 'PUT',
