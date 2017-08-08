@@ -54,137 +54,104 @@ class TodaysJobStore {
       if (this.todaysJobs === null) {
          return 0;
      } else {
-        const arr = map(this.todaysJobs, 'Hours');
+        //const arr = map(this.todaysJobs, 'Hours');
+        //return sum(arr);
+        const temp = filter(this.todaysJobs, (p) => p.Hours > 0);
+        const arr = map(temp, 'Hours');
         return sum(arr);
      }
    }
 
-   @action updateEntry(navigate) {
+   @action updateEntry() {
       this.loading = true;
 
-      const tempPUT = filter(this.todaysJobs, { 'Status': 1, 'Job_Id': !13 && !11344 });
-      const tempPOST = filter(this.todaysJobs, { 'Status': 2, 'Job_Id': !13 && !11344 });
-      const tempDELETE = filter(this.todaysJobs, { 'Status': 3, 'Job_Id': !13 && !11344 });
-      const tempPTO = filter(this.todaysJobs, { 'Job_Id': 13 });
-      const tempFlex = filter(this.todaysJobs, { 'Job_Id': 11344 });
+      const tempPUT = filter(this.todaysJobs, { 'Status': 1 });
+      const tempPOST = filter(this.todaysJobs, { 'Status': 2 });
+      const tempDELETE = filter(this.todaysJobs, { 'Status': 3 });
 
-      // PTO
-      map(tempPTO, (item) => {
-         if (!isNaN(item.Hours) && (item.Hours !== 0) && (item.Hours % 0.5 === 0) && (item.Hours !== '') && !(item.Hours < 0)) {
-            const maxHours = userStore.ptoFlexInfo.PTO_Balance + 40;
-            if (item.Hours > maxHours) {
-              Alert.alert('PTO balance is insufficient for this charge. Setting value to max available PTO');
-              item.Hours = userStore.ptoFlexInfo.PTO_Balance + 40;
-              if (item.Hours % 0.5 !== 0) {
-                  item.hours = Math.floor(item.Hours * 2) / 2;
-                  if (item.Hours === 0) {
-                      alert('PTO balance is insufficient for this charge.');
-                      this.loading = false;
-                      return;
-                  }
-              }
-            }
-            fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Timesheet_Id=${item.Timesheet_Id}&Hours=${item.Hours}&Status=1`, {
-                   method: 'PUT',
-                   headers: {
-                     'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
-                   }
-               })
-               .then(ApiUtils.checkStatus)
-               .then(response => {
-                   // Response successful
-                   console.log('\'PUT PTO Charge\' response successful: ', response);
-               })
-               .catch(e => {
-                  console.log('\'PUT PTO Charge\' response NOT successful: ', e.response);
-                  alert('PUT ERROR');
-                  this.loading = false;
-                  return;
-               });
-         }
-      });
-
-      // Flex
-      map(tempFlex, (item) => {
-         if (!isNaN(item.Hours) && (item.Hours !== 0) && (item.Hours % 0.5 === 0) && (item.Hours !== '')) {
-            if (item.Hours < 0) {
-               if (userStore.negFlex > 0) {  // Checks to see if I have ANY negative flex time
-                  const typedPosHours = Math.abs(item.Hours);
-                  // Max hours is QTD_Sum - QTD_Required (negFlex)
-                  // Check if max hours is 80 OR negFlex
-                  let max = typedPosHours;
-                  if (typedPosHours > userStore.negFlex) {
-                     max = Math.floor(userStore.negFlex * 2) / 2;
-                     Alert.alert(
-                        'This entry would exceed the flex time limit. Setting value to max possible flex time.',
-                        ' '
-                     );
-                  } else if (typedPosHours > userStore.ptoFlexInfo.Flex_Limit) {
-                     max = Math.floor(userStore.ptoFlexInfo.Flex_Limit * 2) / 2;
-                     Alert.alert(
-                        'This entry would exceed the flex time limit. Setting value to max possible flex time.',
-                        ' '
-                     );
-                  }
-                  item.Hours = -1 * max;
-                  fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Timesheet_Id=${item.Timesheet_Id}&Hours=${item.Hours}&Status=1`, {
-                         method: 'PUT',
-                         headers: {
-                           'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
-                         }
-                     })
-                     .then(ApiUtils.checkStatus)
-                     .then(response => {
-                         // Response successful
-                         console.log('\'PUT Flex Charge\' response successful: ', response);
-                     })
-                     .catch(e => {
-                        console.log('\'PUT Flex Charge\' response NOT successful: ', e.response);
-                        alert('PUT ERROR');
-                        this.loading = false;
-                        return;
-                     });
-               } else {
-                  Alert.alert(
-                     'This entry would cause the flex time balance to go negative. Hours are being set to their previously submitted value',
-                     ' '
-                  );
-                  return;
-               }
-            } else if (item.Hours > 0) {
-               const flexBalance = userStore.ptoFlexInfo.Flex_Balance;
-               if (item.Hours > flexBalance) {
-                  item.Hours = Math.floor(flexBalance * 2) / 2;
-                  Alert.alert(
-                     'Not enough flex hours in balance. Set to greatest value!',
-                     ' '
-                  );
-               }
-               fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Timesheet_Id=${item.Timesheet_Id}&Hours=${item.Hours}&Status=1`, {
-                      method: 'PUT',
-                      headers: {
-                        'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
-                      }
-                  })
-                  .then(ApiUtils.checkStatus)
-                  .then(response => {
-                      // Response successful
-                      console.log('\'PUT Flex + Charge\' response successful: ', response);
-                  })
-                  .catch(e => {
-                     console.log('\'PUT Flex + Charge\' response NOT successful: ', e.response);
-                     alert('PUT ERROR');
-                     this.loading = false;
-                     return;
-                  });
-            }
-         }
-      });
-
-      // PUT
+      // PUT (update)
       map(tempPUT, (item) => {
-         if (!isNaN(item.Hours) && (item.Hours !== 0) && (item.Hours % 0.5 === 0) && (item.Hours !== '') && !(item.Hours < 0)) {
-            fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Timesheet_Id=${item.Timesheet_Id}&Hours=${item.Hours}&Status=1`, {
+         if ((item.Hours !== 0) && (item.Hours % 0.5 === 0) && (item.Hours !== '')) {
+            let HOURS = item.Hours;
+            let negBool = false;
+            // If PTO
+            if (item.Job_Id === 13) {
+               const maxHours = userStore.ptoFlexInfo.PTO_Balance + 40;
+               console.log('Max Hours: ', maxHours);
+               if (HOURS > maxHours) {
+                  Alert.alert('PTO balance is insufficient for this charge. Setting value to max available PTO');
+                  HOURS = userStore.ptoFlexInfo.PTO_Balance + 40;
+                  if (HOURS % 0.5 !== 0) {
+                     HOURS = Math.floor(item.Hours * 2) / 2;
+                     if (HOURS === 0) {
+                         alert('PTO balance is insufficient for this charge.');
+                         this.loading = false;
+                         return;
+                     }
+                  }
+               }
+            // If Flex hours
+            } else if ((item.Job_Id === 11344) && (userStore.ptoFlexInfo.Flex_Allowed)) {
+               if (HOURS < 0) {
+                  //console.log('hours are negative');
+                  negBool = true; // Number is negative
+                  if (userStore.negFlex > 0) {  // Checks to see if I have ANY negative flex time
+                     console.log('I have to work with: ', userStore.negFlex);
+                     const typedPosHours = Math.abs(HOURS);
+                     console.log('typedPosHours: ', typedPosHours);
+                     // Max hours is QTD_Sum - QTD_Required (negFlex)
+                     // Check if max hours is 80 OR negFlex
+                     let max = typedPosHours;
+                     if (typedPosHours > userStore.negFlex) {
+                        max = Math.floor(userStore.negFlex * 2) / 2;
+                        if (max === 0) {
+                           alert('Balance is 0. Cannot use flex time.');
+                           return;
+                        }
+                        Alert.alert(
+                           'This entry would exceed the flex time limit. Setting value to max possible flex time.',
+                           ' '
+                        );
+                     } else if (typedPosHours > userStore.ptoFlexInfo.Flex_Limit) {
+                        max = Math.floor(userStore.ptoFlexInfo.Flex_Limit * 2) / 2;
+                        Alert.alert(
+                           'This entry would exceed the flex time limit. Setting value to max possible flex time.',
+                           ' '
+                        );
+                     }
+                     HOURS = -1 * max;
+                  } else {
+                     Alert.alert(
+                        'This entry would cause the flex time balance to go negative. Hours are being set to their previously submitted value',
+                        ' '
+                     );
+                     return;
+                  }
+               } else if (HOURS > 0) {
+                  const flexBalance = userStore.ptoFlexInfo.Flex_Balance;
+                  if (HOURS > flexBalance) {
+                     HOURS = Math.floor(flexBalance * 2) / 2;
+                     if (HOURS === 0) {
+                         alert('Flex balance is insufficient for this charge.');
+                         return;
+                     }
+                     Alert.alert(
+                        'Not enough flex hours in balance. Set to greatest value!',
+                        ' '
+                     );
+                  }
+               }
+            }
+
+            if (!negBool && HOURS < 0) {
+               Alert.alert(
+                  'Only banking flex hours can be negative!',
+                  ' '
+               );
+               return;
+            }
+
+            fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Timesheet_Id=${item.Timesheet_Id}&Hours=${HOURS}&Status=1`, {
                    method: 'PUT',
                    headers: {
                      'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
@@ -204,10 +171,86 @@ class TodaysJobStore {
          }
       });
 
-      // POST
+      // POST (add new)
       map(tempPOST, (item) => {
-         if (!isNaN(item.Hours) && (item.Hours !== 0) && (item.Hours % 0.5 === 0) && (item.Hours !== '') && !(item.Hours < 0)) {
-            fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Job_Id=${item.Job_Id}&Hours=${item.Hours}&Status=2`, {
+         if ((item.Hours !== 0) && (item.Hours % 0.5 === 0) && (item.Hours !== '')) {
+            let HOURS = item.Hours;
+            let negBool = false;
+            // If PTO
+            if (item.Job_Id === 13) {
+               const maxHours = userStore.ptoFlexInfo.PTO_Balance + 40;
+               if (HOURS > maxHours) {
+                  Alert.alert('PTO balance is insufficient for this charge. Setting value to max available PTO');
+                  HOURS = userStore.ptoFlexInfo.PTO_Balance + 40;
+                  if (HOURS % 0.5 !== 0) {
+                     HOURS = Math.floor(HOURS * 2) / 2;
+                     if (HOURS === 0) {
+                         alert('PTO balance is insufficient for this charge.');
+                         return;
+                     }
+                  }
+               }
+            // If flex hours
+            } else if ((item.Job_Id === 11344) && (userStore.ptoFlexInfo.Flex_Allowed)) {
+               if (HOURS < 0) {
+                  //console.log('hours are negative');
+                  negBool = true;
+                  if (userStore.negFlex > 0) {  // Checks to see if I have ANY negative flex time
+                     console.log('I have to work with:', userStore.negFlex);
+                     const typedPosHours = Math.abs(HOURS);
+                     // Max hours is QTD_Sum - QTD_Required (negFlex)
+                     // Check if max hours is 80 OR negFlex
+                     let max = typedPosHours;
+                     if (typedPosHours > userStore.negFlex) {
+                        max = Math.floor(userStore.negFlex * 2) / 2;
+                        if (max === 0) {
+                           alert('Balance is 0. Cannot use flex time.');
+                           return;
+                        }
+                        Alert.alert(
+                           'This entry would exceed the flex time limit. Setting value to max possible flex time.',
+                           ' '
+                        );
+                     } else if (typedPosHours > userStore.ptoFlexInfo.Flex_Limit) {
+                        max = Math.floor(userStore.ptoFlexInfo.Flex_Limit * 2) / 2;
+                        Alert.alert(
+                           'This entry would exceed the flex time limit. Setting value to max possible flex time.',
+                           ' '
+                        );
+                     }
+                     HOURS = -1 * max;
+                  } else {
+                     Alert.alert(
+                        'This entry would cause the flex time balance to go negative. Hours are being set to their previously submitted value',
+                        ' '
+                     );
+                     return;
+                  }
+               } else if (HOURS > 0) {
+                  const flexBalance = userStore.ptoFlexInfo.Flex_Balance;
+                  if (HOURS > flexBalance) {
+                     HOURS = Math.floor(flexBalance * 2) / 2;
+                     if (HOURS === 0) {
+                         alert('Flex balance is insufficient for this charge.');
+                         return;
+                     }
+                     Alert.alert(
+                        'Not enough flex hours in balance. Set to greatest value!',
+                        ' '
+                     );
+                  }
+               }
+            }
+
+            if (!negBool && HOURS < 0) {
+               Alert.alert(
+                  'Only banking flex hours can be negative!',
+                  ' '
+               );
+               return;
+            }
+
+            fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Job_Id=${item.Job_Id}&Hours=${HOURS}&Status=2`, {
                    method: 'PUT',
                    headers: {
                      'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
@@ -249,10 +292,10 @@ class TodaysJobStore {
                });
          }
       });
+
       this.fetchTodaysJobs();
       userStore.fetchPtoFlexInfo(); // Fetch main screen info again
       this.loading = false;
-      //navigate('TodaysCharges');
       Alert.alert(
          'Charges Updated!',
           ' '

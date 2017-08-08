@@ -130,13 +130,9 @@ class AuthorizedJobStore {
           this.errorMessage = `Error Retreiving Authorized Jobs: ${e}`;
         });
     }
-
+c
    // Finish
    @action addEntry(navigate) {
-      //   Use for debugging
-      //console.log('empNo type: ', typeof userStore.employeeInfo.Employee_No, ' ', userStore.employeeInfo.Employee_No, ' ', userStore.employeeInfo.Employee_No.length);
-      //console.log('jobid type: ', typeof this.jobId, ' ', this.jobId, ' ', this.jobId.length);
-      //console.log('hours type: ', typeof this.hours, ' ', this.hours, ' ', this.hours.length);
       this.loading = true;
 
       // Run algorithm to retrieve JobId
@@ -215,7 +211,7 @@ class AuthorizedJobStore {
                return;
             });
          // Flex Time
-      } if ((this.jobId !== null) && (this.jobId === 11344) && (userStore.ptoFlexInfo.Flex_Allowed === true)) { // Checks if you can even change flex
+     } else if ((this.jobId !== null) && (this.jobId === 11344) && (userStore.ptoFlexInfo.Flex_Allowed === true)) { // Checks if you can even change flex
             // The user clicked on the 'negative' box (for iPhone)
             if ((userStore.flexBool === true) || (this.hours < 0)) {
                if (userStore.negFlex > 0) {  // Checks to see if I have ANY negative flex time
@@ -225,6 +221,11 @@ class AuthorizedJobStore {
                   let max = typedPosHours;
                   if (typedPosHours > userStore.negFlex) {
                      max = Math.floor(userStore.negFlex * 2) / 2;
+                     if (max === 0) {
+                        alert('Balance is 0. Cannot use flex time.');
+                        this.loading = false;
+                        return;
+                     }
                      Alert.alert(
                         'This entry would exceed the flex time limit. Setting value to max possible flex time.',
                         ' '
@@ -276,6 +277,11 @@ class AuthorizedJobStore {
                const flexBalance = userStore.ptoFlexInfo.Flex_Balance;
                if (this.hours > flexBalance) {
                   this.hours = Math.floor(flexBalance * 2) / 2;
+                  if (this.hours === 0) {
+                      alert('Flex balance is insufficient for this charge.');
+                      this.loading = false;
+                      return;
+                  }
                   Alert.alert(
                      'Not enough flex hours in balance. Set to greatest value!',
                      ' '

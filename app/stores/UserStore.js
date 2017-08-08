@@ -10,7 +10,6 @@ class UserStore {
    @observable employeeInfo = null;
    @observable loggedIn = false;
 
-
    @observable ptoFlexInfo = null;
    @observable flexBool = false;
    @observable loading = false;

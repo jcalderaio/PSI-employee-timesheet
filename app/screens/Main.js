@@ -119,12 +119,21 @@ export default class Main extends Component {
                   </Grid>
                 </CardSection>
 
-                {/*Display Hours Charged Today*/}
+                {/*Display Tracked Hours, Charged Hours*/}
                 <CardSection>
                   <Grid style={{ justifyContent: 'center', padding: 10 }}>
-                    <Text>
-                      Hours charged today: <Text style={{ fontWeight: 'bold' }}>{todaysJobStore.totalHours}</Text>
-                    </Text>
+                    <Row>
+                        <Col>
+                            <Text>
+                              Tracked Hours: <Text style={{ fontWeight: 'bold' }}>{timeTrackerStore.totalHours}</Text>
+                            </Text>
+                        </Col>
+                        <Col>
+                            <Text>
+                              Charged Hours: <Text style={{ fontWeight: 'bold' }}>{todaysJobStore.totalHours}</Text>
+                            </Text>
+                        </Col>
+                    </Row>
                   </Grid>
                 </CardSection>
 
@@ -157,13 +166,14 @@ export default class Main extends Component {
                         </Col>
                         <Col>
                             <Text>
-                              Flex Time Balance: <Text style={{ fontWeight: 'bold' }}>{userStore.ptoFlexInfo.Flex_Balance}</Text>
+                              Flex Balance: <Text style={{ fontWeight: 'bold' }}>{userStore.ptoFlexInfo.Flex_Balance}</Text>
                             </Text>
                         </Col>
                     </Row>
                   </Grid>
                 </CardSection>
 
+                {/*Display a warning if todays hours >= 24*/}
                 {(todaysJobStore.totalHours >= 24) &&
                     <CardSection>
                       <Grid style={{ justifyContent: 'center', padding: 10 }}>
