@@ -103,8 +103,7 @@ export default class Main extends Component {
                 {/*Display Fname + Lname*/}
                 <CardSection>
                   <Grid style={{ justifyContent: 'center', padding: 10 }}>
-                    <Text>
-                      <Text style={{ fontWeight: 'bold' }}>Name: </Text>
+                    <Text style={{ fontWeight: 'bold' }}>
                       {userStore.employeeInfo.First_Name} {userStore.employeeInfo.Last_Name}
                     </Text>
                   </Grid>

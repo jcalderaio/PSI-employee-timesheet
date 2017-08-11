@@ -1,4 +1,4 @@
-import { Alert } from 'react-native';
+import { Alert, Platform } from 'react-native';
 import { observable, computed, action } from 'mobx';
 import base64 from 'base-64';
 import { map, uniq, filter, some } from 'lodash'; // Import ONLY used functions from Lodash
@@ -255,7 +255,11 @@ class AuthorizedJobStore {
 						if (this.message === '') {
 							Alert.alert('Charge Added!', ' ');
 						} else {
-							Alert.alert(`${this.message} \n\nCharge Added!`, '');
+							if (Platform.OS === 'android') {
+								alert(`${this.message} \n\nCharge Added!`);
+							} else {
+								Alert.alert(`${this.message} \n\nCharge Added!`, '');
+							}
 						}
 						this.clearAll();
 						// Reload the jobs for today
@@ -326,7 +330,11 @@ class AuthorizedJobStore {
 								if (this.message === '') {
 									Alert.alert('Charge Added!', ' ');
 								} else {
-									Alert.alert(`${this.message} \n\nCharge Added!`, '');
+									if (Platform.OS === 'android') {
+										alert(`${this.message} \n\nCharge Added!`);
+									} else {
+										Alert.alert(`${this.message} \n\nCharge Added!`, '');
+									}
 								}
 								this.clearAll();
 								// Reload the jobs for today
@@ -388,7 +396,11 @@ class AuthorizedJobStore {
 							if (this.message === '') {
 								Alert.alert('Charge Added!', ' ');
 							} else {
-								Alert.alert(`${this.message} \n\nCharge Added!`, '');
+								if (Platform.OS === 'android') {
+									alert(`${this.message} \n\nCharge Added!`);
+								} else {
+									Alert.alert(`${this.message} \n\nCharge Added!`, '');
+								}
 							}
 							this.clearAll();
 							// Reload the jobs for today

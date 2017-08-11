@@ -71,33 +71,46 @@ class TodaysJobStore {
 
       // PUT (update)
       map(tempPUT, (item) => {
-         if ((item.Hours !== 0) && (item.Hours % 0.5 === 0) && (item.Hours !== '')) {
-            let HOURS = item.Hours;
-            let negBool = false;
+         if ((item.Hours !== 0) && (item.Hours % 0.5 === 0) && (item.Hours !== '') && !(isNaN(item.Hours))) {
             // If PTO
             if (item.Job_Id === 13) {
-               const maxHours = userStore.ptoFlexInfo.PTO_Balance + 40;
-               console.log('Max Hours: ', maxHours);
-               if (HOURS > maxHours) {
-                  Alert.alert('PTO balance is insufficient for this charge. Setting value to max available PTO');
-                  HOURS = userStore.ptoFlexInfo.PTO_Balance + 40;
-                  if (HOURS % 0.5 !== 0) {
-                     HOURS = Math.floor(item.Hours * 2) / 2;
-                     if (HOURS === 0) {
-                         alert('PTO balance is insufficient for this charge.');
-                         this.loading = false;
+               const maxHours = userStore.ptoFlexInfo.PTO_Balance + item.Old_Hours + 40;
+               if (item.Hours < 0) {
+                  return;
+               } else if (item.Hours > maxHours) {
+                  //Alert.alert('PTO balance is insufficient for this charge. Setting value to max available PTO');
+                  item.Hours = maxHours;
+                  if (item.Hours % 0.5 !== 0) {
+                     item.Hours = Math.floor(item.Hours * 2) / 2;
+                     if (item.Hours === 0) {
+                         //alert('PTO balance is insufficient for this charge.');
                          return;
                      }
                   }
                }
+               fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Timesheet_Id=${item.Timesheet_Id}&Hours=${item.Hours}&Status=1`, {
+                      method: 'PUT',
+                      headers: {
+                        'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
+                      }
+                  })
+                  .then(ApiUtils.checkStatus)
+                  .then(response => {
+                      // Response successful
+                      console.log('\'PUT Charge\' response successful: ', response);
+                  })
+                  .catch(e => {
+                     console.log('\'PUT Charge\' response NOT successful: ', e.response);
+                     alert('PUT ERROR');
+                     return;
+                  });
             // If Flex hours
             } else if ((item.Job_Id === 11344) && (userStore.ptoFlexInfo.Flex_Allowed)) {
-               if (HOURS < 0) {
+               if (item.Hours < 0) {
                   //console.log('hours are negative');
-                  negBool = true; // Number is negative
                   if (userStore.negFlex > 0) {  // Checks to see if I have ANY negative flex time
                      console.log('I have to work with: ', userStore.negFlex);
-                     const typedPosHours = Math.abs(HOURS);
+                     const typedPosHours = Math.abs(item.Hours);
                      console.log('typedPosHours: ', typedPosHours);
                      // Max hours is QTD_Sum - QTD_Required (negFlex)
                      // Check if max hours is 80 OR negFlex
@@ -105,21 +118,21 @@ class TodaysJobStore {
                      if (typedPosHours > userStore.negFlex) {
                         max = Math.floor(userStore.negFlex * 2) / 2;
                         if (max === 0) {
-                           alert('Balance is 0. Cannot use flex time.');
+                           //alert('Balance is 0. Cannot use flex time.');
                            return;
                         }
-                        Alert.alert(
-                           'This entry would exceed the flex time limit. Setting value to max possible flex time.',
-                           ' '
-                        );
+                        //Alert.alert(
+                          // 'This entry would exceed the flex time limit. Setting value to max possible flex time.',
+                           //' '
+                        //);
                      } else if (typedPosHours > userStore.ptoFlexInfo.Flex_Limit) {
                         max = Math.floor(userStore.ptoFlexInfo.Flex_Limit * 2) / 2;
-                        Alert.alert(
-                           'This entry would exceed the flex time limit. Setting value to max possible flex time.',
-                           ' '
-                        );
+                        //Alert.alert(
+                          // 'This entry would exceed the flex time limit. Setting value to max possible flex time.',
+                           //' '
+                        //);
                      }
-                     HOURS = -1 * max;
+                     item.Hours = -1 * max;
                   } else {
                      Alert.alert(
                         'This entry would cause the flex time balance to go negative. Hours are being set to their previously submitted value',
@@ -127,11 +140,11 @@ class TodaysJobStore {
                      );
                      return;
                   }
-               } else if (HOURS > 0) {
+               } else if (item.Hours > 0) {
                   const flexBalance = userStore.ptoFlexInfo.Flex_Balance;
-                  if (HOURS > flexBalance) {
-                     HOURS = Math.floor(flexBalance * 2) / 2;
-                     if (HOURS === 0) {
+                  if (item.Hours > flexBalance) {
+                     item.Hours = Math.floor(flexBalance * 2) / 2;
+                     if (item.Hours === 0) {
                          alert('Flex balance is insufficient for this charge.');
                          return;
                      }
@@ -141,63 +154,74 @@ class TodaysJobStore {
                      );
                   }
                }
-            }
-
-            if (!negBool && HOURS < 0) {
-               Alert.alert(
-                  'Only banking flex hours can be negative!',
-                  ' '
-               );
-               return;
-            }
-
-            fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Timesheet_Id=${item.Timesheet_Id}&Hours=${HOURS}&Status=1`, {
-                   method: 'PUT',
-                   headers: {
-                     'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
-                   }
-               })
-               .then(ApiUtils.checkStatus)
-               .then(response => {
-                   // Response successful
-                   console.log('\'PUT Charge\' response successful: ', response);
-               })
-               .catch(e => {
-                  console.log('\'PUT Charge\' response NOT successful: ', e.response);
-                  alert('PUT ERROR');
-                  this.loading = false;
+            } else {
+               // Not PTO or Flex Time
+               if (item.Hours < 0) {
                   return;
-               });
+               }
+
+               fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Timesheet_Id=${item.Timesheet_Id}&Hours=${item.Hours}&Status=1`, {
+                      method: 'PUT',
+                      headers: {
+                        'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
+                      }
+                  })
+                  .then(ApiUtils.checkStatus)
+                  .then(response => {
+                      // Response successful
+                      console.log('\'PUT Charge\' response successful: ', response);
+                  })
+                  .catch(e => {
+                     console.log('\'PUT Charge\' response NOT successful: ', e.response);
+                     alert('PUT ERROR');
+                     return;
+                  });
+            }
          }
       });
 
       // POST (add new)
       map(tempPOST, (item) => {
-         if ((item.Hours !== 0) && (item.Hours % 0.5 === 0) && (item.Hours !== '')) {
-            let HOURS = item.Hours;
-            let negBool = false;
+         if ((item.Hours !== 0) && (item.Hours % 0.5 === 0) && (item.Hours !== '') && !(isNaN(item.Hours))) {
             // If PTO
             if (item.Job_Id === 13) {
                const maxHours = userStore.ptoFlexInfo.PTO_Balance + 40;
-               if (HOURS > maxHours) {
-                  Alert.alert('PTO balance is insufficient for this charge. Setting value to max available PTO');
-                  HOURS = userStore.ptoFlexInfo.PTO_Balance + 40;
-                  if (HOURS % 0.5 !== 0) {
-                     HOURS = Math.floor(HOURS * 2) / 2;
-                     if (HOURS === 0) {
-                         alert('PTO balance is insufficient for this charge.');
+               if (item.Hours < 0) {
+                  return;
+               } else if (item.Hours > maxHours) {
+                  //Alert.alert('PTO balance is insufficient for this charge. Setting value to max available PTO');
+                  item.Hours = maxHours;
+                  if (item.Hours % 0.5 !== 0) {
+                     item.Hours = Math.floor(item.Hours * 2) / 2;
+                     if (item.Hours === 0) {
+                         //alert('PTO balance is insufficient for this charge.');
                          return;
                      }
                   }
                }
+               fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Job_Id=${item.Job_Id}&Hours=${item.Hours}&Status=2`, {
+                      method: 'PUT',
+                      headers: {
+                        'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
+                      }
+                  })
+                  .then(ApiUtils.checkStatus)
+                  .then(response => {
+                      // Response successful
+                      console.log('\'POST Charge\' response successful: ', response);
+                  })
+                  .catch(e => {
+                     console.log('\'POST Charge\' response NOT successful: ', e.response);
+                     alert('POST ERROR');
+                     return;
+                  });
             // If flex hours
             } else if ((item.Job_Id === 11344) && (userStore.ptoFlexInfo.Flex_Allowed)) {
-               if (HOURS < 0) {
+               if (item.Hours < 0) {
                   //console.log('hours are negative');
-                  negBool = true;
                   if (userStore.negFlex > 0) {  // Checks to see if I have ANY negative flex time
                      console.log('I have to work with:', userStore.negFlex);
-                     const typedPosHours = Math.abs(HOURS);
+                     const typedPosHours = Math.abs(item.Hours);
                      // Max hours is QTD_Sum - QTD_Required (negFlex)
                      // Check if max hours is 80 OR negFlex
                      let max = typedPosHours;
@@ -218,7 +242,7 @@ class TodaysJobStore {
                            ' '
                         );
                      }
-                     HOURS = -1 * max;
+                     item.Hours = -1 * max;
                   } else {
                      Alert.alert(
                         'This entry would cause the flex time balance to go negative. Hours are being set to their previously submitted value',
@@ -226,11 +250,11 @@ class TodaysJobStore {
                      );
                      return;
                   }
-               } else if (HOURS > 0) {
+               } else if (item.Hours > 0) {
                   const flexBalance = userStore.ptoFlexInfo.Flex_Balance;
-                  if (HOURS > flexBalance) {
-                     HOURS = Math.floor(flexBalance * 2) / 2;
-                     if (HOURS === 0) {
+                  if (item.Hours > flexBalance) {
+                     item.Hours = Math.floor(flexBalance * 2) / 2;
+                     if (item.Hours === 0) {
                          alert('Flex balance is insufficient for this charge.');
                          return;
                      }
@@ -240,33 +264,29 @@ class TodaysJobStore {
                      );
                   }
                }
-            }
-
-            if (!negBool && HOURS < 0) {
-               Alert.alert(
-                  'Only banking flex hours can be negative!',
-                  ' '
-               );
-               return;
-            }
-
-            fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Job_Id=${item.Job_Id}&Hours=${HOURS}&Status=2`, {
-                   method: 'PUT',
-                   headers: {
-                     'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
-                   }
-               })
-               .then(ApiUtils.checkStatus)
-               .then(response => {
-                   // Response successful
-                   console.log('\'POST Charge\' response successful: ', response);
-               })
-               .catch(e => {
-                  console.log('\'POST Charge\' response NOT successful: ', e.response);
-                  alert('POST ERROR');
-                  this.loading = false;
+            } else {
+               // Not PTO or Flex Time
+               if (item.Hours < 0) {
                   return;
-               });
+               }
+
+               fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Job_Id=${item.Job_Id}&Hours=${item.Hours}&Status=2`, {
+                      method: 'PUT',
+                      headers: {
+                        'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
+                      }
+                  })
+                  .then(ApiUtils.checkStatus)
+                  .then(response => {
+                      // Response successful
+                      console.log('\'POST Charge\' response successful: ', response);
+                  })
+                  .catch(e => {
+                     console.log('\'POST Charge\' response NOT successful: ', e.response);
+                     alert('POST ERROR');
+                     return;
+                  });
+            }
          }
       });
 

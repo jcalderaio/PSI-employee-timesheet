@@ -15,6 +15,7 @@
     camelcase: off,
     prefer-template: off,
     quote-props: off,
-    eqeqeq: off
+    eqeqeq: off,
+    no-lonely-if: off
   }
 }

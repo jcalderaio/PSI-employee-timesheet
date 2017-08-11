@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { Text, Platform } from 'react-native';
 import { Grid, Col, Row, View, Input } from 'native-base';
 import { map } from 'lodash';
 import { observer } from 'mobx-react/native';
@@ -50,8 +50,8 @@ class TodaysJobsTable extends Component {
                                         style={styles.hoursEntryBorder}
                                         defaultValue={String(item.Hours)}
                                         //value={String(item.Hours)}
-                                        onChangeText={value => {
-                                            const hours = Number(value.trim());
+                                        onEndEditing={e => {
+                                            const hours = Number(e.nativeEvent.text);
                                             item.Old_Hours = item.Hours;
 
                                             // Not a number
@@ -78,7 +78,9 @@ class TodaysJobsTable extends Component {
                                             }
                                         }}
                                         returnKeyType='send'
-                                        keyboardType='numeric'
+                                        keyboardType={
+											(Platform.OS === 'android') && 'numeric'
+										}
                                         maxLength={6}
                                         selectTextOnFocus
                                     />
@@ -104,8 +106,8 @@ class TodaysJobsTable extends Component {
                                     <Input
                                         style={styles.hoursEntryBorder}
                                         defaultValue={String(item.Hours)}
-                                        onChangeText={value => {
-                                            const hours = Number(value.trim());
+                                        onEndEditing={e => {
+                                            const hours = Number(e.nativeEvent.text);
 
                                             // Not a number
                                             if (isNaN(hours)) {
@@ -122,7 +124,9 @@ class TodaysJobsTable extends Component {
                                             }
                                         }}
                                         returnKeyType='send'
-                                        keyboardType='numeric'
+                                        keyboardType={
+											(Platform.OS === 'android') && 'numeric'
+										}
                                         maxLength={6}
                                         selectTextOnFocus
                                     />
@@ -147,8 +151,8 @@ class TodaysJobsTable extends Component {
                                     <Input
                                         style={styles.hoursEntryBorder}
                                         defaultValue={String(item.Hours)}
-                                        onChangeText={value => {
-                                            const hours = Number(value.trim());
+                                        onEndEditing={e => {
+                                            const hours = Number(e.nativeEvent.text);
 
                                             // Not a number
                                             if (isNaN(hours)) {
@@ -178,7 +182,9 @@ class TodaysJobsTable extends Component {
                                             }
                                         }}
                                         returnKeyType='send'
-                                        keyboardType='numeric'
+                                        keyboardType={
+											(Platform.OS === 'android') && 'numeric'
+										}
                                         maxLength={6}
                                         selectTextOnFocus
                                     />
