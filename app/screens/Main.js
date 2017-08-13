@@ -103,7 +103,7 @@ export default class Main extends Component {
                 {/*Display Fname + Lname*/}
                 <CardSection>
                   <Grid style={{ justifyContent: 'center', padding: 10 }}>
-                    <Text style={{ fontWeight: 'bold' }}>
+                    <Text style={{ fontStyle: 'italic', fontSize: 18 }}>
                       {userStore.employeeInfo.First_Name} {userStore.employeeInfo.Last_Name}
                     </Text>
                   </Grid>
@@ -142,12 +142,12 @@ export default class Main extends Component {
                     <Row>
                         <Col>
                             <Text>
-                              QTD Worked: <Text style={{ fontWeight: 'bold' }}>{userStore.ptoFlexInfo.QTD_Sum}</Text>
+                              QTD Required: <Text style={{ fontWeight: 'bold' }}>{userStore.ptoFlexInfo.QTD_Required}</Text>
                             </Text>
                         </Col>
                         <Col>
                             <Text>
-                              QTD Required: <Text style={{ fontWeight: 'bold' }}>{userStore.ptoFlexInfo.QTD_Required}</Text>
+                              QTD Worked: <Text style={{ fontWeight: 'bold' }}>{userStore.ptoFlexInfo.QTD_Sum}</Text>
                             </Text>
                         </Col>
                     </Row>

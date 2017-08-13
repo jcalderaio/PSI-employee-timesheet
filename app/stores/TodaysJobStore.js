@@ -1,5 +1,5 @@
 import { Alert } from 'react-native';
-import { observable, computed, action, autorun } from 'mobx';
+import { observable, computed, action } from 'mobx';
 import base64 from 'base-64';
 import { sum, map, filter } from 'lodash';  // Import ONLY used functions from Lodash
 import ApiUtils from '../components/ApiUtils'; // checks for errors in Fetches
@@ -11,13 +11,6 @@ class TodaysJobStore {
    @observable todaysJobs = null;
    @observable errorMessage = null;
    @observable loading = false;
-
-   /*
-   constructor() {
-      autorun(() =>
-         console.log(this.todaysJobs)
-      );
-   } */
 
    @computed get isEmpty() {
       if (this.todaysJobs !== null) {

@@ -3,7 +3,7 @@ import { View } from 'react-native';
 
 // Any time we pass a component we write another component we write,
 // ... it will show up as {props.children}.
-const Card = (props) => {
+const Card = props => {
 	return (
 		<View style={styles.containerStyle}>
 			{props.children}
@@ -24,7 +24,7 @@ const styles = {
 		elevation: 1,
 		marginLeft: 5,
 		marginRight: 5,
-		marginTop: 10,
+		marginTop: 10
 	}
 };
 

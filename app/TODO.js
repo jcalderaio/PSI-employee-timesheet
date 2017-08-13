@@ -1,18 +1,22 @@
 What I Did:
-    -Was able to work full-time this week (took a week off, so next week is the last we are allowed to charge up until. It will most likely be done by next week and ready for beta testing).
-    -Fixed adding PTO twice
-    -tracked hours:   charged hours: to main screen
-    -Fixed PTO on AddEntry screen
-    -Got rid of checkbox on iPhone and now theres negative
-    -concatenated messages on AddEntry screen
-    -Negative number not alerted bad on update
-    -PTO works on updateEntry (had to use Old_Hours for PUT so a good thing you made it). Fixed it for PUT AND POST.
-    -Got rid of messages on updateEntry screen. Theres a bunch of charges updated on screen, so makes no sense to print message. Will just confuse user.
-    -Added pulldown to todaysCharges but still working on it
+    -Made firstname/lastname larger and italic
+    -Switched QTD_worked and QTD_expected
 
 TODO:
-    -Can update to letters on updateEntry
+
+    -Fixing flex time on TodaysCharges/Update
+    -Time Tracker: Confirmation when delete. Round to nearest tenth of an hour.
+    -Android: AddEntry - duplicate message does not fit.
     -Fix pull down to reload on todaysJobs
+
+    -MAIN: on Android, make it so no scroll.
+
+    -auto pick job if 1 option
+
+    -problem deleting. Normally, if I change it to 0 its status to 3. Then, I make 3 lists based on their status. But, for some reason it only deletes on the 2nd try.
+    -Can update to letters on updateEntry
+    -Android: AddEntry (choose things), then press back button and AddEntry again.
+    -Updating/New/Delete PTO needs polishing
 
 Bugs:
     -Put a 2000 ml timer after every function.
