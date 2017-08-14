@@ -274,12 +274,11 @@ const styles = {
 		}
 	},
 	hoursEntryBorder: {
-		borderWidth: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
 		fontSize: 18,
 		height: 25,
-		width: 50
+		width: 60
 	}
 };
 

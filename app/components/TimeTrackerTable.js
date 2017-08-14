@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { Text, Alert } from 'react-native';
 import { Grid, Col, Row, View, Button } from 'native-base';
 import { map } from 'lodash';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -9,6 +9,7 @@ import DatePicker from 'react-native-datepicker';
 
 //MobX
 import timeTrackerStore from '../stores/TimeTrackerStore';
+import userStore from '../stores/UserStore';
 
 @observer
 class TimeTrackerTable extends Component {
@@ -118,8 +119,19 @@ class TimeTrackerTable extends Component {
 						  <Button
 							  transparent
 							  onPress={() => {
-								  timeTrackerStore.deleteRow(item.Tracker_Id);
-							  }}
+		                     userStore.loggedIn = false;
+		                     Alert.alert(
+		                       'Delete Time Entry?',
+		                        ' ',
+		                        [
+		                          { text: 'Cancel', onPress: () => console.log('Cancel Pressed!') },
+		                          { text: 'OK',
+		                          onPress: () => {
+		                              timeTrackerStore.deleteRow(item.Tracker_Id);
+		                          } },
+		                        ]
+		                     );
+		                 }}
 						  >
 							  <MaterialCommunityIcons name='delete-forever' size={26} style={{ justifyContent: 'center', alignItems: 'center', color: 'red', borderWidth: 0.2 }} />
 						  </Button>

@@ -207,10 +207,14 @@ class AuthorizedJobStore {
 		} else {
 			// If a duplicate is found, then alert the user and return
 			if (some(todaysJobStore.todaysJobs, ['Job_Id', this.jobId])) {
-				Alert.alert(
-					"You cannot add a duplicate! Please edit hours in Today's Charges",
-					' '
-				);
+				if (Platform.OS === 'android') {
+					alert('You cannot add a duplicate! Please edit hours in Today\'s Charges');
+				} else {
+					Alert.alert(
+						"You cannot add a duplicate! Please edit hours in Today's Charges",
+						' '
+					);
+				}
 				this.loading = false;
 				return;
 			}
@@ -284,26 +288,27 @@ class AuthorizedJobStore {
 				userStore.ptoFlexInfo.Flex_Allowed === true
 			) {
 				// Checks if you can even change flex
-				// The user clicked on the 'negative' box (for iPhone)
 				if (this.hours < 0) {
-					if (userStore.negFlex > 0) {
+					if (userStore.negFlex >= 0) {
 						// Checks to see if I have ANY negative flex time
 						const typedPosHours = Math.abs(this.hours);
 						// Max hours is QTD_Sum - QTD_Required (negFlex)
 						// Check if max hours is 80 OR negFlex
 						let max = typedPosHours;
 						if (typedPosHours > userStore.negFlex) {
-							max = Math.floor(userStore.negFlex * 2) / 2;
-							if (max === 0) {
-								alert('Balance is 0. Cannot use flex time.');
-								this.loading = false;
-								return;
-							}
-							this.message += 'This entry would exceed the flex time limit. Setting value to max possible flex time.';
-						} else if (typedPosHours > userStore.ptoFlexInfo.Flex_Limit) {
-							max = Math.floor(userStore.ptoFlexInfo.Flex_Limit * 2) / 2;
-							this.message += 'This entry would exceed the flex time limit. Setting value to max possible flex time.';
-						}
+				         // NegFlex hours greater than Flex_Limit
+				         if (userStore.negFlex > userStore.ptoFlexInfo.Flex_Limit) {
+				            max = Math.floor(userStore.ptoFlexInfo.Flex_Limit * 2) / 2;
+				         } else {
+				            max = Math.floor(userStore.negFlex * 2) / 2;
+				         }
+				         if (max === 0) {
+				            alert('Balance is 0. Cannot use flex time.');
+				            this.loading = false;
+				            return;
+				         }
+				         this.message += 'This entry would exceed the flex time limit. Setting value to max possible flex time.';
+				      }
 						this.hours = -1 * max;
 						fetch(
 							`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore

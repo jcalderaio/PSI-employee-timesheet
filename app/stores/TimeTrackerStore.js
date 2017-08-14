@@ -32,7 +32,7 @@ class TimeTrackerStore {
         const arr = map(this.timeTrackerList, 'Duration');
         let hours = sum(arr) / 60;
         if (hours % 0.5 !== 0) {
-            hours = Math.round(hours * 2) / 2;
+            hours = Math.round(hours * 10) / 10;
         }
         return hours;
      }
