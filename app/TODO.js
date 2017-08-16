@@ -4,12 +4,10 @@ What I Did:
     -Time Tracker: Confirmation when delete.
     -Time Tracker: Round to nearest tenth of an hour.
     -Fixed - Android: duplicate message does not fit.
-    -Flex Hours: updateEntry PUT working
-
-TODO:
+    -PUT: updateEntry - PTO neg/pos and FLEX neg/pos working
+    -POST: updateEntry - PTO neg/pos and FLEX neg/pos working
 
 This Week:
-    -Fixing flex time on TodaysCharges/Update
     -problem deleting. Normally, if I change it to 0 its status to 3. Then, I make 3 lists based on their status. But, for some reason it only deletes on the 2nd try.
     -Can update to letters on updateEntry
     -Updating/New/Delete PTO needs polishing

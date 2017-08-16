@@ -97,7 +97,6 @@ class TodaysJobStore {
                   });
             // If Flex hours
          } else if ((item.Job_Id === 11344) && (userStore.ptoFlexInfo.Flex_Allowed === true)) {
-               console.log('Inside Flex Hours');
                if (item.Hours < 0) {
                   if (userStore.negFlex >= 0) {  // Checks to see if I have ANY negative flex time
                      const typedPosHours = Math.abs(item.Hours);
@@ -138,13 +137,15 @@ class TodaysJobStore {
                      return;
                   }
                } else if (item.Hours > 0) {
-                  const flexBalance = userStore.ptoFlexInfo.Flex_Balance;
+                  // TO DO
+                  const flexBalance = userStore.ptoFlexInfo.Flex_Balance + item.Old_Hours;
                   if (item.Hours > flexBalance) {
                      item.Hours = Math.floor(flexBalance * 2) / 2;
                      if (item.Hours === 0) {
                          return;
                      }
                   }
+
                   fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Timesheet_Id=${item.Timesheet_Id}&Hours=${item.Hours}&Status=1`, {
                          method: 'PUT',
                          headers: {
@@ -164,7 +165,6 @@ class TodaysJobStore {
                }
             // End of Flex Hours
             } else if (item.jobId !== null) {
-               alert('NOT WORKING YET!!');
                // Not PTO or Flex Time
                if (item.Hours < 0) {
                   return;
@@ -190,7 +190,6 @@ class TodaysJobStore {
          }
       });
 
-      /*
       // POST (add new)
       map(tempPOST, (item) => {
          if ((item.Hours !== 0) && (item.Hours % 0.5 === 0) && (item.Hours !== '') && !(isNaN(item.Hours))) {
@@ -200,12 +199,10 @@ class TodaysJobStore {
                if (item.Hours < 0) {
                   return;
                } else if (item.Hours > maxHours) {
-                  //Alert.alert('PTO balance is insufficient for this charge. Setting value to max available PTO');
                   item.Hours = maxHours;
                   if (item.Hours % 0.5 !== 0) {
                      item.Hours = Math.floor(item.Hours * 2) / 2;
                      if (item.Hours === 0) {
-                         //alert('PTO balance is insufficient for this charge.');
                          return;
                      }
                   }
@@ -226,57 +223,76 @@ class TodaysJobStore {
                      alert('POST ERROR');
                      return;
                   });
-            // If flex hours
-            } else if ((item.Job_Id === 11344) && (userStore.ptoFlexInfo.Flex_Allowed)) {
-               console.log('Inside the Flex Time loop. negFlex: ', userStore.negFlex);
+            // If Flex hours
+         } else if ((item.Job_Id === 11344) && (userStore.ptoFlexInfo.Flex_Allowed === true)) {
                if (item.Hours < 0) {
-                  //console.log('hours are negative');
-                  if (userStore.negFlex > 0) {  // Checks to see if I have ANY negative flex time
-                     console.log('I have to work with:', userStore.negFlex);
+                  if (userStore.negFlex >= 0) {  // Checks to see if I have ANY negative flex time
                      const typedPosHours = Math.abs(item.Hours);
+                     const negFlex = userStore.negFlex;
                      // Max hours is QTD_Sum - QTD_Required (negFlex)
                      // Check if max hours is 80 OR negFlex
                      let max = typedPosHours;
-                     if (typedPosHours > userStore.negFlex) {
-                        max = Math.floor(userStore.negFlex * 2) / 2;
-                        if (max === 0) {
-                           alert('Balance is 0. Cannot use flex time.');
-                           return;
-                        }
-                        Alert.alert(
-                           'This entry would exceed the flex time limit. Setting value to max possible flex time.',
-                           ' '
-                        );
-                     } else if (typedPosHours > userStore.ptoFlexInfo.Flex_Limit) {
-                        max = Math.floor(userStore.ptoFlexInfo.Flex_Limit * 2) / 2;
-                        Alert.alert(
-                           'This entry would exceed the flex time limit. Setting value to max possible flex time.',
-                           ' '
-                        );
-                     }
+                     if (typedPosHours > negFlex) {
+   				         // NegFlex hours greater than Flex_Limit
+   				         if (negFlex >= userStore.ptoFlexInfo.Flex_Limit) {
+   				            max = Math.floor(userStore.ptoFlexInfo.Flex_Limit * 2) / 2;
+   				         } else {
+   				            max = Math.floor(negFlex * 2) / 2;
+   				         }
+   				         if (max === 0) {
+   				            return;
+   				         }
+   				      }
                      item.Hours = -1 * max;
+                     fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Job_Id=${item.Job_Id}&Hours=${item.Hours}&Status=2`, {
+                            method: 'PUT',
+                            headers: {
+                              'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
+                            }
+                        })
+                        .then(ApiUtils.checkStatus)
+                        .then(response => {
+                            // Response successful
+                            console.log('\'POST Charge\' response successful: ', response);
+                        })
+                        .catch(e => {
+                           console.log('\'POST Charge\' response NOT successful: ', e.response);
+                           alert('POST ERROR');
+                           return;
+                        });
                   } else {
-                     Alert.alert(
-                        'This entry would cause the flex time balance to go negative. Hours are being set to their previously submitted value',
-                        ' '
-                     );
+                       // 'This entry would cause the flex time balance to go negative. Hours are being set to their previously submitted value';
                      return;
                   }
                } else if (item.Hours > 0) {
+                  // TO DO
                   const flexBalance = userStore.ptoFlexInfo.Flex_Balance;
                   if (item.Hours > flexBalance) {
                      item.Hours = Math.floor(flexBalance * 2) / 2;
                      if (item.Hours === 0) {
-                         alert('Flex balance is insufficient for this charge.');
                          return;
                      }
-                     Alert.alert(
-                        'Not enough flex hours in balance. Set to greatest value!',
-                        ' '
-                     );
                   }
+
+                  fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Job_Id=${item.Job_Id}&Hours=${item.Hours}&Status=2`, {
+                         method: 'PUT',
+                         headers: {
+                           'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
+                         }
+                     })
+                     .then(ApiUtils.checkStatus)
+                     .then(response => {
+                         // Response successful
+                         console.log('\'POST Charge\' response successful: ', response);
+                     })
+                     .catch(e => {
+                        console.log('\'POST Charge\' response NOT successful: ', e.response);
+                        alert('POST ERROR');
+                        return;
+                     });
                }
-            } else {
+            // End of Flex Hours
+            } else if (item.jobId !== null) {
                // Not PTO or Flex Time
                if (item.Hours < 0) {
                   return;
@@ -301,7 +317,6 @@ class TodaysJobStore {
             }
          }
       });
-      */
 
       // DELETE
       map(tempDELETE, (item) => {

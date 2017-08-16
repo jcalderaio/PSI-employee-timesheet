@@ -366,6 +366,7 @@ class AuthorizedJobStore {
 						return;
 					}
 				} else if (this.hours > 0) {
+					// TO DO
 					const flexBalance = userStore.ptoFlexInfo.Flex_Balance;
 					if (this.hours > flexBalance) {
 						this.hours = Math.floor(flexBalance * 2) / 2;
