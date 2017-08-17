@@ -8,12 +8,12 @@ What I Did:
     -POST: updateEntry - PTO neg/pos and FLEX neg/pos working
 
 This Week:
-    -problem deleting. Normally, if I change it to 0 its status to 3. Then, I make 3 lists based on their status. But, for some reason it only deletes on the 2nd try.
+    -Fix pull down to reload on todaysJobs
     -Can update to letters on updateEntry
     -Updating/New/Delete PTO needs polishing
 
 Next Week:
-    -Fix pull down to reload on todaysJobs
+    -SSL
     -MAIN: on Android, make it so no scroll.
     -auto pick job if 1 option
     -Android: AddEntry (choose things), then press back button and AddEntry again.

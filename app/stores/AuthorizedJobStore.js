@@ -289,26 +289,42 @@ class AuthorizedJobStore {
 			) {
 				// Checks if you can even change flex
 				if (this.hours < 0) {
-					if (userStore.negFlex >= 0) {
+					if (userStore.negFlex > 0) {
 						// Checks to see if I have ANY negative flex time
 						const typedPosHours = Math.abs(this.hours);
+						let max = typedPosHours;
 						// Max hours is QTD_Sum - QTD_Required (negFlex)
 						// Check if max hours is 80 OR negFlex
-						let max = typedPosHours;
-						if (typedPosHours > userStore.negFlex) {
+						const negFlex = userStore.negFlex;
+						// If what I typed is greater (or equal) than 80 and pool is greater (or equal) to 80
+						if (typedPosHours >= userStore.ptoFlexInfo.Flex_Limit && negFlex >= userStore.ptoFlexInfo.Flex_Limit) {
+							max = Math.floor(userStore.ptoFlexInfo.Flex_Limit * 2) / 2;
+							this.message += 'This entry would exceed the flex time limit. Setting value to max possible flex time.';
+
 				         // NegFlex hours greater than Flex_Limit
-				         if (userStore.negFlex > userStore.ptoFlexInfo.Flex_Limit) {
+							/*
+							if (negFlex > userStore.ptoFlexInfo.Flex_Limit) {
 				            max = Math.floor(userStore.ptoFlexInfo.Flex_Limit * 2) / 2;
 				         } else {
-				            max = Math.floor(userStore.negFlex * 2) / 2;
+				            max = Math.floor(negFlex * 2) / 2;
 				         }
 				         if (max === 0) {
 				            alert('Balance is 0. Cannot use flex time.');
 				            this.loading = false;
 				            return;
 				         }
-				         this.message += 'This entry would exceed the flex time limit. Setting value to max possible flex time.';
-				      }
+							*/
+						// If what I typed is less than than 80
+						} else if (typedPosHours > negFlex) {
+							max = Math.floor(negFlex * 2) / 2;
+						}
+
+						if (max === 0) {
+							alert('Balance is 0. Cannot use flex time.');
+							this.loading = false;
+							return;
+						}
+
 						this.hours = -1 * max;
 						fetch(
 							`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore

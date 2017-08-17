@@ -79,6 +79,7 @@ class TodaysJobStore {
                      }
                   }
                }
+
                fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Timesheet_Id=${item.Timesheet_Id}&Hours=${item.Hours}&Status=1`, {
                       method: 'PUT',
                       headers: {
@@ -100,22 +101,24 @@ class TodaysJobStore {
                if (item.Hours < 0) {
                   if (userStore.negFlex >= 0) {  // Checks to see if I have ANY negative flex time
                      const typedPosHours = Math.abs(item.Hours);
-                     const negFlex = userStore.negFlex + Math.abs(item.Old_Hours);
-                     // Max hours is QTD_Sum - QTD_Required (negFlex)
-                     // Check if max hours is 80 OR negFlex
-                     let max = typedPosHours;
-                     if (typedPosHours > negFlex) {
-   				         // NegFlex hours greater than Flex_Limit
-   				         if (negFlex >= userStore.ptoFlexInfo.Flex_Limit) {
-   				            max = Math.floor(userStore.ptoFlexInfo.Flex_Limit * 2) / 2;
-   				         } else {
-   				            max = Math.floor(negFlex * 2) / 2;
-   				         }
-   				         if (max === 0) {
-   				            return;
-   				         }
-   				      }
+   						let max = typedPosHours;
+   						// Max hours is QTD_Sum - QTD_Required (negFlex)
+   						// Check if max hours is 80 OR negFlex
+   						const negFlex = userStore.negFlex + Math.abs(item.Old_Hours);
+   						// If what I typed is greater (or equal) than 80 and pool is greater (or equal) to 80
+   						if (typedPosHours >= userStore.ptoFlexInfo.Flex_Limit && negFlex >= userStore.ptoFlexInfo.Flex_Limit) {
+   							max = Math.floor(userStore.ptoFlexInfo.Flex_Limit * 2) / 2;
+   						// If what I typed is less than than 80
+   						} else if (typedPosHours > negFlex) {
+   							max = Math.floor(negFlex * 2) / 2;
+   						}
+
+   						if (max === 0) {
+   							return;
+   						}
+
                      item.Hours = -1 * max;
+
                      fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Timesheet_Id=${item.Timesheet_Id}&Hours=${item.Hours}&Status=1`, {
                             method: 'PUT',
                             headers: {
@@ -207,6 +210,7 @@ class TodaysJobStore {
                      }
                   }
                }
+
                fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Job_Id=${item.Job_Id}&Hours=${item.Hours}&Status=2`, {
                       method: 'PUT',
                       headers: {
@@ -226,24 +230,26 @@ class TodaysJobStore {
             // If Flex hours
          } else if ((item.Job_Id === 11344) && (userStore.ptoFlexInfo.Flex_Allowed === true)) {
                if (item.Hours < 0) {
-                  if (userStore.negFlex >= 0) {  // Checks to see if I have ANY negative flex time
-                     const typedPosHours = Math.abs(item.Hours);
-                     const negFlex = userStore.negFlex;
-                     // Max hours is QTD_Sum - QTD_Required (negFlex)
-                     // Check if max hours is 80 OR negFlex
-                     let max = typedPosHours;
-                     if (typedPosHours > negFlex) {
-   				         // NegFlex hours greater than Flex_Limit
-   				         if (negFlex >= userStore.ptoFlexInfo.Flex_Limit) {
-   				            max = Math.floor(userStore.ptoFlexInfo.Flex_Limit * 2) / 2;
-   				         } else {
-   				            max = Math.floor(negFlex * 2) / 2;
-   				         }
-   				         if (max === 0) {
-   				            return;
-   				         }
-   				      }
+                  if (userStore.negFlex > 0) {  // Checks to see if I have ANY negative flex time
+   						const typedPosHours = Math.abs(item.Hours);
+   						let max = typedPosHours;
+   						// Max hours is QTD_Sum - QTD_Required (negFlex)
+   						// Check if max hours is 80 OR negFlex
+   						const negFlex = userStore.negFlex;
+   						// If what I typed is greater (or equal) than 80 and pool is greater (or equal) to 80
+   						if (typedPosHours >= userStore.ptoFlexInfo.Flex_Limit && negFlex >= userStore.ptoFlexInfo.Flex_Limit) {
+   							max = Math.floor(userStore.ptoFlexInfo.Flex_Limit * 2) / 2;
+   						// If what I typed is less than than 80
+   						} else if (typedPosHours > negFlex) {
+   							max = Math.floor(negFlex * 2) / 2;
+   						}
+
+   						if (max === 0) {
+   							return;
+   						}
+
                      item.Hours = -1 * max;
+
                      fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Job_Id=${item.Job_Id}&Hours=${item.Hours}&Status=2`, {
                             method: 'PUT',
                             headers: {
