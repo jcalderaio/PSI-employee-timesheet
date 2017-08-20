@@ -1,22 +1,24 @@
 What I Did:
-    -Made firstname/lastname larger and italic
-    -Switched QTD_worked and QTD_expected
-    -Time Tracker: Confirmation when delete.
-    -Time Tracker: Round to nearest tenth of an hour.
-    -Fixed - Android: duplicate message does not fit.
-    -PUT: updateEntry - PTO neg/pos and FLEX neg/pos working
-    -POST: updateEntry - PTO neg/pos and FLEX neg/pos working
+    -
 
-This Week:
-    -Fix pull down to reload on todaysJobs
-    -Can update to letters on updateEntry
-    -Updating/New/Delete PTO needs polishing
-
-Next Week:
+To Do:
+    -Android: AddEntry (choose things), then press back button and AddEntry again.
     -SSL
+    -Fix pull down to reload on todaysJobs
     -MAIN: on Android, make it so no scroll.
     -auto pick job if 1 option
-    -Android: AddEntry (choose things), then press back button and AddEntry again.
+    -Can update to letters on updateEntry
+    -.apk + .iphone
 
 Bugs:
-    -Put a 2000 ml timer after every function.
+
+-package.json
+"test": "node node_modules/jest/bin/jest.js --watch"
+
+-
+"import/no-extraneous-dependencies": ["error", {"devDependencies": true, "optionalDependencies": false, "peerDependencies": false}]
+
+Are your test files under a the "test" folder? make sure jest is install properly and listed on your package.json and under scripts have:
+
+"test": "jest --coverage",
+you can run the script with npm test

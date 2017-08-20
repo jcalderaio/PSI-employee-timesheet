@@ -150,6 +150,7 @@ class TimeTrackerTable extends Component {
 						customStyles={{
 							placeholderText: {
 								fontWeight: 'bold',
+								fontStyle: 'italic',
 								color: 'black'
 							},
 							dateInput: {
@@ -158,7 +159,7 @@ class TimeTrackerTable extends Component {
 						}}
 						androidMode={'spinner'}
 						date={timeTrackerStore.inTimeDisplay}
-						placeholder={'Select In_Time'}
+						placeholder={'New Time Entry'}
 						mode="time"
 						format="hh:mm a"
 						confirmBtnText="Confirm"
