@@ -1,8 +1,7 @@
 What I Did:
-    -
+    -Android: clears data when goBack button from AddEntry and SelectRecent
 
 To Do:
-    -Android: AddEntry (choose things), then press back button and AddEntry again.
     -SSL
     -Fix pull down to reload on todaysJobs
     -MAIN: on Android, make it so no scroll.

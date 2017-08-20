@@ -18,8 +18,8 @@ import {
 } from 'native-base';
 import { Octicons } from '@expo/vector-icons';
 import { observer } from 'mobx-react/native';
-import CheckBox from 'react-native-check-box';
 import ModalPicker from 'react-native-modal-picker';
+import AndroidBackButton from 'react-native-android-back-button';
 
 // Import ONLY map from lodash (DELETE)
 import { map } from 'lodash';
@@ -109,6 +109,12 @@ export default class AddEntry extends Component {
 
 				{/*Body*/}
 				<Content>
+					<AndroidBackButton
+						onPress={() => {
+				  			authorizedJobStore.clearAll();
+			  			}}
+					/>
+
 					{todaysJobStore.hasUncommitted &&
 						<Text
 							style={{
@@ -271,23 +277,6 @@ export default class AddEntry extends Component {
 									</View>
 								</ModalPicker>
 							</View>}
-
-						{/* USED FOR A CHECKBOX FOR NEGATIVE NUMBER ON iPHONE
-					{(((Platform.OS !== 'android')) && (authorizedJobStore.jobId === 11344)) &&
-						<View
-							style={{ flex: 1,
-				        	justifyContent: 'center',
-				        	alignItems: 'center',
-							paddingBottom: 25 }}>
-							<Text style={{ fontSize: 16 }}>Negative Flex: {(userStore.flexBool) ? 'True' : 'False'}</Text>
-							<CheckBox
-					          style={{ flex: 1, justifyContent: 'center' }}
-					          onClick={() => this.onClick()}
-					          isChecked={userStore.flexBool}
-					        />
-						</View>
-					}
-					*/}
 
 						{/*Select Hours*/}
 						{authorizedJobStore.jobNumber &&

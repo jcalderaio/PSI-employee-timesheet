@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Alert } from 'react-native';
 import { Container, Content, Button, Grid, Header, Left, Right, Body, Title, Text, View } from 'native-base';
 import { Octicons } from '@expo/vector-icons';
+import AndroidBackButton from 'react-native-android-back-button';
 
 // MobX
 import { observer } from 'mobx-react/native';
@@ -39,6 +40,12 @@ export default class SelectRecent extends Component {
 					</Right>
 				</Header>
 				<Content>
+					<AndroidBackButton
+						onPress={() => {
+				  			recentJobStore.clearChecks();
+			  			}}
+					/>
+
 					{/*Heading*/}
 					<Grid style={{ justifyContent: 'center', paddingVertical: 30 }}>
 		              <Text style={{ fontSize: 18 }}>
