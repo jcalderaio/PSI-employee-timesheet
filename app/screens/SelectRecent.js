@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Alert } from 'react-native';
 import { Container, Content, Button, Grid, Header, Left, Right, Body, Title, Text, View } from 'native-base';
 import { Octicons } from '@expo/vector-icons';
+// Run code when user presses back button on Android
 import AndroidBackButton from 'react-native-android-back-button';
 
 // MobX
@@ -40,6 +41,7 @@ export default class SelectRecent extends Component {
 					</Right>
 				</Header>
 				<Content>
+					{/*Run function when user presses back button on Android*/}
 					<AndroidBackButton
 						onPress={() => {
 				  			recentJobStore.clearChecks();

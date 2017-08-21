@@ -41,13 +41,6 @@ export default class AddEntry extends Component {
 		};
 	}
 
-	/*
-	onClick = () => {
-      userStore.flexBool = !userStore.flexBool;
-	  authorizedJobStore.setHoursNegative();
-    }
-	*/
-
 	render() {
 		// These are from React Navigation
 		const { goBack, navigate } = this.props.navigation;

@@ -1,4 +1,5 @@
 What I Did:
+    -Added something that records errors from all users anytime a user gets one
     -Android: clears data when goBack button from AddEntry and SelectRecent
 
 To Do:

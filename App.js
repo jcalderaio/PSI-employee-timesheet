@@ -1,7 +1,15 @@
+import Sentry from 'sentry-expo';
 import React from 'react';
 import { View } from 'react-native';
 import Expo, { Constants } from 'expo'; // Constants for Android status bar
 import { ModalStack } from './app/navigation';
+
+// Remove this once Sentry is correctly setup.
+Sentry.enableInExpoDevelopment = true;
+// import { SentrySeverity, SentryLog } from 'react-native-sentry';
+Sentry.config(
+	'https://3babd45887884bf999fef53d69ca63ed@sentry.io/206136' // Public DSN
+).install();
 
 export default class App extends React.Component {
 	constructor(props) {
@@ -13,7 +21,10 @@ export default class App extends React.Component {
 
 	async componentWillMount() {
 		// Need for NativeBase + Android
-		await Expo.Font.loadAsync({ 'Roboto': require('native-base/Fonts/Roboto.ttf'), 'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf') });
+		await Expo.Font.loadAsync({
+			Roboto: require('native-base/Fonts/Roboto.ttf'),
+			Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf')
+		});
 
 		// Need for NativeBase + Android
 		this.setState({
@@ -29,7 +40,12 @@ export default class App extends React.Component {
 
 		// Allows the status bar to fit on Android screens
 		return (
-			<View style={[styles.container, !Constants.platform && styles.androidStatusBarPadding]}>
+			<View
+				style={[
+					styles.container,
+					!Constants.platform && styles.androidStatusBarPadding
+				]}
+			>
 				<ModalStack />
 			</View>
 		);
@@ -38,10 +54,10 @@ export default class App extends React.Component {
 
 // For android Status bar
 const styles = {
-  container: {
-    flex: 1,
-  },
-  androidStatusBarPadding: {
-    paddingTop: Constants.statusBarHeight
-  }
+	container: {
+		flex: 1
+	},
+	androidStatusBarPadding: {
+		paddingTop: Constants.statusBarHeight
+	}
 };

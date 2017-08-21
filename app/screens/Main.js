@@ -243,16 +243,6 @@ const styles = {
   		shadowOpacity: 0.3,
   		shadowRadius: 2
     },
-    timeTrackerButton: {
-      backgroundColor: '#007aff',
-      marginHorizontal: 20,
-  		marginTop: 25,
-        marginBottom: 30,
-  		shadowColor: '#000',
-  		shadowOffset: { width: 0, height: 2 },
-  		shadowOpacity: 0.3,
-  		shadowRadius: 2
-    },
     centerContainter: {
       flex: 1,
       justifyContent: 'center',
