@@ -17,6 +17,7 @@
     quote-props: off,
     eqeqeq: off,
     no-lonely-if: off,
-    no-mixed-operators: off
+    no-mixed-operators: off,
+    no-param-reassign: off
   }
 }

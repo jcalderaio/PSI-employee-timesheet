@@ -291,7 +291,7 @@ export default class AddEntry extends Component {
 										value={authorizedJobStore.hours}
 										onChangeText={value => {
 											authorizedJobStore.hours = null;
-											authorizedJobStore.setHours(value.trim());
+											authorizedJobStore.setHours(value.replace(/[^0-9\-\.]/g, ''));
 											authorizedJobStore.setJobId();
 										}}
 										returnKeyType="send"

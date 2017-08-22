@@ -38,7 +38,6 @@ class TimeTrackerTable extends Component {
 					{/* In_Time */}
 					<Col size={40} style={styles.tableStyle.bodyFirst}>
 					  <DatePicker
-						style={{ flex: 1 }}
 						customStyles={{
 							dateText: {
 								fontWeight: 'bold',
@@ -78,7 +77,6 @@ class TimeTrackerTable extends Component {
 					{/* Out_Time */}
 					<Col size={40} style={styles.tableStyle.body}>
 					  <DatePicker
-						//style={{ flex: 1 }}
 						customStyles={{
 							dateText: {
 								fontWeight: 'bold',
@@ -134,7 +132,7 @@ class TimeTrackerTable extends Component {
 		                     );
 		                 }}
 						  >
-							  <MaterialCommunityIcons name='delete-forever' size={26} style={{ justifyContent: 'center', alignItems: 'center', color: 'red', borderWidth: 0.2 }} />
+							  <MaterialCommunityIcons name='delete-forever' size={26} style={{ justifyContent: 'center', alignItems: 'center', color: 'red' }} />
 						  </Button>
 					  </View>
 					</Col>
@@ -147,7 +145,6 @@ class TimeTrackerTable extends Component {
 				{/* In_Time */}
 				  <Col size={40} style={styles.pinkTableStyle.bodyFirst}>
 					  <DatePicker
-						style={{ flex: 1 }}
 						customStyles={{
 							placeholderText: {
 								fontWeight: 'bold',
@@ -211,7 +208,10 @@ const styles = {
 	tableStyle: {
 		titleFirst: {
 			backgroundColor: '#a0a6ab',
-			borderWidth: 1,
+			borderLeftWidth: 0.5,
+			borderBottomWidth: 1,
+			borderRightWidth: 1,
+			borderTopWidth: 1,
 			justifyContent: 'center',
 			alignItems: 'center'
 		},
@@ -236,7 +236,7 @@ const styles = {
 		},
 		bodyFirst: {
 			backgroundColor: '#fff',
-			borderLeftWidth: 1,
+			borderLeftWidth: 0.5,
 			borderBottomWidth: 1,
 			borderRightWidth: 1,
 			justifyContent: 'center',
@@ -262,7 +262,7 @@ const styles = {
     pinkTableStyle: {
 		bodyFirst: {
 			backgroundColor: '#FFC0CB',
-			borderLeftWidth: 1,
+			borderLeftWidth: 0.5,
 			borderBottomWidth: 1,
 			borderRightWidth: 1,
 			justifyContent: 'center',

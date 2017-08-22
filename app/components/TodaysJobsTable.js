@@ -49,9 +49,8 @@ class TodaysJobsTable extends Component {
                                         ref='Status0'
                                         style={styles.hoursEntryBorder}
                                         defaultValue={String(item.Hours)}
-                                        //value={String(item.Hours)}
                                         onEndEditing={e => {
-                                            const hours = Number(e.nativeEvent.text);
+                                            const hours = Number(e.nativeEvent.text.replace(/[^0-9\-\.]/g, ''));
                                             item.Old_Hours = item.Hours;
 
                                             // Not a number
@@ -77,7 +76,7 @@ class TodaysJobsTable extends Component {
                                                 item.Status = 1;  // UPDATE (PUT)
                                             }
                                         }}
-                                        returnKeyType='send'
+                                        returnKeyType='done'
                                         keyboardType={
 											(Platform.OS === 'android') && 'numeric'
 										}
@@ -107,7 +106,7 @@ class TodaysJobsTable extends Component {
                                         style={styles.hoursEntryBorder}
                                         defaultValue={String(item.Hours)}
                                         onEndEditing={e => {
-                                            const hours = Number(e.nativeEvent.text);
+                                            const hours = Number(e.nativeEvent.text.replace(/[^0-9\-\.]/g, ''));
 
                                             // Not a number
                                             if (isNaN(hours)) {
@@ -123,7 +122,7 @@ class TodaysJobsTable extends Component {
                                                 item.Hours = hours;
                                             }
                                         }}
-                                        returnKeyType='send'
+                                        returnKeyType='done'
                                         keyboardType={
 											(Platform.OS === 'android') && 'numeric'
 										}
@@ -152,7 +151,7 @@ class TodaysJobsTable extends Component {
                                         style={styles.hoursEntryBorder}
                                         defaultValue={String(item.Hours)}
                                         onEndEditing={e => {
-                                            const hours = Number(e.nativeEvent.text);
+                                            const hours = Number(e.nativeEvent.text.replace(/[^0-9\-\.]/g, ''));
 
                                             // Not a number
                                             if (isNaN(hours)) {
@@ -181,7 +180,7 @@ class TodaysJobsTable extends Component {
                                                 item.Status = 1;  //PUT
                                             }
                                         }}
-                                        returnKeyType='send'
+                                        returnKeyType='done'
                                         keyboardType={
 											(Platform.OS === 'android') && 'numeric'
 										}
@@ -222,6 +221,7 @@ const styles = {
 			backgroundColor: '#a0a6ab',
 			borderTopWidth: 1,
 			borderBottomWidth: 1,
+            borderRightWidth: 0.5,
 			justifyContent: 'center',
 			alignItems: 'center'
 		},
@@ -243,6 +243,7 @@ const styles = {
 		bodyLast: {
 			backgroundColor: '#fff',
 			borderBottomWidth: 1,
+            borderRightWidth: 0.5,
 			justifyContent: 'center',
 			alignItems: 'center'
 		},
@@ -274,6 +275,7 @@ const styles = {
 		bodyLast: {
 			backgroundColor: '#FFC0CB',
 			borderBottomWidth: 1,
+            borderRightWidth: 0.5,
 			justifyContent: 'center',
 			alignItems: 'center'
 		}

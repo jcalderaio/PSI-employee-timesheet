@@ -2,15 +2,14 @@ What I Did:
     -Added something that records errors from all users anytime a user gets one
     -Android: clears data when goBack button from AddEntry and SelectRecent
     -Text: made it so that on every iPhone and Android screen size, the text resizes accordingly
+    -Fixed border on tables
+    -Prevent people from entering letters/non-wanted characters in AddEntry and todaysJobs
 
 To Do:
-   -If smaller screen, then smaller text.
-   -Main: image at top of screen (not specific numbers)
     -SSL
     -Fix pull down to reload on todaysJobs
     -MAIN: on Android, make it so no scroll.
     -auto pick job if 1 option
-    -Can update to letters on updateEntry
     -.apk + .iphone
 
 Bugs:
