@@ -63,7 +63,6 @@ export default class Login extends Component {
 			'keyboardDidHide',
 			this.keyboardDidHide.bind(this)
 		);
-		//alert(`Height = ${Dimensions.get('window').height}`);
 	}
 
 	// removes listeners from keyboard on unmount component
@@ -77,8 +76,7 @@ export default class Login extends Component {
 		// New size of window height
 		const newSize = Dimensions.get('window').height - e.endCoordinates.height;
 		this.setState({
-			visibleHeight: newSize, // Sets the new height of screen so keyboard out of way
-			topLogo: { width: 100, height: 70 } // for Logo. Not in use
+			visibleHeight: newSize // Sets the new height of screen so keyboard out of way
 		});
 		LayoutAnimation.configureNext(LayoutAnimation.Presets.spring); // This is the spring animation
 	}
@@ -86,8 +84,7 @@ export default class Login extends Component {
 	// When keyboard is shut
 	keyboardDidHide() {
 		this.setState({
-			visibleHeight: 525, // Reset height to Original
-			topLogo: { width: Dimensions.get('window').width }
+			visibleHeight: 525 // Reset height to Original
 		});
 		LayoutAnimation.configureNext(LayoutAnimation.Presets.spring); // This is the spring animation
 	}
@@ -196,8 +193,16 @@ export default class Login extends Component {
 									name="logo-windows"
 									style={{ color: '#396DA6' }}
 								/>
-								<Label style={{ fontWeight: 'bold' }}>Windows ID</Label>
+								<Label
+									style={{
+										fontWeight: 'bold',
+										fontSize: global.MEDIUM_TEXT
+									}}
+								>
+									Windows ID
+								</Label>
 								<Input
+									style={{ fontSize: global.MEDIUM_TEXT }}
 									autoCapitalize={'none'}
 									defaultValue={this.state.windowsId}
 									value={this.state.windowsId}
@@ -215,8 +220,16 @@ export default class Login extends Component {
 									name="unlock"
 									style={{ color: 'orange' }}
 								/>
-								<Label style={{ fontWeight: 'bold' }}>Password</Label>
+								<Label
+									style={{
+										fontWeight: 'bold',
+										fontSize: global.MEDIUM_TEXT
+									}}
+								>
+									Password
+								</Label>
 								<Input
+									style={{ fontSize: global.MEDIUM_TEXT }}
 									ref="inputB"
 									secureTextEntry={this.state.passwordEncrypted}
 									value={this.state.password}
@@ -243,7 +256,7 @@ export default class Login extends Component {
 									{this.state.passwordEncrypted &&
 										<Text
 											style={{
-												fontSize: 12,
+												fontSize: global.XS_TEXT,
 												color: 'black',
 												marginTop: -10
 											}}
@@ -254,7 +267,7 @@ export default class Login extends Component {
 									{!this.state.passwordEncrypted &&
 										<Text
 											style={{
-												fontSize: 12,
+												fontSize: global.XS_TEXT,
 												color: 'black',
 												marginTop: -10
 											}}
@@ -274,7 +287,9 @@ export default class Login extends Component {
 								onPress={this.signIn}
 								style={styles.loginButton}
 							>
-								<Text>Login</Text>
+								<Text style={{ fontSize: global.MEDIUM_TEXT }}>
+									Login
+								</Text>
 							</Button>}
 
 						{/* If bad username/password then show error */}
@@ -312,7 +327,7 @@ const styles = {
 	errorMessageStyle: {
 		marginTop: 20,
 		paddingHorizontal: 20,
-		fontSize: 14,
+		fontSize: global.SMALL_TEXT,
 		color: 'red',
 		alignSelf: 'center'
 	}

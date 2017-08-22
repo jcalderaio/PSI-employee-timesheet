@@ -33,19 +33,19 @@ class RecentJobsTable extends Component {
 
              {/*Job #*/}
             <Col size={24} style={styles.tableStyle.title}>
-              <Text style={{ fontWeight: 'bold' }}>Job #</Text>
+              <Text style={styles.tableStyle.titleText}>Job #</Text>
             </Col>
              {/*Client*/}
             <Col size={28} style={styles.tableStyle.title}>
-              <Text style={{ fontWeight: 'bold' }}>Client</Text>
+              <Text style={styles.tableStyle.titleText}>Client</Text>
             </Col>
              {/*Job Title*/}
             <Col size={31} style={styles.tableStyle.title}>
-              <Text style={{ fontWeight: 'bold' }}>Job Title</Text>
+              <Text style={styles.tableStyle.titleText}>Job Title</Text>
             </Col>
              {/*Add*/}
             <Col size={17} style={styles.tableStyle.titleLast}>
-              <Text style={{ fontWeight: 'bold' }}>Add</Text>
+              <Text style={styles.tableStyle.titleText}>Add</Text>
             </Col>
           </Row>
           {/*Table Labels*/}
@@ -114,8 +114,13 @@ const styles = {
 			alignItems: 'center'
 		},
     bodyText: {
-			fontSize: 14
-		}
+			fontSize: global.SMALL_TEXT,
+      textAlign: 'center'
+		},
+    titleText: {
+      fontWeight: 'bold',
+      fontSize: global.MEDIUM_TEXT
+    }
 	}
 };
 

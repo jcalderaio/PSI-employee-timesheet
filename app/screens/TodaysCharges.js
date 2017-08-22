@@ -44,8 +44,8 @@ export default class TodaysCharges extends Component {
             {/*Heading*/}
             <View style={{ paddingVertical: 30 }}>
               <Grid style={{ justifyContent: 'center' }}>
-                <Text style={{ fontSize: 18, textAlign: 'center' }}>
-                  <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Charges for Today:</Text> {moment().format('dddd, MMMM D, YYYY')}
+                <Text style={{ fontSize: global.LARGE_TEXT, textAlign: 'center' }}>
+                  <Text style={{ fontWeight: 'bold', fontSize: global.LARGE_TEXT }}>Charges for Today:</Text> {moment().format('dddd, MMMM D, YYYY')}
                 </Text>
               </Grid>
             </View>
@@ -53,7 +53,7 @@ export default class TodaysCharges extends Component {
             {/*If error*/}
   					{(todaysJobStore.errorMessage) &&
   						<Grid style={{ justifyContent: 'center', padding: 10, marginTop: 20 }}>
-  			        <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'red' }}>{todaysJobStore.errorMessage}</Text>
+  			        <Text style={{ fontWeight: 'bold', fontSize: global.MEDIUM_TEXT, color: 'red' }}>{todaysJobStore.errorMessage}</Text>
   			      </Grid>
   					}
 
@@ -61,7 +61,7 @@ export default class TodaysCharges extends Component {
   					{(todaysJobStore.isEmpty) &&
               <View style={styles.centerContainter}>
     						<Grid style={{ justifyContent: 'center', marginTop: halfHeight }}>
-    			        <Text style={{ fontWeight: 'bold', fontSize: 18 }}> You have no charges for today!</Text>
+    			        <Text style={{ fontWeight: 'bold', fontSize: global.LARGE_TEXT }}> You have no charges for today!</Text>
     			      </Grid>
               </View>
   					}
@@ -76,10 +76,10 @@ export default class TodaysCharges extends Component {
             {(!todaysJobStore.isEmpty) &&
               <View style={{ paddingTop: 60, marginBottom: (!todaysJobStore.hasUncommitted) ? 30 : 0 }}>
                 <Grid style={{ justifyContent: 'center' }} >
-                    <Text style={{ color: 'steelblue', fontSize: 16 }}>Tap on the 'Hours' column to make changes.</Text>
+                    <Text style={{ color: 'steelblue', fontSize: global.MEDIUM_TEXT, textAlign: 'center' }}>Tap on the 'Hours' column to make changes.</Text>
                 </Grid>
                 <Grid style={{ justifyContent: 'center' }} >
-                    <Text style={{ color: 'steelblue', fontSize: 16 }}>Hint: Type '0' to delete charge.</Text>
+                    <Text style={{ color: 'steelblue', fontSize: global.MEDIUM_TEXT, textAlign: 'center' }}>Hint: Type '0' to delete charge.</Text>
                 </Grid>
               </View>
   					}
@@ -88,14 +88,14 @@ export default class TodaysCharges extends Component {
             {(!todaysJobStore.isEmpty && todaysJobStore.hasUncommitted) &&
               <View style={{ marginTop: 60, marginBottom: 60 }}>
                 {(todaysJobStore.hasUncommitted) &&
-                    <Text style={{ color: 'red', fontSize: 16, textAlign: 'center', marginBottom: 10 }}>Rows in PINK are uncommitted. Click 'Update Charges' to commit.</Text>
+                    <Text style={{ color: 'red', fontSize: global.MEDIUM_TEXT, textAlign: 'center', marginBottom: 10 }}>Rows in PINK are uncommitted. Click 'Update Charges' to commit.</Text>
                 }
                 <Button
                    block
                    onPress={() => todaysJobStore.updateEntry(navigate)}
                    style={styles.updateChargeButton}
                 >
-                   <Text>Update Charges</Text>
+                   <Text style={{ fontSize: global.MEDIUM_TEXT }}>Update Charges</Text>
                  </Button>
               </View>
   			    }

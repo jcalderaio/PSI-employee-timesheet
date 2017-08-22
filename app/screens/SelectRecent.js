@@ -50,22 +50,22 @@ export default class SelectRecent extends Component {
 
 					{/*Heading*/}
 					<Grid style={{ justifyContent: 'center', paddingVertical: 30 }}>
-		              <Text style={{ fontSize: 18 }}>
-		                <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Charges from: </Text> Last 2 Weeks
+		              <Text style={{ fontSize: global.LARGE_TEXT }}>
+		                <Text style={{ fontWeight: 'bold', fontSize: global.LARGE_TEXT }}>Charges from: </Text> Last 2 Weeks
 		              </Text>
 		            </Grid>
 
 					{/*If error*/}
 					{(recentJobStore.errorMessage) &&
 						<Grid style={{ justifyContent: 'center', padding: 10, marginTop: 20 }}>
-			              <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'red' }}>{recentJobStore.errorMessage}</Text>
+			              <Text style={{ fontWeight: 'bold', fontSize: global.MEDIUM_TEXT, color: 'red' }}>{recentJobStore.errorMessage}</Text>
 			            </Grid>
 					}
 
 					{/*If No Recent Jobs*/}
 					{(recentJobStore.isEmpty) &&
 						<Grid style={{ justifyContent: 'center', padding: 10, marginTop: 20 }}>
-			              <Text style={{ fontWeight: 'bold', fontSize: 18 }}> You have no recent jobs!</Text>
+			              <Text style={{ fontWeight: 'bold', fontSize: global.LARGE_TEXT }}> You have no recent jobs!</Text>
 			            </Grid>
 					}
 
@@ -82,14 +82,14 @@ export default class SelectRecent extends Component {
 		                        block
 		                        onPress={() => recentJobStore.addRecent('Selected', navigate)}
 		                        style={styles.addSelectedButton}>
-								<Text>Add Selected</Text>
+								<Text style={{ fontSize: global.LARGE_TEXT }}>Add Selected</Text>
 							</Button>
 
 							<Button
 		                        block
 		                        onPress={() => recentJobStore.addRecent('All', navigate)}
 		                        style={styles.addAllButton}>
-								<Text>Add All</Text>
+								<Text style={{ fontSize: global.LARGE_TEXT }}>Add All</Text>
 							</Button>
 						</View>
 					}

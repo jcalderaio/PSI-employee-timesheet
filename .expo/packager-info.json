@@ -1,8 +1,8 @@
 {
   "packagerPort": 19001,
-  "packagerPid": 24477,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "packagerPid": 29544,
+  "expoServerNgrokUrl": "https://9q-w79.jcalderaio.psi-employee-timesheet.exp.direct",
+  "packagerNgrokUrl": "https://packager.9q-w79.jcalderaio.psi-employee-timesheet.exp.direct",
+  "ngrokPid": 27293,
   "expoServerPort": 19000
 }

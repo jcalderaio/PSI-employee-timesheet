@@ -16,6 +16,7 @@
     prefer-template: off,
     quote-props: off,
     eqeqeq: off,
-    no-lonely-if: off
+    no-lonely-if: off,
+    no-mixed-operators: off
   }
 }

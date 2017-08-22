@@ -103,7 +103,7 @@ export default class Main extends Component {
                 {/*Display Fname + Lname*/}
                 <CardSection>
                   <Grid style={{ justifyContent: 'center', padding: 10 }}>
-                    <Text style={{ fontStyle: 'italic', fontSize: 18 }}>
+                    <Text style={{ fontStyle: 'italic', fontSize: global.LARGE_TEXT }}>
                       {userStore.employeeInfo.First_Name} {userStore.employeeInfo.Last_Name}
                     </Text>
                   </Grid>
@@ -112,8 +112,8 @@ export default class Main extends Component {
                 {/*Display Date*/}
                 <CardSection>
                   <Grid style={{ justifyContent: 'center', padding: 10 }}>
-                    <Text>
-                      <Text style={{ fontWeight: 'bold' }}>Today's Date: </Text> {moment().format('dddd, MMMM D, YYYY')}
+                    <Text style={{ fontSize: global.MEDIUM_TEXT }}>
+                      <Text style={{ fontWeight: 'bold', fontSize: global.MEDIUM_TEXT }}>Today's Date: </Text> {moment().format('dddd, MMMM D, YYYY')}
                     </Text>
                   </Grid>
                 </CardSection>
@@ -123,31 +123,13 @@ export default class Main extends Component {
                   <Grid style={{ justifyContent: 'center', padding: 10 }}>
                     <Row>
                         <Col>
-                            <Text>
-                              Tracked Hours: <Text style={{ fontWeight: 'bold' }}>{timeTrackerStore.totalHours}</Text>
+                            <Text style={{ fontSize: global.MEDIUM_TEXT }}>
+                              Tracked Hours: <Text style={{ fontWeight: 'bold', fontSize: global.MEDIUM_TEXT }}>{timeTrackerStore.totalHours}</Text>
                             </Text>
                         </Col>
                         <Col>
-                            <Text>
-                              Charged Hours: <Text style={{ fontWeight: 'bold' }}>{todaysJobStore.totalHours}</Text>
-                            </Text>
-                        </Col>
-                    </Row>
-                  </Grid>
-                </CardSection>
-
-                {/*Display QTD Worked + QTD Required*/}
-                <CardSection>
-                  <Grid style={{ justifyContent: 'center', padding: 10 }}>
-                    <Row>
-                        <Col>
-                            <Text>
-                              QTD Required: <Text style={{ fontWeight: 'bold' }}>{userStore.ptoFlexInfo.QTD_Required}</Text>
-                            </Text>
-                        </Col>
-                        <Col>
-                            <Text>
-                              QTD Worked: <Text style={{ fontWeight: 'bold' }}>{userStore.ptoFlexInfo.QTD_Sum}</Text>
+                            <Text style={{ fontSize: global.MEDIUM_TEXT }}>
+                              Charged Hours: <Text style={{ fontWeight: 'bold', fontSize: global.MEDIUM_TEXT }}>{todaysJobStore.totalHours}</Text>
                             </Text>
                         </Col>
                     </Row>
@@ -159,13 +141,31 @@ export default class Main extends Component {
                   <Grid style={{ justifyContent: 'center', padding: 10 }}>
                     <Row>
                         <Col>
-                            <Text>
-                              PTO Balance: <Text style={{ fontWeight: 'bold' }}>{userStore.ptoFlexInfo.PTO_Balance}</Text>
+                            <Text style={{ fontSize: global.MEDIUM_TEXT }}>
+                              QTD Required: <Text style={{ fontWeight: 'bold', fontSize: global.MEDIUM_TEXT }}>{userStore.ptoFlexInfo.QTD_Required}</Text>
                             </Text>
                         </Col>
                         <Col>
-                            <Text>
-                              Flex Balance: <Text style={{ fontWeight: 'bold' }}>{userStore.ptoFlexInfo.Flex_Balance}</Text>
+                            <Text style={{ fontSize: global.MEDIUM_TEXT }}>
+                              QTD Worked: <Text style={{ fontWeight: 'bold', fontSize: global.MEDIUM_TEXT }}>{userStore.ptoFlexInfo.QTD_Sum}</Text>
+                            </Text>
+                        </Col>
+                    </Row>
+                  </Grid>
+                </CardSection>
+
+                {/*Display QTD Worked + QTD Required*/}
+                <CardSection>
+                  <Grid style={{ justifyContent: 'center', padding: 10 }}>
+                    <Row>
+                        <Col>
+                            <Text style={{ fontSize: global.MEDIUM_TEXT }}>
+                              PTO Balance: <Text style={{ fontWeight: 'bold', fontSize: global.MEDIUM_TEXT }}>{userStore.ptoFlexInfo.PTO_Balance}</Text>
+                            </Text>
+                        </Col>
+                        <Col>
+                            <Text style={{ fontSize: global.MEDIUM_TEXT }}>
+                              Flex Balance: <Text style={{ fontWeight: 'bold', fontSize: global.MEDIUM_TEXT }}>{userStore.ptoFlexInfo.Flex_Balance}</Text>
                             </Text>
                         </Col>
                     </Row>
@@ -176,7 +176,7 @@ export default class Main extends Component {
                 {(todaysJobStore.totalHours >= 24) &&
                     <CardSection>
                       <Grid style={{ justifyContent: 'center', padding: 10 }}>
-                        <Text style={{ color: 'red', fontWeight: 'bold' }}>
+                        <Text style={{ color: 'red', fontWeight: 'bold', fontSize: global.MEDIUM_TEXT }}>
                           Warning! Excessive hours today!
                         </Text>
                       </Grid>
@@ -191,7 +191,7 @@ export default class Main extends Component {
           			onPress={() => navigate('AddEntry')}
           			style={styles.addEntryButton}
     		      >
-    					<Text>Add Entry</Text>
+    					<Text style={{ fontSize: global.MEDIUM_TEXT }}>Add Entry</Text>
     			  </Button>
 
                   <Button
@@ -199,7 +199,7 @@ export default class Main extends Component {
             		onPress={() => navigate('SelectRecent')}
             		style={styles.selectRecentButton}
     			  >
-    					<Text>Select Recent</Text>
+    					<Text style={{ fontSize: global.MEDIUM_TEXT }}>Select Recent</Text>
     			  </Button>
               </View>
 

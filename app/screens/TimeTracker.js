@@ -15,8 +15,6 @@ import { TimeTrackerTable } from '../components/TimeTrackerTable';
 @observer
 export default class TimeTracker extends Component {
 	render() {
-		const { navigate } = this.props.navigation;
-
 		if ((timeTrackerStore.loading) || (recentJobStore.recentJobs === null) || (todaysJobStore.todaysJobs === null) || (timeTrackerStore.timeTrackerList === null)) {
           return (
             <View style={styles.centerContainter}>
@@ -38,8 +36,8 @@ export default class TimeTracker extends Component {
 				<Content>
 					{/*Heading*/}
 					<Grid style={{ justifyContent: 'center', paddingVertical: 30 }}>
-		              <Text style={{ fontSize: 18 }}>
-		                <Text style={{ fontWeight: 'bold', fontSize: 18 }}>PSI </Text> Time Calculator
+		              <Text style={{ fontSize: global.LARGE_TEXT }}>
+		                <Text style={{ fontWeight: 'bold', fontSize: global.LARGE_TEXT }}>PSI </Text> Time Calculator
 		              </Text>
 		            </Grid>
 
@@ -68,15 +66,13 @@ export default class TimeTracker extends Component {
 					  <Text style={{ textAlign: 'center' }}>Size: {timeTrackerStore.size}</Text>*/}
 
 					  <Grid style={{ justifyContent: 'center', padding: 10 }}>
-	                    <Text>
-	                      Total Hours: <Text style={{ fontWeight: 'bold' }}>{timeTrackerStore.totalHours}</Text>
+	                    <Text style={{ fontSize: global.LARGE_TEXT }}>
+	                      Total Hours: <Text style={{ fontWeight: 'bold', fontSize: global.LARGE_TEXT }}>{timeTrackerStore.totalHours}</Text>
 	                    </Text>
 	                  </Grid>
 
 
 					</View>
-					{/*End Buttons*/}
-
 				</Content>
 			</Container>
 		);

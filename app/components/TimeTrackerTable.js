@@ -23,25 +23,26 @@ class TimeTrackerTable extends Component {
 			{/* Table Labels */}
               <Row style={{ height: 30 }} >
                 <Col size={40} style={styles.tableStyle.titleFirst}>
-                  <Text style={{ fontWeight: 'bold' }}>In Time</Text>
+                  <Text style={styles.tableStyle.titleText}>In Time</Text>
                 </Col>
                 <Col size={40} style={styles.tableStyle.title}>
-                  <Text style={{ fontWeight: 'bold' }}>Out Time</Text>
+                  <Text style={styles.tableStyle.titleText}>Out Time</Text>
               	</Col>
 			  	<Col size={20} style={styles.tableStyle.titleLast}>
-					<Text style={{ fontWeight: 'bold' }}>Delete</Text>
+					<Text style={styles.tableStyle.titleText}>Delete</Text>
 				</Col>
               </Row>
 			  {/* Table Content */}
 			  {map(timeTrackerStore.timeTrackerList, (item) =>
-				  <Row style={{ height: 40 }} key={item.Tracker_Id}>
+				  <Row style={{ height: 50 }} key={item.Tracker_Id}>
 					{/* In_Time */}
 					<Col size={40} style={styles.tableStyle.bodyFirst}>
 					  <DatePicker
 						style={{ flex: 1 }}
 						customStyles={{
 							dateText: {
-								fontWeight: 'bold'
+								fontWeight: 'bold',
+								fontSize: global.SMALL_TEXT
 							},
 							dateInput: {
 								borderWidth: 0
@@ -80,7 +81,8 @@ class TimeTrackerTable extends Component {
 						//style={{ flex: 1 }}
 						customStyles={{
 							dateText: {
-								fontWeight: 'bold'
+								fontWeight: 'bold',
+								fontSize: global.SMALL_TEXT
 							},
 							dateInput: {
 								borderWidth: 0
@@ -119,7 +121,6 @@ class TimeTrackerTable extends Component {
 						  <Button
 							  transparent
 							  onPress={() => {
-		                     userStore.loggedIn = false;
 		                     Alert.alert(
 		                       'Delete Time Entry?',
 		                        ' ',
@@ -142,7 +143,7 @@ class TimeTrackerTable extends Component {
 
 {/*---------------------------------------------------------------------------------------*/}
 			  	{/*New Rows*/}
-				<Row style={{ height: 40 }} >
+				<Row style={{ height: 50 }} >
 				{/* In_Time */}
 				  <Col size={40} style={styles.pinkTableStyle.bodyFirst}>
 					  <DatePicker
@@ -151,7 +152,8 @@ class TimeTrackerTable extends Component {
 							placeholderText: {
 								fontWeight: 'bold',
 								fontStyle: 'italic',
-								color: 'black'
+								color: 'black',
+								fontSize: global.MEDIUM_TEXT
 							},
 							dateInput: {
 								borderWidth: 0
@@ -221,6 +223,10 @@ const styles = {
 			justifyContent: 'center',
 			alignItems: 'center'
 		},
+		titleText: {
+			fontWeight: 'bold',
+         fontSize: global.MEDIUM_TEXT
+		},
 		titleLast: {
 			backgroundColor: '#a0a6ab',
 			borderTopWidth: 1,
@@ -250,7 +256,7 @@ const styles = {
 			alignItems: 'center'
 		},
 		bodyText: {
-			fontSize: 14
+			fontSize: global.SMALL_TEXT
 		}
 	},
     pinkTableStyle: {

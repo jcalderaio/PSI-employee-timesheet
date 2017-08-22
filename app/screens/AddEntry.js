@@ -112,7 +112,7 @@ export default class AddEntry extends Component {
 						<Text
 							style={{
 								color: 'red',
-								fontSize: 16,
+								fontSize: global.MEDIUM_TEXT,
 								textAlign: 'center',
 								padding: 10
 							}}
@@ -130,7 +130,7 @@ export default class AddEntry extends Component {
 							<Grid
 								style={{ justifyContent: 'center', paddingBottom: 10 }}
 							>
-								<Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+								<Text style={{ fontSize: global.LARGE_TEXT, fontWeight: 'bold' }}>
 									Select a Client
 								</Text>
 							</Grid>
@@ -157,7 +157,7 @@ export default class AddEntry extends Component {
 										paddingBottom: 10
 									}}
 								>
-									<Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+									<Text style={{ fontSize: global.LARGE_TEXT, fontWeight: 'bold' }}>
 										Select a Task
 									</Text>
 								</Grid>
@@ -196,7 +196,7 @@ export default class AddEntry extends Component {
 										paddingBottom: 10
 									}}
 								>
-									<Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+									<Text style={{ fontSize: global.LARGE_TEXT, fontWeight: 'bold' }}>
 										Select a Sub-Task
 									</Text>
 								</Grid>
@@ -243,7 +243,7 @@ export default class AddEntry extends Component {
 										paddingBottom: 10
 									}}
 								>
-									<Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+									<Text style={{ fontSize: global.LARGE_TEXT, fontWeight: 'bold' }}>
 										Select a Job Number
 									</Text>
 								</Grid>
@@ -282,7 +282,7 @@ export default class AddEntry extends Component {
 								}}
 							>
 								<Icon active name="timer" style={{ paddingRight: 5 }} />
-								<Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+								<Text style={{ fontSize: global.LARGE_TEXT, fontWeight: 'bold' }}>
 									Hours:{' '}
 								</Text>
 								<View>
@@ -314,7 +314,7 @@ export default class AddEntry extends Component {
 								style={styles.addChargeButton}
 								onPress={() => authorizedJobStore.addEntry(navigate)}
 							>
-								<Text>Add Charge</Text>
+								<Text style={{ fontSize: global.LARGE_TEXT }}>Add Charge</Text>
 							</Button>}
 
 						{/*Directions*/}
@@ -326,7 +326,7 @@ export default class AddEntry extends Component {
 									<Text
 										style={{
 											color: 'steelblue',
-											fontSize: 16,
+											fontSize: global.MEDIUM_TEXT,
 											textAlign: 'center'
 										}}
 									>
@@ -372,13 +372,13 @@ const styles = {
 		borderWidth: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
-		fontSize: 18
+		fontSize: global.LARGE_TEXT
 	},
 	hoursEntryBorder: {
 		borderWidth: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
-		fontSize: 18,
+		fontSize: global.LARGE_TEXT,
 		height: 20,
 		width: 50
 	},

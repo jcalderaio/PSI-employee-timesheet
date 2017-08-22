@@ -15,16 +15,16 @@ class TodaysJobsTable extends Component {
               <Row style={{ height: 30 }} >
               {/*Table Labels*/}
                 <Col size={24} style={styles.tableStyle.titleFirst}>
-                  <Text style={{ fontWeight: 'bold' }}>Job #</Text>
+                  <Text style={styles.tableStyle.titleText}>Job #</Text>
                 </Col>
                 <Col size={28} style={styles.tableStyle.title}>
-                  <Text style={{ fontWeight: 'bold' }}>Client</Text>
+                  <Text style={styles.tableStyle.titleText}>Client</Text>
                 </Col>
                 <Col size={31} style={styles.tableStyle.title}>
-                  <Text style={{ fontWeight: 'bold' }}>Job Title</Text>
+                  <Text style={styles.tableStyle.titleText}>Job Title</Text>
                 </Col>
                 <Col size={17} style={styles.tableStyle.titleLast}>
-                  <Text style={{ fontWeight: 'bold' }}>Hours</Text>
+                  <Text style={styles.tableStyle.titleText}>Hours</Text>
                 </Col>
               </Row>
               {/*Table Labels*/}
@@ -247,8 +247,13 @@ const styles = {
 			alignItems: 'center'
 		},
 		bodyText: {
-			fontSize: 14
-		}
+			fontSize: global.SMALL_TEXT,
+            textAlign: 'center'
+		},
+        titleText: {
+            fontWeight: 'bold',
+            fontSize: global.MEDIUM_TEXT
+        }
 	},
     pinkTableStyle: {
 		bodyFirst: {
@@ -276,9 +281,10 @@ const styles = {
 	hoursEntryBorder: {
 		justifyContent: 'center',
 		alignItems: 'center',
-		fontSize: 18,
+		fontSize: global.LARGE_TEXT,
 		height: 25,
-		width: 60
+		width: 60,
+        textAlign: 'center'
 	}
 };
 
