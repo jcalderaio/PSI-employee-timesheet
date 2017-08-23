@@ -14,15 +14,14 @@ class RecentJobsTable extends Component {
       item.Is_Checked = !item.Is_Checked;
     }
 
-    renderCheckBox = (item) => {
-      return (
+    renderCheckBox = (item) => (
         <CheckBox
           style={{ flex: 1, padding: 10 }}
           onClick={() => this.onClick(item)}
           isChecked={item.Is_Checked}
         />
-      );
-    }
+    );
+
 
     render() {
       return (

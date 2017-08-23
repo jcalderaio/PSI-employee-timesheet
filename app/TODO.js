@@ -3,14 +3,17 @@ What I Did:
     -Android: clears data when goBack button from AddEntry and SelectRecent
     -Text: made it so that on every iPhone and Android screen size, the text resizes accordingly
     -Fixed border on tables
+    -Got rid of border on trashcan icon in time tracker
     -Prevent people from entering letters/non-wanted characters in AddEntry and todaysJobs
 
 To Do:
-    -SSL
     -Fix pull down to reload on todaysJobs
     -MAIN: on Android, make it so no scroll.
     -auto pick job if 1 option
+
+Next Week:
     -.apk + .iphone
+    -SSL
 
 Bugs:
 

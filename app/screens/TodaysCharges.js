@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, Alert, Dimensions } from 'react-native';
+import { Dimensions, RefreshControl } from 'react-native';
 import { Container, Content, Button, Text, Grid, Header, Body, Title, View, Spinner } from 'native-base';
 import moment from 'moment';
 
@@ -12,10 +12,23 @@ import recentJobStore from '../stores/RecentJobStore';
 import { TodaysJobsTable } from '../components/TodaysJobsTable';
 
 // Variable that is half the height of the screen
-const halfHeight = Dimensions.get('window').height / 4;
+const midscreen = Dimensions.get('window').height / 4;
 
 @observer
 export default class TodaysCharges extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      refreshing: false
+    };
+  }
+
+  onRefresh = () => {
+    this.setState({ refreshing: true });
+    todaysJobStore.fetchTodaysJobs();
+    this.setState({ refreshing: false });
+  }
+
   render() {
     const { navigate } = this.props.navigation;
 
@@ -39,7 +52,14 @@ export default class TodaysCharges extends Component {
             </Body>
           </Header>
 
-          <Content>
+          <Content
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this.onRefresh}
+              />
+            }
+          >
 
             {/*Heading*/}
             <View style={{ paddingVertical: 30 }}>
@@ -60,7 +80,7 @@ export default class TodaysCharges extends Component {
   					{/*If No Recent Jobs*/}
   					{(todaysJobStore.isEmpty) &&
               <View style={styles.centerContainter}>
-    						<Grid style={{ justifyContent: 'center', marginTop: halfHeight }}>
+    						<Grid style={{ justifyContent: 'center', marginTop: midscreen }}>
     			        <Text style={{ fontWeight: 'bold', fontSize: global.LARGE_TEXT }}> You have no charges for today!</Text>
     			      </Grid>
               </View>
