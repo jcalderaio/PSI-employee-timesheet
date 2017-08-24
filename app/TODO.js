@@ -5,10 +5,10 @@ What I Did:
     -Fixed border on tables
     -Got rid of border on trashcan icon in time tracker
     -Prevent people from entering letters/non-wanted characters in AddEntry and todaysJobs
+    -Pull to refresh updates todaysCharges table
+    -MAIN: on Android, make it so no scroll.
 
 To Do:
-    -Fix pull down to reload on todaysJobs
-    -MAIN: on Android, make it so no scroll.
     -auto pick job if 1 option
 
 Next Week:

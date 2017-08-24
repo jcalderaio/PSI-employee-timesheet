@@ -6,6 +6,7 @@ import { observer } from 'mobx-react/native';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { CardSection } from '../components/CardSection';
 import { Card } from '../components/Card';
+import { scale } from '../components/HelperFunctions';
 
 //MobX
 import userStore from '../stores/UserStore';
@@ -14,6 +15,7 @@ import recentJobStore from '../stores/RecentJobStore';
 import authorizedJobStore from '../stores/AuthorizedJobStore';
 import timeTrackerStore from '../stores/TimeTrackerStore';
 
+// If true, fetch info from store, if false DONT
 let flag = true;
 
 @observer
@@ -32,12 +34,6 @@ export default class Main extends Component {
 
  render() {
     const { navigate, goBack } = this.props.navigation;
-
-    //Needs to refresh every time screen is shown
-
-    // For testing purposes
-    //console.log('Todays Jobs:', todaysJobStore.todaysJobs);
-    //console.log('Recent Jobs:', recentJobStore.recentJobs);
 
     if ((recentJobStore.recentJobs === null) || (todaysJobStore.todaysJobs === null) || (recentJobStore.timeTrackerList === null) || (userStore.ptoFlexInfo === null)) {
       return (
@@ -99,10 +95,11 @@ export default class Main extends Component {
                 />
               </View>
 
+              {/*Begin Info Card*/}
               <Card>
                 {/*Display Fname + Lname*/}
                 <CardSection>
-                  <Grid style={{ justifyContent: 'center', padding: 10 }}>
+                  <Grid style={styles.gridStyle}>
                     <Text style={{ fontStyle: 'italic', fontSize: global.LARGE_TEXT }}>
                       {userStore.employeeInfo.First_Name} {userStore.employeeInfo.Last_Name}
                     </Text>
@@ -111,7 +108,7 @@ export default class Main extends Component {
 
                 {/*Display Date*/}
                 <CardSection>
-                  <Grid style={{ justifyContent: 'center', padding: 10 }}>
+                  <Grid style={styles.gridStyle}>
                     <Text style={{ fontSize: global.MEDIUM_TEXT }}>
                       <Text style={{ fontWeight: 'bold', fontSize: global.MEDIUM_TEXT }}>Today's Date: </Text> {moment().format('dddd, MMMM D, YYYY')}
                     </Text>
@@ -120,7 +117,7 @@ export default class Main extends Component {
 
                 {/*Display Tracked Hours, Charged Hours*/}
                 <CardSection>
-                  <Grid style={{ justifyContent: 'center', padding: 10 }}>
+                  <Grid style={styles.gridStyle}>
                     <Row>
                         <Col>
                             <Text style={{ fontSize: global.MEDIUM_TEXT }}>
@@ -138,7 +135,7 @@ export default class Main extends Component {
 
                 {/*Display QTD Worked + QTD Required*/}
                 <CardSection>
-                  <Grid style={{ justifyContent: 'center', padding: 10 }}>
+                  <Grid style={styles.gridStyle}>
                     <Row>
                         <Col>
                             <Text style={{ fontSize: global.MEDIUM_TEXT }}>
@@ -156,7 +153,7 @@ export default class Main extends Component {
 
                 {/*Display QTD Worked + QTD Required*/}
                 <CardSection>
-                  <Grid style={{ justifyContent: 'center', padding: 10 }}>
+                  <Grid style={styles.gridStyle}>
                     <Row>
                         <Col>
                             <Text style={{ fontSize: global.MEDIUM_TEXT }}>
@@ -175,7 +172,7 @@ export default class Main extends Component {
                 {/*Display a warning if todays hours >= 24*/}
                 {(todaysJobStore.totalHours >= 24) &&
                     <CardSection>
-                      <Grid style={{ justifyContent: 'center', padding: 10 }}>
+                      <Grid style={styles.gridStyle}>
                         <Text style={{ color: 'red', fontWeight: 'bold', fontSize: global.MEDIUM_TEXT }}>
                           Warning! Excessive hours today!
                         </Text>
@@ -184,8 +181,9 @@ export default class Main extends Component {
                 }
 
               </Card>
+              {/*End Info Card*/}
 
-              <View style={{ marginBottom: 60 }}>
+              <View style={{ marginBottom: 25 }}>
                   <Button
           			block
           			onPress={() => navigate('AddEntry')}
@@ -228,7 +226,7 @@ const styles = {
     addEntryButton: {
       backgroundColor: '#007aff',
       marginHorizontal: 20,
-  		marginTop: 60,
+  		marginTop: (Platform.OS === 'ios') ? scale(50) : scale(25),
   		shadowColor: '#000',
   		shadowOffset: { width: 0, height: 2 },
   		shadowOpacity: 0.3,
@@ -237,7 +235,7 @@ const styles = {
     selectRecentButton: {
       backgroundColor: '#007aff',
       marginHorizontal: 20,
-  		marginTop: 25,
+  		marginTop: (Platform.OS === 'ios') ? scale(25) : scale(17),
   		shadowColor: '#000',
   		shadowOffset: { width: 0, height: 2 },
   		shadowOpacity: 0.3,
@@ -248,4 +246,7 @@ const styles = {
       justifyContent: 'center',
       alignItems: 'center'
   	},
+    gridStyle: {
+      justifyContent: 'center', padding: scale(10)
+    }
 };
