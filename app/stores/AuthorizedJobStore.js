@@ -36,8 +36,8 @@ class AuthorizedJobStore {
 
 	@computed
 	get jobNumberSize() {
-		if (this.jobNumber !== null) {
-			return this.jobNumber.length;
+		if (this.jobNumberWithoutDupes !== undefined) {
+			return this.jobNumberWithoutDupes.length;
 		} else {
 			return 0;
 		}
@@ -147,7 +147,6 @@ class AuthorizedJobStore {
 		this.hours = null;
 		this.jobId = null;
 		this.message = '';
-		//userStore.flexBool = false;
 	}
 
 	@action
