@@ -138,12 +138,6 @@ class AuthorizedJobStore {
 		this.hours = value;
 	}
 
-	/* USED WHEN CHECKBOX FOR iPhone
-   @action setHoursNegative() {
-      this.hours = this.hours * -1;
-   }
-   */
-
 	@action
 	clearAll() {
 		this.clientFilter = null;
@@ -296,27 +290,15 @@ class AuthorizedJobStore {
 						// Max hours is QTD_Sum - QTD_Required (negFlex)
 						// Check if max hours is 80 OR negFlex
 						const negFlex = userStore.negFlex;
-						// If what I typed is greater (or equal) than 80 and pool is greater (or equal) to 80
+						// If what I typed is greater (or equal) than 80 and NegFlex is greater Flex_Limit
 						if (typedPosHours >= userStore.ptoFlexInfo.Flex_Limit && negFlex >= userStore.ptoFlexInfo.Flex_Limit) {
 							max = Math.floor(userStore.ptoFlexInfo.Flex_Limit * 2) / 2;
-							this.message += 'This entry would exceed the flex time limit. Setting value to max possible flex time.';
+							this.message += 'This entry would exceed the flex time limit. Setting value to flex time limit.';
 
-				         // NegFlex hours greater than Flex_Limit
-							/*
-							if (negFlex > userStore.ptoFlexInfo.Flex_Limit) {
-				            max = Math.floor(userStore.ptoFlexInfo.Flex_Limit * 2) / 2;
-				         } else {
-				            max = Math.floor(negFlex * 2) / 2;
-				         }
-				         if (max === 0) {
-				            alert('Balance is 0. Cannot use flex time.');
-				            this.loading = false;
-				            return;
-				         }
-							*/
 						// If what I typed is less than than 80
 						} else if (typedPosHours > negFlex) {
 							max = Math.floor(negFlex * 2) / 2;
+							this.message += 'This entry would exceed available flex time. Setting value to max available.';
 						}
 
 						if (max === 0) {
