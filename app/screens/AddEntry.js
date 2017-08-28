@@ -27,7 +27,6 @@ import { map } from 'lodash';
 // MobX
 import authorizedJobStore from '../stores/AuthorizedJobStore';
 import todaysJobStore from '../stores/TodaysJobStore';
-import userStore from '../stores/UserStore';
 
 // Add this to show that it will update the observables in the MobX stores
 @observer
@@ -211,6 +210,9 @@ export default class AddEntry extends Component {
 										authorizedJobStore.setSubTaskFilter(value.label);
 										this.setState({ selectedSubTask: value.label });
 										this.setState({ selectedJobNumber: '' });
+										if (authorizedJobStore.jobNumberSize === 1) {
+											authorizedJobStore.setJobNumber(authorizedJobStore.jobNumberWithoutDupes[0]);
+										}
 									}}
 									style={{ paddingHorizontal: 35 }}
 								>
@@ -226,16 +228,15 @@ export default class AddEntry extends Component {
 							</View>}
 
 						{/*Was for when number auto-filled if less than 1*/}
-						{/*}
-					{(authorizedJobStore.jobNumberSize === 1) &&
+					{(authorizedJobStore.jobNumberSize === 1) && (authorizedJobStore.subTaskFilter) &&
 						<Grid style={{ flexDirection: 'row', justifyContent: 'center', paddingBottom: 25 }}>
-							<Text style={{ fontSize: 18, fontWeight: 'bold' }}>Job Number: </Text>
+							<Text style={{ fontSize: global.LARGE_TEXT, fontWeight: 'bold' }}>Job Number: </Text>
 							<Text style={styles.jobNumberBorder}>{authorizedJobStore.jobNumber}</Text>
 						</Grid>
-					} */}
+					}
 
 						{/*Select Job Number*/}
-						{authorizedJobStore.subTaskFilter &&
+						{((authorizedJobStore.jobNumberSize > 1)) && (authorizedJobStore.subTaskFilter) &&
 							<View style={{ paddingBottom: 25 }}>
 								<Grid
 									style={{
@@ -256,7 +257,7 @@ export default class AddEntry extends Component {
 										authorizedJobStore.hours = null;
 										authorizedJobStore.setJobNumber(value.label);
 										this.setState({ selectedJobNumber: value.label });
-										authorizedJobStore.setJobId();
+										//authorizedJobStore.setJobId();
 									}}
 									style={{ paddingHorizontal: 35 }}
 								>
@@ -292,7 +293,7 @@ export default class AddEntry extends Component {
 										onChangeText={value => {
 											authorizedJobStore.hours = null;
 											authorizedJobStore.setHours(value.replace(/[^0-9\-\.]/g, ''));
-											authorizedJobStore.setJobId();
+											//authorizedJobStore.setJobId();
 										}}
 										returnKeyType="send"
 										keyboardType={
@@ -372,7 +373,8 @@ const styles = {
 		borderWidth: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
-		fontSize: global.LARGE_TEXT
+		fontSize: global.LARGE_TEXT,
+		padding: 1
 	},
 	hoursEntryBorder: {
 		borderWidth: 1,

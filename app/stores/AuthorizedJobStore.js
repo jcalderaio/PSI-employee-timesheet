@@ -180,7 +180,7 @@ class AuthorizedJobStore {
 		this.loading = true;
 
 		// Run algorithm to retrieve JobId
-		//this.setJobId();
+		this.setJobId();
 
 		// Make sure you are placing in database as a 'Number' object
 		this.hours = Number(this.hours);

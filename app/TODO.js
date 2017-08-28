@@ -12,6 +12,7 @@ To Do:
     -auto pick job if 1 option
 
 Next Week:
+    -Flex Hours - when do positive, then too much negative hours, it goes to -80 instead of negHours
     -.apk + .iphone
     -SSL
 
