@@ -62,7 +62,7 @@ export default class TodaysCharges extends Component {
           >
 
             {/*Heading*/}
-            <View style={{ paddingVertical: 30 }}>
+            <View style={{ paddingVertical: 30, paddingHorizontal: 5 }}>
               <Grid style={{ justifyContent: 'center' }}>
                 <Text style={{ fontSize: global.LARGE_TEXT, textAlign: 'center' }}>
                   <Text style={{ fontWeight: 'bold', fontSize: global.LARGE_TEXT }}>Charges for Today:</Text> {moment().format('dddd, MMMM D, YYYY')}

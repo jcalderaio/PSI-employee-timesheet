@@ -7,12 +7,9 @@ What I Did:
     -Prevent people from entering letters/non-wanted characters in AddEntry and todaysJobs
     -Pull to refresh updates todaysCharges table
     -MAIN: on Android, make it so no scroll.
-
-To Do:
     -auto pick job if 1 option
 
-Next Week:
-    -Flex Hours - when do positive, then too much negative hours, it goes to -80 instead of negHours
+To Do:
     -.apk + .iphone
     -SSL
 

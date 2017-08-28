@@ -1,7 +1,6 @@
 import { Alert } from 'react-native';
 import { observable, action, computed } from 'mobx';
 import base64 from 'base-64';
-import { sum, map, filter } from 'lodash';  // Import ONLY used functions from Lodash
 import ApiUtils from '../components/ApiUtils'; // checks for errors in Fetches
 
 class UserStore {

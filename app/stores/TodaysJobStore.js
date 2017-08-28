@@ -64,7 +64,9 @@ class TodaysJobStore {
 
       // PUT (update)
       map(tempPUT, (item) => {
+        console.log('WE ARE IN PUT (UPDATE)!');
          if ((item.Hours !== 0) && (item.Hours % 0.5 === 0) && (item.Hours !== '') && !(isNaN(item.Hours))) {
+           console.log('1. WE ARE PAST PUT (UPDATE)S FIRST IF CHECK!');
             // If PTO
             if (item.Job_Id === 13) {
                const maxHours = userStore.ptoFlexInfo.PTO_Balance + item.Old_Hours + 40;
@@ -98,24 +100,33 @@ class TodaysJobStore {
                   });
             // If Flex hours
          } else if ((item.Job_Id === 11344) && (userStore.ptoFlexInfo.Flex_Allowed === true)) {
+           console.log('2. WE ARE INSIDE PUT (UPDATE)S AND CONFIRMED FLEX');
                if (item.Hours < 0) {
-                  if (userStore.negFlex >= 0) {  // Checks to see if I have ANY negative flex time
-                     const typedPosHours = Math.abs(item.Hours);
-   						let max = typedPosHours;
-   						// Max hours is QTD_Sum - QTD_Required (negFlex)
-   						// Check if max hours is 80 OR negFlex
-   						const negFlex = userStore.negFlex + Math.abs(item.Old_Hours);
-   						// If what I typed is greater (or equal) than 80 and pool is greater (or equal) to 80
-   						if (typedPosHours >= userStore.ptoFlexInfo.Flex_Limit && negFlex >= userStore.ptoFlexInfo.Flex_Limit) {
-   							max = Math.floor(userStore.ptoFlexInfo.Flex_Limit * 2) / 2;
-   						// If what I typed is less than than 80
-   						} else if (typedPosHours > negFlex) {
-   							max = Math.floor(negFlex * 2) / 2;
-   						}
+                 console.log('3. WE ARE INSIDE PUT (UPDATE)S AND item.Hours < 0');
+                  if (userStore.negFlex > 0) {  // Checks to see if I have ANY negative flex time
+                    console.log('4. WE ARE INSIDE PUT (UPDATE)S AND item.Hours < 0');
+                    const typedPosHours = Math.abs(item.Hours);
+         				    let max = typedPosHours;
+         				    // Max hours is QTD_Sum - QTD_Required (negFlex)
 
-   						if (max === 0) {
-   							return;
-   						}
+                    // Following is for testing ONLY
+                    const negFlex = (item.Old_Hours < 0) ? (userStore.negFlex + Math.abs(item.Old_Hours)) : (userStore.negFlex - item.Old_Hours);
+
+                    // For testing
+                    console.log('New_Hours: ', item.Hours);
+                    console.log('Old_Hours', item.Old_Hours);
+                    console.log('Available Flex: ', userStore.negFlex);
+         						// If what I typed is greater (or equal) than 80 and pool is greater (or equal) to 80
+         						if (typedPosHours >= userStore.ptoFlexInfo.Flex_Limit && negFlex >= userStore.ptoFlexInfo.Flex_Limit) {
+         							max = Math.floor(userStore.ptoFlexInfo.Flex_Limit * 2) / 2;
+         						// If what I typed is less than than 80
+         						} else if (typedPosHours > negFlex) {
+         							max = Math.floor(negFlex * 2) / 2;
+         						}
+
+         						if (max === 0) {
+         							return;
+         						}
 
                      item.Hours = -1 * max;
 
@@ -140,6 +151,7 @@ class TodaysJobStore {
                      return;
                   }
                } else if (item.Hours > 0) {
+                 console.log('5. WE ARE INSIDE PUT (UPDATE)S AND item.Hours > 0');
                   // TO DO
                   const flexBalance = userStore.ptoFlexInfo.Flex_Balance + item.Old_Hours;
                   if (item.Hours > flexBalance) {
@@ -168,6 +180,7 @@ class TodaysJobStore {
                }
             // End of Flex Hours
             } else if (item.jobId !== null) {
+              console.log('6. WE ARE INSIDE PUT (UPDATE)S but not PTO or Flex Time');
                // Not PTO or Flex Time
                if (item.Hours < 0) {
                   return;
@@ -195,6 +208,7 @@ class TodaysJobStore {
 
       // POST (add new)
       map(tempPOST, (item) => {
+        console.log('WE ARE IN POST (ADD NEW)!');
          if ((item.Hours !== 0) && (item.Hours % 0.5 === 0) && (item.Hours !== '') && !(isNaN(item.Hours))) {
             // If PTO
             if (item.Job_Id === 13) {
@@ -231,22 +245,22 @@ class TodaysJobStore {
          } else if ((item.Job_Id === 11344) && (userStore.ptoFlexInfo.Flex_Allowed === true)) {
                if (item.Hours < 0) {
                   if (userStore.negFlex > 0) {  // Checks to see if I have ANY negative flex time
-   						const typedPosHours = Math.abs(item.Hours);
-   						let max = typedPosHours;
-   						// Max hours is QTD_Sum - QTD_Required (negFlex)
-   						// Check if max hours is 80 OR negFlex
-   						const negFlex = userStore.negFlex;
-   						// If what I typed is greater (or equal) than 80 and pool is greater (or equal) to 80
-   						if (typedPosHours >= userStore.ptoFlexInfo.Flex_Limit && negFlex >= userStore.ptoFlexInfo.Flex_Limit) {
-   							max = Math.floor(userStore.ptoFlexInfo.Flex_Limit * 2) / 2;
-   						// If what I typed is less than than 80
-   						} else if (typedPosHours > negFlex) {
-   							max = Math.floor(negFlex * 2) / 2;
-   						}
+         						const typedPosHours = Math.abs(item.Hours);
+         						let max = typedPosHours;
+         						// Max hours is QTD_Sum - QTD_Required (negFlex)
+         						// Check if max hours is 80 OR negFlex
+         						const negFlex = userStore.negFlex;
+         						// If what I typed is greater (or equal) than 80 and pool is greater (or equal) to 80
+         						if (typedPosHours >= userStore.ptoFlexInfo.Flex_Limit && negFlex >= userStore.ptoFlexInfo.Flex_Limit) {
+         							max = Math.floor(userStore.ptoFlexInfo.Flex_Limit * 2) / 2;
+         						// If what I typed is less than than 80
+         						} else if (typedPosHours > negFlex) {
+         							max = Math.floor(negFlex * 2) / 2;
+         						}
 
-   						if (max === 0) {
-   							return;
-   						}
+         						if (max === 0) {
+         							return;
+         						}
 
                      item.Hours = -1 * max;
 
