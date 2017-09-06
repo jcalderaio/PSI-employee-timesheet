@@ -82,7 +82,7 @@ class TodaysJobStore {
                   }
                }
 
-               fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Timesheet_Id=${item.Timesheet_Id}&Hours=${item.Hours}&Status=1`, {
+               fetch(`https://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Timesheet_Id=${item.Timesheet_Id}&Hours=${item.Hours}&Status=1`, {
                       method: 'PUT',
                       headers: {
                         'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
@@ -130,7 +130,7 @@ class TodaysJobStore {
 
                      item.Hours = -1 * max;
 
-                     fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Timesheet_Id=${item.Timesheet_Id}&Hours=${item.Hours}&Status=1`, {
+                     fetch(`https://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Timesheet_Id=${item.Timesheet_Id}&Hours=${item.Hours}&Status=1`, {
                             method: 'PUT',
                             headers: {
                               'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
@@ -161,7 +161,7 @@ class TodaysJobStore {
                      }
                   }
 
-                  fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Timesheet_Id=${item.Timesheet_Id}&Hours=${item.Hours}&Status=1`, {
+                  fetch(`https://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Timesheet_Id=${item.Timesheet_Id}&Hours=${item.Hours}&Status=1`, {
                          method: 'PUT',
                          headers: {
                            'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
@@ -186,7 +186,7 @@ class TodaysJobStore {
                   return;
                }
 
-               fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Timesheet_Id=${item.Timesheet_Id}&Hours=${item.Hours}&Status=1`, {
+               fetch(`https://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Timesheet_Id=${item.Timesheet_Id}&Hours=${item.Hours}&Status=1`, {
                       method: 'PUT',
                       headers: {
                         'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
@@ -225,7 +225,7 @@ class TodaysJobStore {
                   }
                }
 
-               fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Job_Id=${item.Job_Id}&Hours=${item.Hours}&Status=2`, {
+               fetch(`https://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Job_Id=${item.Job_Id}&Hours=${item.Hours}&Status=2`, {
                       method: 'PUT',
                       headers: {
                         'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
@@ -264,7 +264,7 @@ class TodaysJobStore {
 
                      item.Hours = -1 * max;
 
-                     fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Job_Id=${item.Job_Id}&Hours=${item.Hours}&Status=2`, {
+                     fetch(`https://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Job_Id=${item.Job_Id}&Hours=${item.Hours}&Status=2`, {
                             method: 'PUT',
                             headers: {
                               'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
@@ -294,7 +294,7 @@ class TodaysJobStore {
                      }
                   }
 
-                  fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Job_Id=${item.Job_Id}&Hours=${item.Hours}&Status=2`, {
+                  fetch(`https://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Job_Id=${item.Job_Id}&Hours=${item.Hours}&Status=2`, {
                          method: 'PUT',
                          headers: {
                            'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
@@ -318,7 +318,7 @@ class TodaysJobStore {
                   return;
                }
 
-               fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Job_Id=${item.Job_Id}&Hours=${item.Hours}&Status=2`, {
+               fetch(`https://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Job_Id=${item.Job_Id}&Hours=${item.Hours}&Status=2`, {
                       method: 'PUT',
                       headers: {
                         'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
@@ -341,7 +341,7 @@ class TodaysJobStore {
       // DELETE
       map(tempDELETE, (item) => {
          if (item.Hours === 0) {
-            fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Timesheet_Id=${item.Timesheet_Id}&Status=3`, {
+            fetch(`https://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}&Timesheet_Id=${item.Timesheet_Id}&Status=3`, {
                    method: 'PUT',
                    headers: {
                      'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
@@ -372,7 +372,7 @@ class TodaysJobStore {
 
    // Retrieve jobs from the server EVERY TIME RECENT JOBS BUTTON IS PRESSED!!!
    @action fetchTodaysJobs() {
-		fetch(`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}`, {
+		fetch(`https://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore.employeeInfo.Employee_No}`, {
             method: 'GET',
             headers: {
               'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)

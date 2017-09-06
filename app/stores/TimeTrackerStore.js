@@ -87,7 +87,7 @@ class TimeTrackerStore {
    }
 
    @action fetchTimeTracker = () => {
-       fetch(`http://psitime.psnet.com/Api/TimeTracker?Employee_Id=${userStore.employeeInfo.Employee_No}`, {
+       fetch(`https://psitime.psnet.com/Api/TimeTracker?Employee_Id=${userStore.employeeInfo.Employee_No}`, {
            method: 'GET',
            headers: {
              'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
@@ -111,7 +111,7 @@ class TimeTrackerStore {
    @action deleteRow = (Tracker_Id) => {
       this.loading = true;
 
-      fetch(`http://psitime.psnet.com/Api/TimeTracker?Employee_Id=${userStore.employeeInfo.Employee_No}&Status=3&Tracker_Id=${Tracker_Id}`, {
+      fetch(`https://psitime.psnet.com/Api/TimeTracker?Employee_Id=${userStore.employeeInfo.Employee_No}&Status=3&Tracker_Id=${Tracker_Id}`, {
                 method: 'PUT',
                 headers: {
                   'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
@@ -138,7 +138,7 @@ class TimeTrackerStore {
 
       if (flag === 'POST') {
          if (this.inTime !== null && this.outTime === null) {
-            fetch(`http://psitime.psnet.com/Api/TimeTracker?Employee_Id=${userStore.employeeInfo.Employee_No}&Status=2&In_Time=${this.inTime}`, {
+            fetch(`https://psitime.psnet.com/Api/TimeTracker?Employee_Id=${userStore.employeeInfo.Employee_No}&Status=2&In_Time=${this.inTime}`, {
                       method: 'PUT', //POST
                       headers: {
                         'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
@@ -157,7 +157,7 @@ class TimeTrackerStore {
                      return;
                   });
            } else if (this.inTime !== null && this.outTime !== null) {
-             fetch(`http://psitime.psnet.com/Api/TimeTracker?Employee_Id=${userStore.employeeInfo.Employee_No}&Status=2&In_Time=${this.inTime}&Out_Time=${this.outTime}`, {
+             fetch(`https://psitime.psnet.com/Api/TimeTracker?Employee_Id=${userStore.employeeInfo.Employee_No}&Status=2&In_Time=${this.inTime}&Out_Time=${this.outTime}`, {
                         method: 'PUT', //POST
                         headers: {
                           'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
@@ -178,7 +178,7 @@ class TimeTrackerStore {
             }
       } else if (flag === 'PUT') {
          if (this.inTime !== null && this.outTime === null) {
-            fetch(`http://psitime.psnet.com/Api/TimeTracker?Employee_Id=${userStore.employeeInfo.Employee_No}&Status=1&In_Time=${this.inTime}&Tracker_Id=${Tracker_Id}`, {
+            fetch(`https://psitime.psnet.com/Api/TimeTracker?Employee_Id=${userStore.employeeInfo.Employee_No}&Status=1&In_Time=${this.inTime}&Tracker_Id=${Tracker_Id}`, {
                       method: 'PUT', //PUT
                       headers: {
                         'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
@@ -197,7 +197,7 @@ class TimeTrackerStore {
                      return;
                   });
          } else if (this.inTime !== null && this.outTime !== null) {
-             fetch(`http://psitime.psnet.com/Api/TimeTracker?Employee_Id=${userStore.employeeInfo.Employee_No}&Status=1&In_Time=${this.inTime}&Out_Time=${this.outTime}&Tracker_Id=${Tracker_Id}`, {
+             fetch(`https://psitime.psnet.com/Api/TimeTracker?Employee_Id=${userStore.employeeInfo.Employee_No}&Status=1&In_Time=${this.inTime}&Out_Time=${this.outTime}&Tracker_Id=${Tracker_Id}`, {
                    method: 'PUT', //PUT
                    headers: {
                      'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)
@@ -216,7 +216,7 @@ class TimeTrackerStore {
                   return;
                });
          } else if (this.inTime === null && this.outTime !== null) {
-             fetch(`http://psitime.psnet.com/Api/TimeTracker?Employee_Id=${userStore.employeeInfo.Employee_No}&Status=1&In_Time=${this.inTime}&Out_Time=${this.outTime}&Tracker_Id=${Tracker_Id}`, {
+             fetch(`https://psitime.psnet.com/Api/TimeTracker?Employee_Id=${userStore.employeeInfo.Employee_No}&Status=1&In_Time=${this.inTime}&Out_Time=${this.outTime}&Tracker_Id=${Tracker_Id}`, {
                    method: 'PUT', //PUT
                    headers: {
                      'Authorization': 'Basic ' + base64.encode(`${userStore.windowsId}:${userStore.password}`)

@@ -152,7 +152,7 @@ class AuthorizedJobStore {
 	@action
 	fetchAuthorizedJobs() {
 		fetch(
-			`http://psitime.psnet.com/Api/AuthorizedJobs?Employee_ID=${userStore
+			`https://psitime.psnet.com/Api/AuthorizedJobs?Employee_ID=${userStore
 				.employeeInfo.Employee_No}`,
 			{
 				method: 'GET',
@@ -231,7 +231,7 @@ class AuthorizedJobStore {
 					}
 				}
 				fetch(
-					`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore
+					`https://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore
 						.employeeInfo.Employee_No}&Job_Id=${this.jobId}&Hours=${this
 						.hours}&Status=2`,
 					{
@@ -308,7 +308,7 @@ class AuthorizedJobStore {
 
 						this.hours = -1 * max;
 						fetch(
-							`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore
+							`https://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore
 								.employeeInfo.Employee_No}&Job_Id=${this
 								.jobId}&Hours=${this.hours}&Status=2`,
 							{
@@ -375,7 +375,7 @@ class AuthorizedJobStore {
 						this.message += 'Not enough flex hours in balance. Set to greatest value!';
 					}
 					fetch(
-						`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore
+						`https://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore
 							.employeeInfo.Employee_No}&Job_Id=${this
 							.jobId}&Hours=${this.hours}&Status=2`,
 						{
@@ -432,7 +432,7 @@ class AuthorizedJobStore {
 				}
 				// Add new entry to the database!
 				fetch(
-					`http://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore
+					`https://psitime.psnet.com/Api/Timesheet?Employee_Id=${userStore
 						.employeeInfo.Employee_No}&Job_Id=${this.jobId}&Hours=${this
 						.hours}&Status=2`,
 					{

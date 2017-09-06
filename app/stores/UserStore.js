@@ -20,7 +20,7 @@ class UserStore {
    }
 
    @action fetchPtoFlexInfo() {
-		fetch(`http://psitime.psnet.com/Api/Summary?Employee_Id=${this.employeeInfo.Employee_No}`, {
+		fetch(`https://psitime.psnet.com/Api/Summary?Employee_Id=${this.employeeInfo.Employee_No}`, {
             method: 'GET',
             headers: {
               'Authorization': 'Basic ' + base64.encode(`${this.windowsId}:${this.password}`)
