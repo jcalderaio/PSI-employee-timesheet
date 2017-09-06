@@ -1,6 +1,6 @@
 ## Table of Contents
 
-This app allows an employee to manipulate their current work "charges" (Client, Task, Description, Date, Hours Worked, etc) by Adding, Deleting, or Updating them. 
+This app allows an employee to manipulate their current work "charges" (Client, Task, Description, Date, Hours Worked, etc) by Adding, Deleting, or Updating them.
 
 Functionality includes a user authentication screen (in which a user logs in with their Windows ID and password), a main screen to display Name, Date, and number of hours logged today, an "Add Entry" screen to select a new project for time charges, a "Select Recent" form which gives faster access to projects charged recently, and a Timesheet screen to show a list of todays charges (consisting of hours worked, client, task, and sub-task).
 
@@ -42,3 +42,6 @@ This form will display a status of the user's charges for the current day. Each 
 Entries for the number of hours need to be restricted to multiples of 0.5 hours.
 Entries on the "Flex Time" job may be negative, but all other charges must be positive numbers.
 The user needs to be able to remove or zero out errant entries.
+
+
+![Alt Text](https://github.com/jcalderaio/PSI-employee-timesheet/blob/master/gifs/login.gif)
