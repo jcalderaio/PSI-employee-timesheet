@@ -1,18 +1,22 @@
 {
-	"expo": {
-		"sdkVersion": "18.0.0",
-		"orientation": "portrait",
-		"hooks": {
-			"postPublish": [
-				{
-					"file": "sentry-expo/upload-sourcemaps",
-					"config": {
-						"organization": "john-calderaio",
-						"project": "psi-employee-timesheet",
-						"authToken": "16c73e3e5a0c495ba80a35a3b97659d64c68b2c5512944abbf0365aa14270c46"
-					}
-				}
-			]
-		}
-	}
+  "expo": {
+    "name": "timesheet-navigation",
+    "description": "An app for the employees of Parametric Solutions to log their charges (Client, Task, Sub-Task, Hours). They may add, remove, or update their charges.",
+    "sdkVersion": "18.0.0",
+    "version": "beta",
+    "icon": "app/img/icon.png",
+    "orientation": "portrait",
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "john-calderaio",
+            "project": "psi-employee-timesheet",
+            "authToken": "16c73e3e5a0c495ba80a35a3b97659d64c68b2c5512944abbf0365aa14270c46"
+          }
+        }
+      ]
+    }
+  }
 }
