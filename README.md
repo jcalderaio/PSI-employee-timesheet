@@ -43,9 +43,4 @@ Entries for the number of hours need to be restricted to multiples of 0.5 hours.
 Entries on the "Flex Time" job may be negative, but all other charges must be positive numbers.
 The user needs to be able to remove or zero out errant entries.
 
-
-<<<<<<< HEAD
-![Alt Text](https://github.com/jcalderaio/PSI-employee-timesheet/blob/master/gifs/login.gif)
-=======
-![Alt Text](https://github.com/jcalderaio/PSI-employee-timesheet/gifs/login.gif)
->>>>>>> dd2dd7d13d35b6b3a41fced5075b91a084a34835
+(https://github.com/jcalderaio/PSI-employee-timesheet/blob/master/gifs/login.gif)
