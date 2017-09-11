@@ -357,9 +357,10 @@ class AuthorizedJobStore {
 							});
 					} else {
 						Alert.alert(
-							'This entry would cause the flex time balance to go negative. Hours are being set to their previously submitted value',
+							'QTD Worked - QTD Required less than 0. Unable to complete action.',
 							' '
 						);
+						this.loading = false;
 						return;
 					}
 				} else if (this.hours > 0) {
