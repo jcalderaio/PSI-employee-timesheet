@@ -42,3 +42,5 @@ This form will display a status of the user's charges for the current day. Each 
 Entries for the number of hours need to be restricted to multiples of 0.5 hours.
 Entries on the "Flex Time" job may be negative, but all other charges must be positive numbers.
 The user needs to be able to remove or zero out errant entries.
+
+![Login](https://github.com/jcalderaio/PSI-employee-timesheet/tree/master/gifs/login.gif)
