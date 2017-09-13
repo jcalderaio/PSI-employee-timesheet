@@ -45,4 +45,8 @@ The user needs to be able to remove or zero out errant entries.
 
 ![LoginApple](https://github.com/jcalderaio/PSI-employee-timesheet/blob/master/gifs/loginApple.gif)
 
-[[ https://github.com/jcalderaio/PSI-employee-timesheet/blob/master/gifs/loginAndroid.gif | height = 400px ]]
+![LoginAndroid](https://github.com/jcalderaio/PSI-employee-timesheet/blob/master/gifs/loginAndroid.gif){:height="50%" width="50%"}
+
+![LoginAndroid](https://github.com/jcalderaio/PSI-employee-timesheet/blob/master/gifs/loginAndroid.gif | width=200)
+
+<img src="https://github.com/jcalderaio/PSI-employee-timesheet/blob/master/gifs/loginAndroid.gif" width="200">
