@@ -41,7 +41,7 @@ The user needs to be able to add all listed jobs to the previous form.
 This form will display a status of the user's charges for the current day. Each displayed "charge" comprises a job number, a client name, a job title, and a quantity of hours. The record created in the database comprises a job id (linked to the job number via the Jobs table), a client id (linked to the client name via the Clients table), the user id (retrieved by the login form from the Employees table), and a decimal number of hours.
 Entries for the number of hours need to be restricted to multiples of 0.5 hours.
 Entries on the "Flex Time" job may be negative, but all other charges must be positive numbers.
-The user needs to be able to remove or zero out errant entries.
+The user needs to be able to remove or zero out errant entries.k
 
 ![LoginApple](https://github.com/jcalderaio/PSI-employee-timesheet/blob/master/gifs/loginApple.gif)
 
