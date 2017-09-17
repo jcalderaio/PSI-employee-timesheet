@@ -4,6 +4,12 @@
     "slug": "psi-timesheet",
     "description": "An app for the employees of Parametric Solutions to log their charges (Client, Task, Sub-Task, Hours). They may add, remove, or update their charges.",
     "sdkVersion": "18.0.0",
+    "ios": {
+      "bundleIdentifier": "com.upyourapps.psitimesheet"
+    },
+    "android": {
+      "package": "com.upyourapps.psitimesheet"
+    },
     "version": "beta",
     "icon": "app/img/icon.png",
     "orientation": "portrait",
