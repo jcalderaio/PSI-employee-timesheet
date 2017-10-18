@@ -7,6 +7,24 @@ Functionality includes a user authentication screen (in which a user logs in wit
 The app needs to reach both Android and iOS users. Since our user base is ~80% Android, development for Android should take priority over iOS in the event problems arise using React Native.
 Expo will be used as the demonstration platform when appropriate.
 
+## Logging In:
+<img src="https://github.com/jcalderaio/PSI-employee-timesheet/blob/master/gifs/login.gif" width="400">
+
+## Adding Hours to TimeClock:
+<img src="https://github.com/jcalderaio/PSI-employee-timesheet/blob/master/gifs/timeclock.gif" width="400">
+
+## Adding Charges:
+<img src="https://github.com/jcalderaio/PSI-employee-timesheet/blob/master/gifs/addNew.gif" width="400">
+
+## Selecting From Recent Charges:
+<img src="https://github.com/jcalderaio/PSI-employee-timesheet/blob/master/gifs/selectRecent.gif" width="400">
+
+## Adding FlexTime:
+<img src="https://github.com/jcalderaio/PSI-employee-timesheet/blob/master/gifs/flexTime.gif" width="400">
+
+## Adding PTO (you are allowed to be -40 hours in the hole):
+<img src="https://github.com/jcalderaio/PSI-employee-timesheet/blob/master/gifs/PTO.gif" width="400">
+
 ## Login Screen:
 Given a login name, the login form will need to authenticate the user and retrieve their legal name and employee number.
 User authentication against Active Directory is expected to wait until next work package, as this needs support from PSI I.T.
@@ -42,21 +60,3 @@ This form will display a status of the user's charges for the current day. Each 
 Entries for the number of hours need to be restricted to multiples of 0.5 hours.
 Entries on the "Flex Time" job may be negative, but all other charges must be positive numbers.
 The user needs to be able to remove or zero out errant entries.
-
-## Logging In:
-<img src="https://github.com/jcalderaio/PSI-employee-timesheet/blob/master/gifs/login.gif" width="400">
-
-## Adding Hours to TimeClock:
-<img src="https://github.com/jcalderaio/PSI-employee-timesheet/blob/master/gifs/timeclock.gif" width="400">
-
-## Adding Charges:
-<img src="https://github.com/jcalderaio/PSI-employee-timesheet/blob/master/gifs/addNew.gif" width="400">
-
-## Selecting From Recent Charges:
-<img src="https://github.com/jcalderaio/PSI-employee-timesheet/blob/master/gifs/selectRecent.gif" width="400">
-
-## Adding FlexTime:
-<img src="https://github.com/jcalderaio/PSI-employee-timesheet/blob/master/gifs/flexTime.gif" width="400">
-
-## Adding PTO (you are allowed to be -40 hours in the hole):
-<img src="https://github.com/jcalderaio/PSI-employee-timesheet/blob/master/gifs/PTO.gif" width="400">
