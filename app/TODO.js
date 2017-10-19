@@ -8,12 +8,10 @@ What I Did:
     -Pull to refresh updates todaysCharges table
     -MAIN: on Android, make it so no scroll.
     -auto pick job if 1 option
+    -SSL
 
 To Do:
     -.apk + .iphone
-    -SSL
-
-Bugs:
 
 -package.json
 "test": "node node_modules/jest/bin/jest.js --watch"
