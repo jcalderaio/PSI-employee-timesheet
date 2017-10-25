@@ -48,7 +48,7 @@ export default class TodaysCharges extends Component {
             style={styles.headerStyle}
           >
             <Body>
-              <Title style={styles.headerTextStyle}>Today"'"s Charges</Title>
+              <Title style={styles.headerTextStyle}>Today\'s Charges</Title>
             </Body>
           </Header>
 
