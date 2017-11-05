@@ -2,8 +2,9 @@
   "expo": {
     "name": "PSI Timesheet",
     "slug": "psi-timesheet",
-    "description": "An app for the employees of Parametric Solutions to log their charges (Client, Task, Sub-Task, Hours). They may add, remove, or update their charges.",
-    "sdkVersion": "18.0.0",
+    "description":
+      "An app for the employees of Parametric Solutions to log their charges (Client, Task, Sub-Task, Hours). They may add, remove, or update their charges.",
+    "sdkVersion": "19.0.0",
     "ios": {
       "bundleIdentifier": "com.upyourapps.psitimesheet"
     },
@@ -21,7 +22,8 @@
           "config": {
             "organization": "john-calderaio",
             "project": "psi-employee-timesheet",
-            "authToken": "16c73e3e5a0c495ba80a35a3b97659d64c68b2c5512944abbf0365aa14270c46"
+            "authToken":
+              "16c73e3e5a0c495ba80a35a3b97659d64c68b2c5512944abbf0365aa14270c46"
           }
         }
       ]

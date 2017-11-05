@@ -1,0 +1,19 @@
+dependencies: \
+  /Users/leland_richardson/code/react-native-maps/ios/AirMaps/AIRMapPolygon.m \
+  /Users/leland_richardson/code/react-native-maps/ios/AirMaps/AIRMapPolygon.h \
+  ../../react-native/React/Views/RCTConvert+MapKit.h \
+  ../../react-native/React/Base/RCTConvert.h \
+  ../../react-native/React/Layout/Layout.h \
+  ../../react-native/React/Views/RCTAnimationType.h \
+  ../../react-native/React/Views/RCTBorderStyle.h \
+  ../../react-native/React/Views/RCTTextDecorationLineType.h \
+  ../../react-native/React/Base/RCTDefines.h \
+  ../../react-native/React/Base/RCTLog.h \
+  ../../react-native/React/Base/RCTAssert.h \
+  ../../react-native/React/Views/RCTPointerEvents.h \
+  ../../react-native/React/Views/RCTComponent.h \
+  /Users/leland_richardson/code/react-native-maps/ios/AirMaps/AIRMapCoordinate.h \
+  /Users/leland_richardson/code/react-native-maps/ios/AirMaps/AIRMap.h \
+  /Users/leland_richardson/code/react-native-maps/ios/AirMaps/Callout/SMCalloutView.h \
+  ../../react-native/React/Views/RCTView.h \
+  ../../react-native/React/Views/UIView+React.h

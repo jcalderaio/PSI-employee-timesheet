@@ -1,11 +1,7 @@
-'use strict';
-
-import React, { Component, PropTypes } from 'react';
-
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { View, ViewPropTypes } from 'react-native';
-
-import deprecatedPropType
-  from 'react-native/Libraries/Utilities/deprecatedPropType';
+import deprecatedPropType from 'react-native/Libraries/Utilities/deprecatedPropType';
 
 export default class BlurView extends Component {
   static propTypes = {

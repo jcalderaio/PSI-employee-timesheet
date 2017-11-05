@@ -1,11 +1,8 @@
-'use strict';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { ViewPropTypes, requireNativeComponent } from 'react-native';
 
-import React, { Component, PropTypes } from 'react';
-
-import { View, ViewPropTypes, requireNativeComponent } from 'react-native';
-
-import deprecatedPropType
-  from 'react-native/Libraries/Utilities/deprecatedPropType';
+import deprecatedPropType from 'react-native/Libraries/Utilities/deprecatedPropType';
 
 export default class BlurView extends Component {
   static propTypes = {
@@ -34,7 +31,7 @@ export default class BlurView extends Component {
     return (
       <NativeBlurView
         {...nativeProps}
-        style={[this.props.style, { backgroundColor: 'transparent' }]}
+        style={[style, { backgroundColor: 'transparent' }]}
       />
     );
   }

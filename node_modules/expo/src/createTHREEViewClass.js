@@ -1,7 +1,6 @@
-'use strict';
-
-import React, { PropTypes } from 'react';
-import { View, ViewPropTypes } from 'react-native';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { ViewPropTypes } from 'react-native';
 
 import GLView from './GLView';
 

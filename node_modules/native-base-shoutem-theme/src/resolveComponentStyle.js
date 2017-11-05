@@ -1,4 +1,5 @@
-import _ from 'lodash';
+import _ from "lodash";
+import customMerge from "./customMerge";
 
 /**
  * Matches any style properties that represent component style variants.
@@ -39,51 +40,24 @@ function isChildStyle(propertyName) {
  * @returns {*} An object with the componentStyle, styleVariants, and childrenStyle keys.
  */
 function splitStyle(style) {
-  return _.reduce(style, (result, value, key) => {
-    let styleSection = result.componentStyle;
-    if (isStyleVariant(key)) {
-      styleSection = result.styleVariants;
-    } else if (isChildStyle(key)) {
-      styleSection = result.childrenStyle;
-    }
-    styleSection[key] = value;
-    return result;
-  }, {
-    componentStyle: {},
-    styleVariants: {},
-    childrenStyle: {},
-  });
-}
-
-function customMerge(obj1, obj2) {
-  const objToReturn = {};
-
-  let property1, property2;
-
-  if(!obj1) {
-    return obj2;
-  } else if(!obj2) {
-    return obj1;
-  }
-
-  for(property1 in obj1) {
-    for(property2 in obj2) {
-      if(property1 === property2) {
-        if(typeof obj1[property1] !== 'object' || typeof obj2[property1] !== 'object' || !obj2[property1] || !obj1[property1]) {
-          objToReturn[property1] = obj2[property1];
-        } else {
-          objToReturn[property1] = customMerge(obj1[property1], obj2[property1]);
-        }
-      } else {
-        if(objToReturn[property1] === undefined)
-          objToReturn[property1] = obj1[property1];
-        if(objToReturn[property2] === undefined)
-          objToReturn[property2] = obj2[property2];
+  return _.reduce(
+    style,
+    (result, value, key) => {
+      let styleSection = result.componentStyle;
+      if (isStyleVariant(key)) {
+        styleSection = result.styleVariants;
+      } else if (isChildStyle(key)) {
+        styleSection = result.childrenStyle;
       }
+      styleSection[key] = value;
+      return result;
+    },
+    {
+      componentStyle: {},
+      styleVariants: {},
+      childrenStyle: {}
     }
-  }
-
-  return objToReturn;
+  );
 }
 
 /**
@@ -116,7 +90,6 @@ export function resolveComponentStyle(
   parentStyle = {},
   themeCache
 ) {
-
   // const mergedStyle = _.merge({},
   //   themeStyle,
   //   parentStyle['*'],
@@ -126,15 +99,16 @@ export function resolveComponentStyle(
   //   ..._.map(styleNames, (sn) => parentStyle[`${componentName}.${sn}`])
   // );
 
-  
-
   let mergedStyle = customMerge(themeStyle, parentStyle[componentName]);
   styleNames.forEach((sn, index) => {
     mergedStyle = customMerge(mergedStyle, themeStyle[`${sn}`]);
   });
 
   styleNames.forEach((sn, index) => {
-    mergedStyle = customMerge(mergedStyle, parentStyle[`${componentName}${sn}`])
+    mergedStyle = customMerge(
+      mergedStyle,
+      parentStyle[`${componentName}${sn}`]
+    );
   });
 
   // Phase 2: merge the component styles, this step is performed by using the
@@ -150,13 +124,16 @@ export function resolveComponentStyle(
   // );
 
   let resolvedStyle = customMerge(mergedStyle, parentStyle[componentName]);
-  
+
   styleNames.forEach((sn, index) => {
-    resolvedStyle = customMerge(resolvedStyle, mergedStyle[`${sn}`])
+    resolvedStyle = customMerge(resolvedStyle, mergedStyle[`${sn}`]);
   });
 
   styleNames.forEach((sn, index) => {
-    resolvedStyle = customMerge(resolvedStyle, parentStyle[`${componentName}${sn}`])
+    resolvedStyle = customMerge(
+      resolvedStyle,
+      parentStyle[`${componentName}${sn}`]
+    );
   });
 
   return resolvedStyle;

@@ -4,8 +4,8 @@ import { NativeModules, findNodeHandle } from 'react-native';
 
 const { RNViewShot } = NativeModules;
 
-export default (async function takeSnapshotAsync(
-  view: ?(number | ReactElement<any>),
+export default async function takeSnapshotAsync(
+  view: ?(number | React$Element<*>),
   options?: {
     width?: number,
     height?: number,
@@ -16,12 +16,11 @@ export default (async function takeSnapshotAsync(
 ): Promise<string> {
   if (typeof view !== 'number') {
     const node = findNodeHandle(view);
-    if (!node)
-      return Promise.reject(
-        new Error('findNodeHandle failed to resolve view=' + String(view))
-      );
+    if (!node) {
+      throw new Error('findNodeHandle failed to resolve view=' + String(view));
+    }
     view = node;
   }
 
   return RNViewShot.takeSnapshot(view, options);
-});
+}

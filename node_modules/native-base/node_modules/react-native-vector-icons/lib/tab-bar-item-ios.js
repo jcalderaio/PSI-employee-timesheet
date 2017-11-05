@@ -1,16 +1,14 @@
+/* eslint-disable react/no-unused-prop-types */
 import isEqual from 'lodash/isEqual';
 import pick from 'lodash/pick';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { TabBarIOS } from './react-native';
 
-import React, {
-  Component,
-  PropTypes,
-} from 'react';
-
-import {
-  TabBarIOS,
-} from './react-native';
-
-export default function createTabBarItemIOSComponent(IconNamePropType, getImageSource) {
+export default function createTabBarItemIOSComponent(
+  IconNamePropType,
+  getImageSource
+) {
   return class TabBarItemIOS extends Component {
     static propTypes = {
       iconName: IconNamePropType.isRequired,
@@ -24,19 +22,6 @@ export default function createTabBarItemIOSComponent(IconNamePropType, getImageS
       iconSize: 30,
     };
 
-    updateIconSources(props) {
-      if (props.iconName) {
-        getImageSource(props.iconName, props.iconSize, props.iconColor)
-          .then(icon => this.setState({ icon }));
-      }
-      if (props.selectedIconName || props.selectedIconColor) {
-        const selectedIconName = props.selectedIconName || props.iconName;
-        const selectedIconColor = props.selectedIconColor || props.iconColor;
-        getImageSource(selectedIconName, props.iconSize, selectedIconColor)
-          .then(selectedIcon => this.setState({ selectedIcon }));
-      }
-    }
-
     componentWillMount() {
       this.updateIconSources(this.props);
     }
@@ -48,8 +33,27 @@ export default function createTabBarItemIOSComponent(IconNamePropType, getImageS
       }
     }
 
+    updateIconSources(props) {
+      if (props.iconName) {
+        getImageSource(
+          props.iconName,
+          props.iconSize,
+          props.iconColor
+        ).then(icon => this.setState({ icon }));
+      }
+      if (props.selectedIconName || props.selectedIconColor) {
+        const selectedIconName = props.selectedIconName || props.iconName;
+        const selectedIconColor = props.selectedIconColor || props.iconColor;
+        getImageSource(
+          selectedIconName,
+          props.iconSize,
+          selectedIconColor
+        ).then(selectedIcon => this.setState({ selectedIcon }));
+      }
+    }
+
     render() {
-      return (<TabBarIOS.Item {...this.props} {...this.state} />);
+      return <TabBarIOS.Item {...this.props} {...this.state} />;
     }
   };
 }

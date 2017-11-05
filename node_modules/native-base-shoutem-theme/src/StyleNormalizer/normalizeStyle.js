@@ -1,5 +1,7 @@
-import _ from 'lodash';
-import StyleNormalizer from './StyleNormalizer';
+import _ from "lodash";
+import StyleNormalizer from "./StyleNormalizer";
+
+import { StyleSheet } from "react-native";
 
 const styleNormalizer = new StyleNormalizer();
 
@@ -10,20 +12,24 @@ const styleNormalizer = new StyleNormalizer();
  * @returns {*}
  */
 export default function normalizeStyle(style) {
-  return _.reduce(style, (normalizedStyle, val, prop) => {
-    /* eslint-disable no-param-reassign */
-    if (_.isPlainObject(val)) {
-      normalizedStyle[prop] = normalizeStyle(val);
-    } else if (styleNormalizer.canNormalize(prop)) {
-      normalizedStyle = {
-        ...normalizedStyle,
-        ...styleNormalizer.normalize(prop, val),
-      };
-    } else {
-      normalizedStyle[prop] = val;
-    }
-    /* eslint-enable no-param-reassign */
+  return _.reduce(
+    style,
+    (normalizedStyle, val, prop) => {
+      /* eslint-disable no-param-reassign */
+      if (_.isPlainObject(val)) {
+        normalizedStyle[prop] = normalizeStyle(val);
+      } else if (styleNormalizer.canNormalize(prop)) {
+        normalizedStyle = {
+          ...normalizedStyle,
+          ...styleNormalizer.normalize(prop, val)
+        };
+      } else {
+        normalizedStyle[prop] = val;
+      }
+      /* eslint-enable no-param-reassign */
 
-    return normalizedStyle;
-  }, {});
+      return normalizedStyle;
+    },
+    {}
+  );
 }

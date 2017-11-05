@@ -9,8 +9,12 @@ Object.defineProperty(exports,"__esModule",{value:true});var _extends=Object.ass
 
 
 
-normalizeStyle;var _lodash=require('lodash');var _lodash2=_interopRequireDefault(_lodash);var _StyleNormalizer=require('./StyleNormalizer');var _StyleNormalizer2=_interopRequireDefault(_StyleNormalizer);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}var styleNormalizer=new _StyleNormalizer2.default();function normalizeStyle(style){
-return _lodash2.default.reduce(style,function(normalizedStyle,val,prop){
+
+
+normalizeStyle;var _lodash=require("lodash");var _lodash2=_interopRequireDefault(_lodash);var _StyleNormalizer=require("./StyleNormalizer");var _StyleNormalizer2=_interopRequireDefault(_StyleNormalizer);var _reactNative=require("react-native");function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}var styleNormalizer=new _StyleNormalizer2.default();function normalizeStyle(style){
+return _lodash2.default.reduce(
+style,
+function(normalizedStyle,val,prop){
 
 if(_lodash2.default.isPlainObject(val)){
 normalizedStyle[prop]=normalizeStyle(val);
@@ -25,6 +29,8 @@ normalizedStyle[prop]=val;
 
 
 return normalizedStyle;
-},{});
+},
+{});
+
 }
 //# sourceMappingURL=normalizeStyle.js.map

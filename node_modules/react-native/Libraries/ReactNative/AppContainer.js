@@ -13,6 +13,7 @@
 'use strict';
 
 const EmitterSubscription = require('EmitterSubscription');
+const PropTypes = require('prop-types');
 const RCTDeviceEventEmitter = require('RCTDeviceEventEmitter');
 const React = require('React');
 const ReactNative = require('ReactNative');
@@ -41,7 +42,7 @@ class AppContainer extends React.Component {
   _subscription: ?EmitterSubscription = null;
 
   static childContextTypes = {
-    rootTag: React.PropTypes.number,
+    rootTag: PropTypes.number,
   };
 
   getChildContext(): Context {
@@ -52,26 +53,28 @@ class AppContainer extends React.Component {
 
   componentDidMount(): void {
     if (__DEV__) {
-      this._subscription = RCTDeviceEventEmitter.addListener(
-        'toggleElementInspector',
-        () => {
-          const Inspector = require('Inspector');
-          const inspector = this.state.inspector
-            ? null
-            : <Inspector
-                inspectedViewTag={ReactNative.findNodeHandle(this._mainRef)}
-                onRequestRerenderApp={(updateInspectedViewTag) => {
-                  this.setState(
-                    (s) => ({mainKey: s.mainKey + 1}),
-                    () => updateInspectedViewTag(
-                      ReactNative.findNodeHandle(this._mainRef)
-                    )
-                  );
-                }}
-              />;
-          this.setState({inspector});
-        },
-      );
+      if (!global.__RCTProfileIsProfiling) {
+        this._subscription = RCTDeviceEventEmitter.addListener(
+          'toggleElementInspector',
+          () => {
+            const Inspector = require('Inspector');
+            const inspector = this.state.inspector
+              ? null
+              : <Inspector
+                  inspectedViewTag={ReactNative.findNodeHandle(this._mainRef)}
+                  onRequestRerenderApp={(updateInspectedViewTag) => {
+                    this.setState(
+                      (s) => ({mainKey: s.mainKey + 1}),
+                      () => updateInspectedViewTag(
+                        ReactNative.findNodeHandle(this._mainRef)
+                      )
+                    );
+                  }}
+                />;
+            this.setState({inspector});
+          },
+        );
+      }
     }
   }
 
@@ -84,8 +87,10 @@ class AppContainer extends React.Component {
   render(): React.Element<*> {
     let yellowBox = null;
     if (__DEV__) {
-      const YellowBox = require('YellowBox');
-      yellowBox = <YellowBox />;
+      if (!global.__RCTProfileIsProfiling) {
+        const YellowBox = require('YellowBox');
+        yellowBox = <YellowBox />;
+      }
     }
 
     return (
