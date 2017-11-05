@@ -110,7 +110,7 @@ export default class Main extends Component {
                 <CardSection>
                   <Grid style={styles.gridStyle}>
                     <Text style={{ fontSize: global.MEDIUM_TEXT }}>
-                      <Text style={{ fontWeight: 'bold', fontSize: global.MEDIUM_TEXT }}>Today's Date: </Text> {moment().format('dddd, MMMM D, YYYY')}
+                      <Text style={{ fontWeight: 'bold', fontSize: global.MEDIUM_TEXT }}>Todays Date: </Text> {moment().format('dddd, MMMM D, YYYY')}
                     </Text>
                   </Grid>
                 </CardSection>
