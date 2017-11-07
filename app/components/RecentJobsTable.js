@@ -28,7 +28,7 @@ class RecentJobsTable extends Component {
         <Grid style={{ alignItems: 'center' }}>
 
           <Row style={{ height: 30 }} >
-          {/*Table Labels*/}
+          {/*Table Label*/}
 
              {/*Job #*/}
             <Col size={24} style={styles.tableStyle.title}>
