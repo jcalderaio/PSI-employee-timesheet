@@ -1,9 +1,10 @@
+/* eslint-disable */
 // Copyright 2015-present 650 Industries. All rights reserved.
 
 var LegacyAsyncStorage = {
   async migrateItems(items) {},
 
-  getItem: function(
+  getItem(
     key: string,
     callback?: ?(error: ?Error, result: ?string) => void
   ): Promise {
@@ -13,7 +14,7 @@ var LegacyAsyncStorage = {
     });
   },
 
-  getAllKeys: function(
+  getAllKeys(
     callback?: ?(error: ?Error, keys: ?Array<string>) => void
   ): Promise {
     return new Promise((resolve, reject) => {
@@ -22,9 +23,9 @@ var LegacyAsyncStorage = {
     });
   },
 
-  flushGetRequests: function(): void {},
+  flushGetRequests(): void {},
 
-  multiGet: function(
+  multiGet(
     keys: Array<string>,
     callback?: ?(errors: ?Array<Error>, result: ?Array<Array<string>>) => void
   ): Promise {

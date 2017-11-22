@@ -60,6 +60,14 @@ export default class TodaysCharges extends Component {
               />
             }
           >
+            {/*Pull Down to Refresh*/}
+            <View style={{ paddingTop: 20, paddingHorizontal: 5 }}>
+              <Grid style={{ justifyContent: 'center' }}>
+                <Text style={{ fontSize: global.SMALL_TEXT, textAlign: 'center' }}>
+                  Pull to Refresh
+                </Text>
+              </Grid>
+            </View>
 
             {/*Heading*/}
             <View style={{ paddingVertical: 30, paddingHorizontal: 5 }}>

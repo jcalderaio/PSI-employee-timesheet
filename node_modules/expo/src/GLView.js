@@ -7,7 +7,7 @@ import {
   requireNativeComponent,
 } from 'react-native';
 
-import * as Constants from './Constants';
+import Constants from './Constants';
 
 // A component that acts as an OpenGL render target.
 
@@ -59,11 +59,11 @@ export default class GLView extends React.Component {
 
 // JavaScript WebGL types to wrap around native objects
 
-global.WebGLRenderingContext = class WebGLRenderingContext {};
+class WebGLRenderingContext {}
 
 const idToObject = {};
 
-global.WebGLObject = class WebGLObject {
+class WebGLObject {
   constructor(id) {
     if (idToObject[id]) {
       throw new Error(
@@ -75,7 +75,7 @@ global.WebGLObject = class WebGLObject {
   toString() {
     return `[WebGLObject ${this.id}]`;
   }
-};
+}
 
 const wrapObject = (type, id) => {
   const found = idToObject[id];
@@ -85,35 +85,35 @@ const wrapObject = (type, id) => {
   return (idToObject[id] = new type(id));
 };
 
-global.WebGLBuffer = class WebGLBuffer extends WebGLObject {};
+class WebGLBuffer extends WebGLObject {}
 
-global.WebGLFramebuffer = class WebGLFramebuffer extends WebGLObject {};
+class WebGLFramebuffer extends WebGLObject {}
 
-global.WebGLProgram = class WebGLProgram extends WebGLObject {};
+class WebGLProgram extends WebGLObject {}
 
-global.WebGLRenderbuffer = class WebGLRenderbuffer extends WebGLObject {};
+class WebGLRenderbuffer extends WebGLObject {}
 
-global.WebGLShader = class WebGLShader extends WebGLObject {};
+class WebGLShader extends WebGLObject {}
 
-global.WebGLTexture = class WebGLTexture extends WebGLObject {};
+class WebGLTexture extends WebGLObject {}
 
-global.WebGLUniformLocation = class WebGLUniformLocation {
+class WebGLUniformLocation {
   constructor(id) {
     this.id = id; // Native GL object id
   }
-};
+}
 
-global.WebGLActiveInfo = class WebGLActiveInfo {
+class WebGLActiveInfo {
   constructor(obj) {
     Object.assign(this, obj);
   }
-};
+}
 
-global.WebGLShaderPrecisionFormat = class WebGLShaderPrecisionFormat {
+class WebGLShaderPrecisionFormat {
   constructor(obj) {
     Object.assign(this, obj);
   }
-};
+}
 
 // Many functions need wrapping/unwrapping of arguments and return value. We
 // handle each case specifically so we can write the tightest code for
@@ -315,7 +315,7 @@ const getGl = exglCtxId => {
   if (Object.setPrototypeOf) {
     Object.setPrototypeOf(gl, global.WebGLRenderingContext.prototype);
   } else {
-    gl.__proto__ = global.WebGLRenderingContext.prototype;
+    gl.__proto__ = global.WebGLRenderingContext.prototype; // eslint-disable-line no-proto
   }
 
   wrapMethods(gl);
@@ -366,3 +366,15 @@ const getGl = exglCtxId => {
 
   return gl;
 };
+
+global.WebGLRenderingContext = WebGLRenderingContext;
+global.WebGLObject = WebGLObject;
+global.WebGLBuffer = WebGLBuffer;
+global.WebGLFramebuffer = WebGLFramebuffer;
+global.WebGLProgram = WebGLProgram;
+global.WebGLRenderbuffer = WebGLRenderbuffer;
+global.WebGLShader = WebGLShader;
+global.WebGLTexture = WebGLTexture;
+global.WebGLUniformLocation = WebGLUniformLocation;
+global.WebGLActiveInfo = WebGLActiveInfo;
+global.WebGLShaderPrecisionFormat = WebGLShaderPrecisionFormat;

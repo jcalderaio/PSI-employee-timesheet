@@ -1,3 +1,4 @@
+/* eslint-disable */
 // Copyright 2015-present 650 Industries. All rights reserved.
 
 // Read-only access to legacy (unscoped) `RCTAsyncLocalStorage` backing for
@@ -83,7 +84,7 @@ var LegacyAsyncStorage = {
     // Skip missing or newly set values
     const newValuesArray = await AsyncStorage.multiGet(items);
     const newValuesMap = {};
-    newValuesArray.forEach(([k, v]) => newValuesMap[k] = v);
+    newValuesArray.forEach(([k, v]) => (newValuesMap[k] = v));
     const valuesToSet = oldValuesArray.filter(
       ([k, v]) => v !== null && newValuesMap[k] == null
     );
@@ -101,7 +102,7 @@ var LegacyAsyncStorage = {
    *    any error.
    * @returns A `Promise` object.
    */
-  getItem: function(
+  getItem(
     key: string,
     callback?: ?(error: ?Error, result: ?string) => void
   ): Promise {
@@ -128,7 +129,7 @@ var LegacyAsyncStorage = {
    *
    * Example: see the `multiGet` example.
    */
-  getAllKeys: function(
+  getAllKeys(
     callback?: ?(error: ?Error, keys: ?Array<string>) => void
   ): Promise {
     return new Promise((resolve, reject) => {
@@ -154,7 +155,7 @@ var LegacyAsyncStorage = {
    */
 
   /** Flushes any pending requests using a single batch call to get the data. */
-  flushGetRequests: function(): void {
+  flushGetRequests(): void {
     const getRequests = this._getRequests;
     const getKeys = this._getKeys;
 
@@ -213,7 +214,7 @@ var LegacyAsyncStorage = {
    *   });
    * });
    */
-  multiGet: function(
+  multiGet(
     keys: Array<string>,
     callback?: ?(errors: ?Array<Error>, result: ?Array<Array<string>>) => void
   ): Promise {
@@ -225,8 +226,8 @@ var LegacyAsyncStorage = {
     }
 
     var getRequest = {
-      keys: keys,
-      callback: callback,
+      keys,
+      callback,
       // do we need this?
       keyIndex: this._getKeys.length,
       resolve: null,

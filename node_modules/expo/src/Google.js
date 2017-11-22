@@ -2,7 +2,7 @@
 
 import { NativeModules } from 'react-native';
 
-import * as Constants from './Constants';
+import Constants from './Constants';
 
 const Google = NativeModules.ExponentGoogle;
 
@@ -51,12 +51,14 @@ export async function logInAsync(config: LogInConfig): Promise<LogInResult> {
     scopes = ['profile', 'email'];
   }
 
-  const androidClientId = Constants.appOwnership === 'standalone'
-    ? config.androidStandaloneAppClientId
-    : config.androidClientId;
-  const iosClientId = Constants.appOwnership === 'standalone'
-    ? config.iosStandaloneAppClientId
-    : config.iosClientId;
+  const androidClientId =
+    Constants.appOwnership === 'standalone'
+      ? config.androidStandaloneAppClientId
+      : config.androidClientId;
+  const iosClientId =
+    Constants.appOwnership === 'standalone'
+      ? config.iosStandaloneAppClientId
+      : config.iosClientId;
 
   const logInResult = await Google.logInAsync({
     androidClientId,

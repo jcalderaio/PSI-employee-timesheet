@@ -1,7 +1,6 @@
-Expo SDK
+Expo SDK [![CircleCI](https://circleci.com/gh/expo/expo-sdk.svg?style=svg)](https://circleci.com/gh/expo/expo-sdk) [![codecov](https://codecov.io/gh/expo/expo-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/expo/expo-sdk)
 ========
 
-The Expo SDK provides access to system functionality such as contacts,
-camera, location for Expo apps.
+The Expo SDK provides access to system functionality such as contacts, camera, and location for Expo apps.
 
 [Read the full Expo SDK docs](https://docs.expo.io/versions/latest/sdk/index.html).

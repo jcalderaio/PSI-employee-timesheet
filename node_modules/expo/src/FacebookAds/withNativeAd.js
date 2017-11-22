@@ -25,13 +25,14 @@ type NativeAdWrapperProps = {
  * returned instead of a component provided.
  */
 export default (Component: Function) =>
-  class NativeAdWrapper extends React.Component {
-    state: NativeAdWrapperState = {
+  class NativeAdWrapper extends React.Component<
+    NativeAdWrapperProps,
+    NativeAdWrapperState
+  > {
+    state = {
       ad: null,
       canRequestAds: false,
     };
-
-    props: NativeAdWrapperProps;
 
     /** @{EmitterSubscription} **/
     subscription: EmitterSubscription;

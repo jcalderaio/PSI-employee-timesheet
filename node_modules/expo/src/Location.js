@@ -1,7 +1,8 @@
 // @flow
-import { NativeEventEmitter, NativeModules, Platform } from 'react-native';
-import * as Permissions from './Permissions';
 import invariant from 'invariant';
+import { NativeEventEmitter, NativeModules, Platform } from 'react-native';
+
+import * as Permissions from './Permissions';
 
 const LocationEventEmitter = new NativeEventEmitter(
   NativeModules.ExponentLocation
@@ -252,7 +253,7 @@ async function _googleGeocodeAsync(address: string) {
   const resultObject = await result.json();
 
   if (resultObject.status !== 'OK') {
-    return Promise.reject('An error occurred during geocoding.');
+    throw new Error('An error occurred during geocoding.');
   }
 
   return resultObject.results.map(result => {
@@ -274,7 +275,7 @@ async function _googleReverseGeocodeAsync(options: {
   const resultObject = await result.json();
 
   if (resultObject.status !== 'OK') {
-    return Promise.reject('An error occurred during geocoding.');
+    throw new Error('An error occurred during geocoding.');
   }
 
   return resultObject.results.map(result => {

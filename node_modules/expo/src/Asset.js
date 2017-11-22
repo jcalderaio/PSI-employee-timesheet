@@ -1,12 +1,11 @@
 'use strict';
 
 import { NativeModules, PixelRatio, Platform } from 'react-native';
-
 import AssetRegistry from 'react-native/Libraries/Image/AssetRegistry';
 import AssetSourceResolver from 'react-native/Libraries/Image/AssetSourceResolver';
 import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource';
 
-import { manifest } from './Constants';
+import Constants from './Constants';
 
 const FS = NativeModules.ExponentFileSystem;
 
@@ -17,9 +16,10 @@ const pickScale = meta => {
   // This logic is based on that in AssetSourceResolver.js, we just do it with
   // our own tweaks for Exponent
 
-  const scale = meta.scales.length > 1
-    ? AssetSourceResolver.pickScale(meta.scales, PixelRatio.get())
-    : 1;
+  const scale =
+    meta.scales.length > 1
+      ? AssetSourceResolver.pickScale(meta.scales, PixelRatio.get())
+      : 1;
   const index = meta.scales.findIndex(s => s === scale);
   const hash = meta.fileHashes[index] || meta.fileHashes[0];
 
@@ -43,13 +43,13 @@ const pickScale = meta => {
     };
   }
 
-  if (manifest.xde) {
+  if (Constants.manifest.xde) {
     // Development server URI is pieced together
     return {
       uri:
-        manifest.bundleUrl.match(/^https?:\/\/.*?\//)[0] +
-          meta.httpServerLocation.replace(/^\/?/, '') +
-          suffix,
+        Constants.manifest.bundleUrl.match(/^https?:\/\/.*?\//)[0] +
+        meta.httpServerLocation.replace(/^\/?/, '') +
+        suffix,
       hash,
     };
   }

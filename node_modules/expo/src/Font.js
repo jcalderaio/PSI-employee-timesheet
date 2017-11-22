@@ -76,7 +76,6 @@ export async function loadAsync(
 
   let name = nameOrMapOrArray;
   if (loaded[name]) {
-    return;
   } else if (loading[name]) {
     await new Promise(resolve => {
       onLoadPromises[name].push(resolve);

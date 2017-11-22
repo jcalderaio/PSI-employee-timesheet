@@ -34,7 +34,7 @@ function dearrayifyRow(res) {
   }
   var insertId = res[1];
   if (insertId === null) {
-    insertId = void 0; // per the spec, should be undefined
+    insertId = undefined;
   }
   var rowsAffected = res[2];
   var columns = res[3];

@@ -1,10 +1,10 @@
 'use strict';
 
+import prettyFormat from 'pretty-format';
 import UUID from 'uuid-js';
 
-import * as Constants from './Constants';
+import Constants from './Constants';
 import Queue from './lib/Queue';
-import prettyFormat from 'pretty-format';
 
 let logQueue = new Queue();
 let logCounter = 0;

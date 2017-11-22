@@ -47,7 +47,8 @@ export default class BarCodeScanner extends React.Component {
   };
 
   setNativeProps(props) {
-    this.refs[CAMERA_REF].setNativeProps(props);
+    const nativeProps = convertNativeProps(props);
+    this._component.setNativeProps(nativeProps);
   }
 
   render() {
@@ -56,10 +57,15 @@ export default class BarCodeScanner extends React.Component {
     return (
       <ExponentBarCodeScanner
         {...nativeProps}
+        ref={this._setRef}
         onBarCodeRead={this._onBarCodeRead}
       />
     );
   }
+
+  _setRef = component => {
+    this._component = component;
+  };
 
   _onBarCodeRead = ({ nativeEvent }) => {
     if (

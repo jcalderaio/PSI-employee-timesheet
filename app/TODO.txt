@@ -1,0 +1,6 @@
+What I did:
+	-supported versions are iOS 8 and above and Android 4.1 (JellyBean) and above
+	-distribution research
+	-upgrading expo versions
+	-upgrading React Native versions
+	-Added pull to refresh text

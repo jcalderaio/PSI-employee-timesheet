@@ -38,10 +38,6 @@ success "Generated artifacts for Maven"
 
 npm install
 
-success "Killing any running packagers"
-lsof -i :8081 | grep LISTEN
-lsof -i :8081 | grep LISTEN | /usr/bin/awk '{print $2}' | xargs kill
-
 npm pack
 
 PACKAGE=$(pwd)/react-native-$PACKAGE_VERSION.tgz

@@ -1,13 +1,16 @@
 module.exports = {
-  presets: ['babel-preset-react-native-stage-0/decorator-support'],
+  presets: ['react-native'],
   plugins: [
     [
-      'babel-plugin-module-resolver',
+      'module-resolver',
       {
         alias: {
           'react-native-vector-icons': '@expo/vector-icons',
         },
       },
     ],
+    'transform-decorators-legacy',
+    'transform-exponentiation-operator',
+    'transform-export-extensions',
   ],
 };

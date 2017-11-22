@@ -6,7 +6,7 @@ import { channel } from './ModalHost';
 import ModalImplementation from './ModalImplementation';
 import type { ModalProps as Props } from './ModalImplementation';
 
-export default class Modal extends Component<void, Props, void> {
+export default class Modal extends Component<Props, void> {
   static contextTypes = {
     [channel]: PropTypes.object,
   };
