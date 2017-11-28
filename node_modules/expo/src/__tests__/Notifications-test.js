@@ -7,7 +7,7 @@ const mockNotificationObject = { origin: 'selected', data: {} };
 const mockNotificationString = JSON.stringify({ origin: 'received', data: {} });
 
 jest.mock('fbjs/lib/warning');
-jest.mock('RCTDeviceEventEmitter', () => {
+jest.mock('react-native/Libraries/EventEmitter/RCTDeviceEventEmitter', () => {
   const { EventEmitter } = require('fbemitter');
   return new EventEmitter();
 });
@@ -366,5 +366,8 @@ pass number of seconds since Unix Epoch instead of number of milliseconds?`
 });
 
 function emitNativeNotification(notif) {
-  require('RCTDeviceEventEmitter').emit('Exponent.notification', notif);
+  require('react-native/Libraries/EventEmitter/RCTDeviceEventEmitter').emit(
+    'Exponent.notification',
+    notif
+  );
 }

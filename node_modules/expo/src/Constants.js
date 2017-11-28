@@ -15,5 +15,6 @@ if (ExponentConstants) {
 
 export default {
   ...ExponentConstants,
+  linkingUrl: ExponentConstants.linkingUri,
   manifest,
 };

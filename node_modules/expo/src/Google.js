@@ -11,6 +11,7 @@ type LogInConfig = {
   androidStandaloneAppClientId?: string,
   iosClientId?: string,
   iosStandaloneAppClientId?: string,
+  webClientId?: string,
   behavior?: 'system' | 'web',
   scopes?: Array<string>,
 };
@@ -21,7 +22,7 @@ type LogInResult =
     }
   | {
       type: 'success',
-      accessToken: string,
+      accessToken?: ?string,
       idToken: ?string,
       refreshToken: ?string,
       serverAuthCode: ?string,
@@ -63,6 +64,7 @@ export async function logInAsync(config: LogInConfig): Promise<LogInResult> {
   const logInResult = await Google.logInAsync({
     androidClientId,
     iosClientId,
+    webClientId: config.webClientId,
     behavior,
     scopes,
   });

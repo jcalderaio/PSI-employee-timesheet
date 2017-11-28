@@ -157,8 +157,10 @@ Go to the root directory for your project and create a new `package.json` file w
 Next, you will install the `react` and `react-native` packages. Open a terminal or command prompt, then navigate to the root directory for your project and type the following commands:
 
 ```
-$ npm install --save react react-native
+$ npm install --save react@16.0.0-alpha.12 react-native
 ```
+
+> Make sure you use the same React version as specified in the [React Native `package.json` file](https://github.com/facebook/react-native/blob/0.48-stable/package.json). This will only be necessary as long as React Native depends on a pre-release version of React.
 
 This will create a new `/node_modules` folder in your project's root directory. This folder stores all the JavaScript dependencies required to build your project.
 
@@ -223,7 +225,7 @@ target 'NumberTileGame' do
     # Add any other subspecs you want to use in your project
   ]
   # Explicitly include Yoga if you are using RN >= 0.42.0
-  pod "Yoga", :path => "../node_modules/react-native/ReactCommon/yoga"
+  pod 'Yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
 
 end
 ```
@@ -351,7 +353,7 @@ const styles = StyleSheet.create({
 });
 
 // Module name
-AppRegistry.registerComponent('AwesomeProject', () => RNHighScores);
+AppRegistry.registerComponent('MyReactNativeApp', () => RNHighScores);
 ```
 
 > `RNHighScores` is the name of your module that will be used when you add a view to React Native from within your iOS application.
@@ -628,7 +630,7 @@ var styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('AwesomeProject', () => HelloWorld);
+AppRegistry.registerComponent('MyReactNativeApp', () => HelloWorld);
 ```
 
 ##### 3. Configure permissions for development error overlay
@@ -684,7 +686,7 @@ public class MyReactActivity extends Activity implements DefaultHardwareBackBtnH
                 .setUseDeveloperSupport(BuildConfig.DEBUG)
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();
-        mReactRootView.startReactApplication(mReactInstanceManager, "HelloWorld", null);
+        mReactRootView.startReactApplication(mReactInstanceManager, "MyReactNativeApp", null);
 
         setContentView(mReactRootView);
     }

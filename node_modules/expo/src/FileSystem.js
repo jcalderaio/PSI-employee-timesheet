@@ -152,10 +152,14 @@ export class DownloadResumable {
     );
   }
 
-  async pauseAsync(): Promise<{ resumeData: string }> {
+  async pauseAsync(): Promise<DownloadPauseState> {
     const pauseResult = await FS.downloadResumablePauseAsync(this._uuid);
-    this._resumeData = pauseResult.resumeData;
-    return pauseResult;
+    if (pauseResult) {
+      this._resumeData = pauseResult.resumeData;
+      return this.savable();
+    } else {
+      throw new Error('Unable to generate a savable pause state');
+    }
   }
 
   async resumeAsync(): Promise<?DownloadResult> {
@@ -184,10 +188,8 @@ export class DownloadResumable {
     }
     this._subscription = this._emitter.addListener(
       'Exponent.downloadProgress',
-      ({ UUID, uuid, data }) => {
-        // TODO: Fix. iOS sends UUID and Android sends uuid.
-        const identifier = UUID || uuid;
-        if (identifier === this._uuid) {
+      ({ uuid, data }) => {
+        if (uuid === this._uuid) {
           const callback = this._callback;
           if (callback) {
             callback(data);

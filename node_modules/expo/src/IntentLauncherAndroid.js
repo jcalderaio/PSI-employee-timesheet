@@ -143,7 +143,10 @@ export const ACTION_ZEN_MODE_SCHEDULE_RULE_SETTINGS =
   'android.settings.ZEN_MODE_SCHEDULE_RULE_SETTINGS';
 export const ACTION_ZEN_MODE_SETTINGS = 'android.settings.ZEN_MODE_SETTINGS';
 
-export function startActivityAsync(activity: string, data?: ?Object = null) {
+export function startActivityAsync(
+  activity: string,
+  data?: ?Object = null
+): Promise<boolean> {
   if (Platform.OS === 'android') {
     return NativeModules.ExponentIntentLauncher.startActivity(activity, data);
   } else {

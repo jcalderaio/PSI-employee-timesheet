@@ -34,6 +34,14 @@ const pickScale = meta => {
     '&hash=' +
     meta.hash;
 
+  // Allow asset processors to directly provide the URL that will be loaded
+  if (meta.uri) {
+    return {
+      uri: meta.uri,
+      hash,
+    };
+  }
+
   if (/^https?:/.test(meta.httpServerLocation)) {
     // This is a full URL, so we avoid prepending bundle URL/cloudfront
     // This usually means Asset is on a different server, and the URL is present in the bundle
@@ -137,6 +145,7 @@ export default class Asset {
         if (md5 !== this.hash) {
           throw new Error(
             `Downloaded file for asset '${this.name}.${this.type}' ` +
+              `Located at ${this.uri} ` +
               `failed MD5 integrity check`
           );
         }

@@ -27,9 +27,9 @@ class ModuleRegistry;
 
 struct InstanceCallback {
   virtual ~InstanceCallback() {}
-  virtual void onBatchComplete() = 0;
-  virtual void incrementPendingJSCalls() = 0;
-  virtual void decrementPendingJSCalls() = 0;
+  virtual void onBatchComplete() {}
+  virtual void incrementPendingJSCalls() {}
+  virtual void decrementPendingJSCalls() {}
 };
 
 class RN_EXPORT Instance {
@@ -53,8 +53,6 @@ class RN_EXPORT Instance {
     std::string startupScriptSourceURL,
     bool loadSynchronously);
   bool supportsProfiling();
-  void startProfiler(const std::string& title);
-  void stopProfiler(const std::string& title, const std::string& filename);
   void setGlobalVariable(std::string propName, std::unique_ptr<const JSBigString> jsonValue);
   void *getJavaScriptContext();
   void callJSFunction(std::string&& module, std::string&& method, folly::dynamic&& params);

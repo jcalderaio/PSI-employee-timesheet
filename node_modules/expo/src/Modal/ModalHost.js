@@ -94,14 +94,12 @@ export default class ModalHost extends Component<Props, State> {
   render() {
     return (
       <View style={styles.host} onLayout={this._handleLayout}>
-        <PureContainer {...this.props}>
-          {this.props.children}
-        </PureContainer>
-        {this.state.layout.measured
-          ? this.state.modals.map(({ key, renderer }) => {
-              return renderer(this.state.layout, key);
-            })
-          : null}
+        <PureContainer {...this.props}>{this.props.children}</PureContainer>
+        {this.state.layout.measured ? (
+          this.state.modals.map(({ key, renderer }) => {
+            return renderer(this.state.layout, key);
+          })
+        ) : null}
       </View>
     );
   }

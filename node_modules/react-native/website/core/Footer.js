@@ -16,14 +16,14 @@ function getGitHubPath(path) {
   return 'https://github.com/facebook/react-native/blob/master/' + path;
 }
 
-var Footer = React.createClass({
-  render: function() {
+class Footer extends React.Component {
+  render() {
     return (
       <p className="edit-page-block">
         <a target="_blank" href={getGitHubPath(this.props.path)}>Improve this page</a> by sending a pull request!
       </p>
     );
   }
-});
+}
 
 module.exports = Footer;

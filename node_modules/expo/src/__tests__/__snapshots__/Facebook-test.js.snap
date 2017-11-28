@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`warning 1`] = `"logInWithReadPermissionsAsync: parameter 'appId' must be a string, was 'number''."`;
+
+exports[`warning 2`] = `"logInWithReadPermissionsAsync: parameter 'appId' must be a string, was 'number''."`;

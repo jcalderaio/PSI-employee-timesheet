@@ -5,6 +5,7 @@ import { AppRegistry, StyleSheet } from 'react-native';
 
 import { processFontFamily } from './Font';
 import Notifications from './Notifications';
+import RootErrorBoundary from './RootErrorBoundary';
 
 type InitialProps = {
   exp: {
@@ -30,7 +31,11 @@ function wrapWithExpoRoot<P: InitialProps>(
     }
 
     render() {
-      return <AppRootComponent {...this.props} />;
+      return (
+        <RootErrorBoundary>
+          <AppRootComponent {...this.props} />
+        </RootErrorBoundary>
+      );
     }
   };
 }

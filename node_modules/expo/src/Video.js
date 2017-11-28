@@ -377,12 +377,14 @@ export default class Video extends Component<Props, State> {
       onFullscreenUpdateNative: this._nativeOnFullscreenUpdate,
     };
 
-    return this.props.usePoster && this.state.showPoster
-      ? <View style={nativeProps.style}>
-          <ExponentVideo ref={this._assignRoot} {...nativeProps} />
-          <Image style={_STYLES.poster} source={this.props.posterSource} />
-        </View>
-      : <ExponentVideo ref={this._assignRoot} {...nativeProps} />;
+    return this.props.usePoster && this.state.showPoster ? (
+      <View style={nativeProps.style}>
+        <ExponentVideo ref={this._assignRoot} {...nativeProps} />
+        <Image style={_STYLES.poster} source={this.props.posterSource} />
+      </View>
+    ) : (
+      <ExponentVideo ref={this._assignRoot} {...nativeProps} />
+    );
   }
 }
 

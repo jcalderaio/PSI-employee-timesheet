@@ -3,10 +3,9 @@ import { View } from 'react-native';
 
 // Any time we pass a component we write another component we write,
 // ... it will show up as {props.children}.
-const Card = props =>
-  <View style={styles.containerStyle}>
-    {props.children}
-  </View>;
+const Card = props => (
+  <View style={styles.containerStyle}>{props.children}</View>
+);
 
 const styles = {
   containerStyle: {

@@ -16,8 +16,7 @@
     "^[./a-zA-Z0-9$_-]+\\.(ttf|m4v|mov|mp4|mpeg|mpg|webm|aac|aiff|caf|m4a|mp3|wav|html|pdf|obj)$": "RelativeImageStub"
   },
   "modulePathIgnorePatterns": [
-    "<rootDir>/node_modules/react-native/Libraries/react-native/",
-    "<rootDir>/node_modules/react-native/packager/"
+    "<rootDir>/node_modules/react-native/Libraries/react-native/"
   ],
   "transformIgnorePatterns": [
     "node_modules/(?!((jest-)?react-native|react-clone-referenced-element|expo(nent)?|@expo(nent)?/.*|react-navigation))"

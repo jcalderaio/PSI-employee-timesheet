@@ -29,13 +29,6 @@ function applyMocks() {
     'getCurrentPositionAsync',
     jest.fn(async () => fakeReturnValue)
   );
-
-  mockProperty(
-    NativeModules.ExponentLocation,
-    'watchPositionImplAsync',
-    jest.fn(async () => {})
-  );
-
   ExpoLocation = NativeModules.ExponentLocation;
 }
 
@@ -80,6 +73,30 @@ describe('Location', () => {
       emitNativeLocationUpdate(fakeReturnValue);
       emitNativeLocationUpdate(fakeReturnValue);
       expect(callback).toHaveBeenCalledTimes(2);
+    });
+  });
+
+  describe('geocodeAsync', () => {
+    it('falls back to Google Maps API on Android without Google Play services', () => {
+      mockPlatformAndroid();
+      ExpoLocation.geocodeAsync.mockImplementationOnce(async () => {
+        const error = new Error();
+        error.code = 'E_NO_GEOCODER';
+        throw error;
+      });
+      return expect(Location.geocodeAsync('Googleplex')).rejects.toEqual(
+        expect.objectContaining({
+          message: expect.stringContaining('Please set a Google API Key'),
+        })
+      );
+    });
+  });
+
+  describe('reverseGeocodeAsync', () => {
+    it('rejects non-numeric latitude/longitude', () => {
+      return expect(
+        Location.reverseGeocodeAsync({ latitude: '37.7', longitude: '-122.5' })
+      ).rejects.toEqual(expect.any(TypeError));
     });
   });
 

@@ -9,7 +9,8 @@ type PermissionType =
   | 'location'
   | 'camera'
   | 'contacts'
-  | 'audioRecording';
+  | 'audioRecording'
+  | 'systemBrightness';
 type PermissionStatus = 'undetermined' | 'granted' | 'denied';
 type PermissionExpires = 'never';
 type PermissionDetailsLocationIOS = {
@@ -43,3 +44,4 @@ export const LOCATION = 'location';
 export const REMOTE_NOTIFICATIONS = 'remoteNotifications';
 export const NOTIFICATIONS = REMOTE_NOTIFICATIONS;
 export const CONTACTS = 'contacts';
+export const SYSTEM_BRIGHTNESS = 'systemBrightness';
